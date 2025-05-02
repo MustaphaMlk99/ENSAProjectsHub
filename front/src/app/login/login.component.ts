@@ -1,0 +1,71 @@
+import { Component } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule
+  ]
+})
+export class LoginComponent {
+  loginForm!: FormGroup;
+  errorMessage = '';
+  isLoading = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
+
+  login(): void {
+    if (this.loginForm.invalid) return;
+
+    this.isLoading = true;
+    const credentials = this.loginForm.value;
+
+    this.http.post<{ token: string; role: string }>('http://localhost:8000/api/login', credentials).subscribe({
+      next: (response) => {
+        console.log("response ", response);
+        localStorage.setItem('token', response.token);
+    
+        switch (response.role) {
+          case 'etudiant':
+            this.router.navigate(['/etudiant_home']);
+            break;
+          case 'admin':
+            this.router.navigate(['/admin_home']);
+            break;
+          case 'enseignant':
+            this.router.navigate(['/enseignant_home']);
+            break;
+          default:
+            this.errorMessage = 'Rôle inconnu';
+        }
+      },
+      error: (errorResponse) => {
+        this.errorMessage = errorResponse.error?.error || 'Une erreur est survenue.';
+        this.isLoading = false;
+      }
+    });
+    
+  }
+}
