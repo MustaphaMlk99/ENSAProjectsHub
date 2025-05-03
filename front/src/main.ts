@@ -6,6 +6,8 @@ import { LoginComponent } from './app/login/login.component';
 import { EtudiantHomeComponent } from './app/etudiant/etudiant-home/etudiant-home.component';
 import { EnseignantHomeComponent } from './app/enseignant/enseignant-home/enseignant-home.component';
 import { AdminHomeComponent } from './app/admin/admin-home/admin-home.component';
+import { HistoriqueComponent } from './app/etudiant/historique/historique.component';
+import { AddProjetComponent } from './app/etudiant/add-projet/add-projet.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -14,7 +16,9 @@ bootstrapApplication(AppComponent, {
       { path: '', component: LoginComponent },
       { path: 'etudiant_home', component: EtudiantHomeComponent },
       { path: 'enseignant_home', component: EnseignantHomeComponent },
-      { path: 'admin_home', component: AdminHomeComponent }
+      { path: 'admin_home', component: AdminHomeComponent },
+      { path: 'historique', component: HistoriqueComponent },
+      { path: 'add_projet', component: AddProjetComponent }
     ])
   ]
 });

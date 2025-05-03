@@ -16,10 +16,14 @@
       <div class="actions">
         <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || loginForm.invalid">
           Se connecter
-        </button>
+        </button>        
+      </div>
+
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner diameter="30"></mat-spinner>
       </div>
     </form>
 
-    <!-- <mat-error *ngIf="error" class="error-msg">{{ errorMessage }}</mat-error> -->
+    <mat-error *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</mat-error> 
   </mat-card>
 </div>

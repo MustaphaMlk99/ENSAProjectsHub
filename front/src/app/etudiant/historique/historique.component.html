@@ -1,0 +1,13 @@
+<app-etudiant-header></app-etudiant-header>
+
+<div class="project-grid">
+    <div class="project-card" *ngFor="let project of projects">
+      <h3>{{ project.title }}</h3>
+      <p>{{ project.description }}</p>
+      <div class="actions">
+        <button class="btn edit">Modifier</button>
+        <button class="btn delete">Supprimer</button>
+      </div>
+    </div>
+  </div>
+  

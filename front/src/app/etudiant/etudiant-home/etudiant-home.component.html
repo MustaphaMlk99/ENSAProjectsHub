@@ -1,1 +1,18 @@
-<p>etudiant-home works!</p>
+<app-etudiant-header></app-etudiant-header>
+
+<div class="carousel-container">
+    <mat-card *ngFor="let slide of slides; let i = index" class="carousel-slide" [class.active]="i === currentSlide">
+      <img [src]="slide.image" alt="Image ENSAK" class="carousel-image">
+      <mat-card-content>
+        <h3>{{ slide.title }}</h3>
+        <p>{{ slide.description }}</p>
+        <a mat-button color="primary" [href]="slide.link" target="_blank">Visiter</a>
+      </mat-card-content>
+    </mat-card>
+  
+    <div class="carousel-controls">
+      <button mat-icon-button (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
+      <button mat-icon-button (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
+    </div>
+  </div>
+  

@@ -1,0 +1,32 @@
+<mat-toolbar color="primary" class="navbar">
+    <!-- Logo -->
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    
+    <!-- Message de connexion -->
+    <div class="navbar-message">
+      <span style="color:rgb(0, 0, 0);">Vous êtes connecté(e) Mr. l'administrateur !</span>
+    </div>
+  
+    <!-- Dropdown - Types de matériel -->
+    <mat-menu #menu1="matMenu">
+      <button mat-menu-item *ngFor="let role of roles" [routerLink]="['/admin/gestion_users', role]">
+        {{ role.role }}
+      </button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu1">Gestion des utilisateurs</button>
+  
+    <!-- Dropdown 2 - Autre menu -->
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item>Option 1</button>
+      <button mat-menu-item>Option 2</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu2">Autre Menu</button>
+  
+    <!-- Boutons -->
+    <button mat-button [routerLink]="'/admin_home'">Home</button>
+  
+    <!-- Bouton Déconnexion -->
+    <span class="spacer"></span>
+    <button mat-raised-button color="warn" (click)="logout()">Se déconnecter</button>
+  </mat-toolbar>
+  

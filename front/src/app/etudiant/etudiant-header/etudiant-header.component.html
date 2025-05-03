@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="navbar">
+    <!-- Logo -->
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    
+    <!-- Message de connexion -->
+    <div class="navbar-message">
+      <span style="color:rgb(0, 0, 0);">Vous êtes connecté(e) a dak l'etudiant !</span>
+    </div>
+  
+    <!-- Boutons -->
+    <button mat-button [routerLink]="'/etudiant_home'">Home</button>
+  
+    <!-- Dropdown - Types de matériel
+    <mat-menu #menu1="matMenu">
+      <button mat-menu-item *ngFor="let role of roles" [routerLink]="['/admin/gestion_users', role]">
+        {{ role.role }}
+      </button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu1">Projets</button>
+   -->
+
+    <!-- Dropdown 2 - projet -->
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item (click)="historique()">Historique des projets</button>
+      <button mat-menu-item (click)="add_projet()">Ajouter un nouveau projet</button>
+      <button mat-menu-item>...</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu2">Projets</button>
+  
+
+    <!-- Bouton Déconnexion -->
+    <span class="spacer"></span>
+    <button mat-raised-button color="warn" (click)="logout()">Se déconnecter</button>
+  </mat-toolbar>
+  

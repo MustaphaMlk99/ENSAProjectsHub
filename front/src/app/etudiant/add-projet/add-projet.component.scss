@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap');
+
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #e6f7ff);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.form-wrapper {
+  max-width: 650px;
+  margin: 4rem auto;
+  padding: 3rem 2.5rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.form-wrapper:hover {
+  transform: scale(1.01);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #34495e;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.form-title::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: #2196f3;
+  display: block;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.mat-mdc-form-field {
+  --mdc-theme-primary: #2196f3;
+  --mat-mdc-form-field-floating-label-color: #2196f3;
+  --mat-mdc-form-field-label-text-color: #34495e;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+button {
+  min-width: 160px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(33, 150, 243, 0.2);
+}
+
+button[color="warn"]:hover {
+  background-color: #f44336;
+  color: #fff;
+}
