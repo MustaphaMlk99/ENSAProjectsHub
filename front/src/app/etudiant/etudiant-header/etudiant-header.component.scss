@@ -1,20 +1,109 @@
+/* NAVBAR PRINCIPALE */
 .navbar {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 70px;
+  background: linear-gradient(to right, #eef2ff, #e0f7fa); /* dégradé doux */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 0 0 16px 16px;
+  flex-wrap: wrap;
+}
+
+/* LOGO */
+.logo {
+  height: 48px;
+  margin-right: 24px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
+
+/* MESSAGE DE CONNEXION */
+.navbar-message {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+  font-weight: 500;
+  font-size: 17px;
+  color: #2f3e46;
+}
+.navbar-message mat-icon {
+  margin-right: 6px;
+  color: #5c6bc0; /* icône douce */
+}
+
+/* ESPACE ENTRE LES BLOCS */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* BOUTONS MAT-BUTTON (NAVIGATION) */
+button[mat-button],
+a[mat-button] {
+  margin: 0 6px;
+  color: #37474f;
+  background-color: transparent;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+button[mat-button]:hover,
+a[mat-button]:hover {
+  background-color: rgba(63, 81, 181, 0.08);
+  transform: translateY(-1px);
+}
+button[mat-button] mat-icon,
+a[mat-button] mat-icon {
+  margin-right: 4px;
+  color: #5c6bc0;
+}
+
+/* BOUTON DECONNEXION */
+button[color="warn"] {
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 6px 16px;
+  transition: background-color 0.3s ease, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+button[color="warn"]:hover {
+  background-color: #e53935 !important;
+  transform: scale(1.03);
+}
+button[color="warn"] mat-icon {
+  margin-right: 6px;
+  color: #000000;
+}
+
+/* RESPONSIVE : Menu compact sur petit écran */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 12px;
   }
-  
+
   .logo {
-    height: 50px;
-    margin-right: 20px;
+    margin-bottom: 12px;
   }
-  
+
   .navbar-message {
-    margin-right: 20px;
-    font-weight: bold;
+    margin-bottom: 12px;
   }
-  
-  .spacer {
-    flex: 1 1 auto;
+
+  button[mat-button],
+  a[mat-button],
+  button[color="warn"] {
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 8px;
   }
-  
+}
