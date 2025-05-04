@@ -1,38 +1,70 @@
-<div class="form-wrapper">
-  <h2 class="form-title">Ajouter un nouveau projet</h2>
+<mat-horizontal-stepper linear #stepper>
+  <!-- Étape 1 : Informations sur le projet -->
+  <mat-step [stepControl]="projetForm">
+    <form class="form-title" [formGroup]="projetForm">
+      <ng-template matStepLabel>Informations sur le projet</ng-template>
 
-  <form [formGroup]="projetForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-      <mat-label>Titre du projet</mat-label>
-      <input matInput formControlName="titre" required>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Titre du projet</mat-label>
+        <input matInput formControlName="titre" required>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea matInput rows="5" formControlName="description" required></textarea>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="5" formControlName="description" required></textarea>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Encadrant</mat-label>
-      <mat-select formControlName="encadrant_id" required>
-        <mat-option *ngFor="let encadrant of encadrants" [value]="encadrant.id">
-          {{ encadrant.nom }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Encadrant</mat-label>
+        <mat-select formControlName="encadrant_id" required>
+          <mat-option *ngFor="let encadrant of encadrants" [value]="encadrant.id">
+            {{ encadrant.nom }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Modules</mat-label>
-      <mat-select formControlName="module_id" required>
-        <mat-option *ngFor="let module of modules" [value]="module.id">
-          {{ module.nom }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Modules</mat-label>
+        <mat-select formControlName="module_id" required>
+          <mat-option *ngFor="let module of modules" [value]="module.id">
+            {{ module.nom }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <div class="button-group">
-      <button mat-raised-button color="primary" type="submit">Enregistrer</button>
-      <button mat-stroked-button color="warn" type="button" (click)="annuler()">Annuler</button>
-    </div>
-  </form>
-</div>
+      <div class="button-group">
+        <button mat-raised-button color="primary" matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Étape 2 : Ajout des livrables -->
+  <mat-step [stepControl]="livrableForm">
+    <form [formGroup]="livrableForm">
+      <ng-template matStepLabel>Ajout des livrables</ng-template>
+      
+      <!-- Upload Rapport -->
+      <div class="upload-section">
+        <label for="rapport">Rapport :</label>
+        <input type="file" id="rapport" (change)="onFileSelected($event, 'rapport')" required>
+      </div>
+      
+      <!-- Upload Présentation -->
+      <div class="upload-section">
+        <label for="presentation">Présentation :</label>
+        <input type="file" id="presentation" (change)="onFileSelected($event, 'presentation')" required>
+      </div>
+      
+      <!-- Upload Code Source -->
+      <div class="upload-section">
+        <label for="codeSource">Code Source :</label>
+        <input type="file" id="codeSource" (change)="onFileSelected($event, 'codeSource')" required>
+      </div>
+
+      <div class="button-group">
+        <button mat-button matStepperPrevious>Précédent</button>
+        <button mat-raised-button color="accent" type="submit" (click)="onSubmit()">Soumettre</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

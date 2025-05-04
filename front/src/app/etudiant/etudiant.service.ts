@@ -37,6 +37,11 @@ export class EtudiantService {
     return this.http.post(`${this.apiUrl}/updateprojet`, projet);
   }  
 
+  ajouterProjetAvecLivrables(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/projets-avec-livrables`, formData);
+  }
+  
+
 
 
 

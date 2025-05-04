@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projet;
+use App\Models\Livrable;
 use Illuminate\Http\Request;
 
 class ProjetController extends Controller
@@ -69,5 +70,46 @@ class ProjetController extends Controller
         $projet->save();
 
         return response()->json(['message' => 'Projet mis à jour avec succès', 'projet' => $projet], 200);
+    }
+
+    public function storeWithLivrables(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'encadrant_id' => 'required|integer',
+            'module_id' => 'required|integer',
+            'etudiant_id' => 'required|integer',
+            'rapport' => 'nullable|file',
+            'presentation' => 'nullable|file',
+            'codeSource' => 'nullable|file',
+        ]);
+
+        $projet = Projet::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'encadrant_id' => $request->encadrant_id,
+            'module_id' => $request->module_id,
+            'etudiant_id' => $request->etudiant_id,
+        ]);
+
+        $livrable = new Livrable();
+        $livrable->projet_id = $projet->id;
+
+        if ($request->hasFile('rapport')) {
+            $livrable->rapport = file_get_contents($request->file('rapport')->getRealPath());
+        }
+
+        if ($request->hasFile('presentation')) {
+            $livrable->presentation = file_get_contents($request->file('presentation')->getRealPath());
+        }
+
+        if ($request->hasFile('codeSource')) {
+            $livrable->code_source = file_get_contents($request->file('codeSource')->getRealPath());
+        }
+
+        $livrable->save();
+
+        return response()->json(['message' => 'Projet et livrable enregistrés avec succès.'], 201);
     }
 }

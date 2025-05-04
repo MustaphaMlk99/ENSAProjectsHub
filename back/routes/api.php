@@ -38,6 +38,8 @@ Route::get('/getProjets', [ProjetController::class, 'getProjets']);
 Route::post('/ajouterProjet', [ProjetController::class, 'ajouterProjet']);
 Route::get('/projet/{id}', [ProjetController::class, 'getProjetById']);
 Route::post('/updateprojet', [ProjetController::class, 'updateProjet']);
+Route::post('/projets-avec-livrables', [ProjetController::class, 'storeWithLivrables']);
+
 
 // Modules
 Route::get('/getModules', [ModuleController::class, 'getModules']);

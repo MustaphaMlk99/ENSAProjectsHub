@@ -22,4 +22,9 @@ class Projet extends Model
         return $this->belongsTo(Module::class);
     }
 
+    public function livrable()
+    {
+        return $this->hasOne(Livrable::class);
+    }
+
 }

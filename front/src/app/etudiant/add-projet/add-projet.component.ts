@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { EtudiantService } from '../etudiant.service';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-add-projet',
@@ -19,21 +22,32 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule,
+    MatIconModule,
+    MatProgressBarModule
   ]
 })
 export class AddProjetComponent {
   projetForm: FormGroup;
+  livrableForm: FormGroup;
   user_id: number | null = null;
-  public encadrants: any;
-  public modules: any;
+  public encadrants: any[] = [];
+  public modules: any[] = [];
 
+  livrables: {
+    rapport: File | null;
+    presentation: File | null;
+    codeSource: File | null;
+  } = {
+    rapport: null,
+    presentation: null,
+    codeSource: null
+  };
 
-  
-  constructor(private fb: FormBuilder, private router: Router,private etudiantService: EtudiantService) {
+  constructor(private fb: FormBuilder, private router: Router, private etudiantService: EtudiantService) {
     const storedId = localStorage.getItem('id_user');
     this.user_id = storedId ? parseInt(storedId, 10) : null;
-    //console.log('ID utilisateur connecté :', this.user_id);
 
     this.projetForm = this.fb.group({
       titre: ['', [Validators.required, Validators.maxLength(150)]],
@@ -42,13 +56,18 @@ export class AddProjetComponent {
       encadrant_id: ['', Validators.required],
       module_id: ['', Validators.required]
     });
+
+    this.livrableForm = this.fb.group({
+      rapport: [null, Validators.required],
+      presentation: [null, Validators.required],
+      codeSource: [null, Validators.required]
+    });
   }
 
   ngOnInit(): void {
     this.etudiantService.getEncadrants().subscribe({
       next: (response) => {
-        this.encadrants = response; 
-        //console.log('Liste des encadrants :', this.encadrants);
+        this.encadrants = response;
       },
       error: (error) => {
         console.error("Erreur lors de la récupération des encadrants:", error);
@@ -57,36 +76,60 @@ export class AddProjetComponent {
 
     this.etudiantService.getModules().subscribe({
       next: (response) => {
-        this.modules = response; 
-        //console.log('Liste des encadrants :', this.modules);
+        this.modules = response;
       },
       error: (error) => {
-        console.error("Erreur lors de la récupération des encadrants:", error);
+        console.error("Erreur lors de la récupération des modules:", error);
       }
     });
   }
 
+  onFileSelected(event: any, type: 'rapport' | 'presentation' | 'codeSource') {
+    const file = event.target.files[0];
+    if (file) {
+      this.livrables[type] = file;
+      this.livrableForm.get(type)?.setValue(file);
+    }
+  }
+
   onSubmit() {
-    if (this.projetForm.valid) {
-      //console.log('Projet ajouté :', this.projetForm.value);
-      
-      // Appel au service pour ajouter le projet
-      this.etudiantService.ajouterProjet(this.projetForm.value).subscribe({
+    if (this.projetForm.valid && this.livrableForm.valid) {
+      const formData = new FormData();
+      console.log("projetForm ", this.projetForm.value);
+      // Ajouter les champs du projet
+      Object.entries(this.projetForm.value).forEach(([key, value]) => {
+        console.log("key", key, value);
+        formData.append(key, value as any);
+      });
+
+      // Ajouter les fichiers (BLOBs)
+      if (this.livrables.rapport) {
+        formData.append('rapport', this.livrables.rapport);
+      }
+      if (this.livrables.presentation) {
+        formData.append('presentation', this.livrables.presentation);
+      }
+      if (this.livrables.codeSource) {
+        formData.append('codeSource', this.livrables.codeSource);
+      }
+      formData.forEach((value, key) => {
+        console.log("FormData contains:", key, value); // Vérifiez tout ce qui est dans formData
+      });
+      this.etudiantService.ajouterProjetAvecLivrables(formData).subscribe({
         next: (response) => {
-          //console.log('Projet ajouté avec succès:', response);
+          alert("Projet ajouté avec succès !");
           this.router.navigate(['/historique']);
         },
         error: (error) => {
-          alert("Erreur lors de l\'ajout du projet.");
-          console.error('Erreur lors de l\'ajout du projet :', error);
-          // Vous pouvez afficher un message d'erreur à l'utilisateur ici
+          alert("Erreur lors de l'ajout du projet.");
+          console.error("Erreur lors de l'ajout :", error);
         }
       });
     } else {
-      alert("Le formulaire n'est pas valide.");
-      console.log('Le formulaire n\'est pas valide.');
+      alert("Veuillez remplir correctement les deux étapes du formulaire.");
     }
   }
+  
 
   annuler() {
     this.router.navigate(['/etudiant_home']);

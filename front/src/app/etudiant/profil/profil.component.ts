@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EtudiantService } from '../etudiant.service';
 import { EtudiantHeaderComponent } from '../etudiant-header/etudiant-header.component';
 import { CommonModule } from '@angular/common';
+import { EtudiantService } from '../etudiant.service';
 
 @Component({
   selector: 'app-profil',
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 export class ProfilComponent implements OnInit {
   userId: number | null = null;
   etudiant: any = null;
+  public projetCount: number = 0;
 
   constructor(private etudiantService: EtudiantService) {}
 
@@ -37,5 +38,17 @@ export class ProfilComponent implements OnInit {
         }
       );
     }
+
+    //Récupération des projets pour compter ceux de l'étudiant connecté
+    this.etudiantService.getProjets().subscribe(
+      (projets) => {
+        const projetsEtudiant = projets.filter(p => p.etudiant_id === this.userId);
+        this.projetCount = projetsEtudiant.length;
+        console.log('Nombre de projets de l’étudiant :', this.projetCount);
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des projets', error);
+      }
+    );
   }
 }
