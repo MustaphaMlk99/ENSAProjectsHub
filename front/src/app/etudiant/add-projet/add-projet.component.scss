@@ -1,81 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap');
-
-:host {
-  display: block;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #f0f4ff, #e6f7ff);
-  min-height: 100vh;
-  padding: 2rem;
-}
-
+/* STYLE DU FORMULAIRE */
 .form-wrapper {
-  max-width: 650px;
-  margin: 4rem auto;
-  padding: 3rem 2.5rem;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
-}
-
-.form-wrapper:hover {
-  transform: scale(1.01);
+  padding: 24px;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 800px;
+  margin: auto;
+  background: linear-gradient(to right, #eef2ff, #e0f7fa);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .form-title {
   text-align: center;
-  font-size: 2rem;
-  color: #34495e;
-  font-weight: 600;
-  margin-bottom: 2.5rem;
-  position: relative;
-}
-
-.form-title::after {
-  content: '';
-  width: 60px;
-  height: 4px;
-  background: #2196f3;
-  display: block;
-  margin: 0.5rem auto 0;
-  border-radius: 2px;
+  margin-bottom: 24px;
+  font-size: 1.75rem;
+  color: #5c6bc0;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
-.mat-mdc-form-field {
-  --mdc-theme-primary: #2196f3;
-  --mat-mdc-form-field-floating-label-color: #2196f3;
-  --mat-mdc-form-field-label-text-color: #34495e;
-}
-
-textarea {
-  resize: vertical;
+button {
+  font-size: 1rem;
+  margin-top: 20px;
 }
 
 .button-group {
   display: flex;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: 10px;
 }
 
-button {
-  min-width: 160px;
-  font-weight: 500;
-  border-radius: 8px;
-  transition: all 0.3s ease-in-out;
+/* MEDIA QUERIES POUR LA RÉPONSIVITÉ */
+
+/* Mobile (en dessous de 600px) */
+@media (max-width: 600px) {
+  .form-wrapper {
+    padding: 16px;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  mat-form-field {
+    margin-bottom: 12px;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(33, 150, 243, 0.2);
+/* Tablette (en dessous de 1024px) */
+@media (max-width: 1024px) {
+  .form-wrapper {
+    padding: 20px;
+  }
+
+  .form-title {
+    font-size: 1.75rem;
+  }
+
+  .button-group {
+    flex-direction: row;
+    gap: 16px;
+  }
 }
 
-button[color="warn"]:hover {
-  background-color: #f44336;
-  color: #fff;
+/* Desktop normal et au-dessus de 1200px */
+@media (min-width: 1201px) {
+  .form-wrapper {
+    padding: 24px;
+  }
+
+  .form-title {
+    font-size: 2rem;
+  }
+
+  .button-group {
+    gap: 20px;
+  }
 }

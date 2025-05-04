@@ -1,0 +1,218 @@
+/* CONTENEUR PROFIL */
+.profile-container {
+    padding: 24px;
+    font-family: 'Segoe UI', sans-serif;
+    max-width: 960px;
+    margin: auto;
+  }
+  
+  /* PROFIL HEADER */
+  .profile-header {
+    display: flex;
+    background: linear-gradient(to right, #eef2ff, #e0f7fa);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .avatar i {
+    font-size: 90px;
+    color: #5c6bc0;
+    margin-right: 24px;
+  }
+  
+  .profile-info h2 {
+    margin: 0 0 10px;
+  }
+  
+  .profile-info p {
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    color: #455a64;
+  }
+  
+  .profile-info i {
+    font-size: 18px;
+    margin-right: 8px;
+    color: #5c6bc0;
+  }
+  
+  /* STATS */
+  .stats-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  
+  .stat-card {
+    flex: 1;
+    min-width: 200px;
+    background: #f4f6fc;
+    border-radius: 12px;
+    text-align: center;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  
+  .stat-card i {
+    font-size: 32px;
+    color: #5c6bc0;
+    margin-bottom: 8px;
+  }
+  
+  /* GRAPHIQUE */
+  .chart-section h3 {
+    margin-bottom: 16px;
+  }
+  
+  .fake-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 200px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  
+  .bar {
+    width: 60px;
+    background: #a5b4fc;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 4px;
+    transition: 0.3s ease;
+  }
+  
+  .bar:hover {
+    background: #7986cb;
+    transform: scale(1.05);
+  }
+  
+  /* MEDIA QUERIES POUR RÉPONDRE AUX ÉCRANS PLUS PETITS */
+  
+  /* Mobile (en dessous de 600px) */
+  @media (max-width: 600px) {
+    .profile-header {
+      flex-direction: column;
+      text-align: center;
+      padding: 16px;
+    }
+  
+    .avatar i {
+      font-size: 80px;
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
+  
+    .profile-info h2 {
+      font-size: 1.5rem;
+    }
+  
+    .profile-info p {
+      font-size: 0.9rem;
+    }
+  
+    .stats-section {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .stat-card {
+      width: 100%;
+      min-width: auto;
+    }
+  
+    .fake-chart {
+      height: 150px;
+    }
+  
+    .bar {
+      width: 40px;
+    }
+  }
+  
+  /* Tablette (en dessous de 1024px) */
+  @media (max-width: 1024px) {
+    .profile-header {
+      padding: 20px;
+    }
+  
+    .avatar i {
+      font-size: 80px;
+    }
+  
+    .profile-info h2 {
+      font-size: 1.75rem;
+    }
+  
+    .stats-section {
+      justify-content: space-between;
+    }
+  
+    .stat-card {
+      flex: 1 1 45%;
+    }
+  
+    .fake-chart {
+      height: 180px;
+    }
+  
+    .bar {
+      width: 50px;
+    }
+  }
+  
+  /* Pour PC inférieur à 1025px et jusqu'à 1200px */
+  @media (max-width: 1200px) {
+    .navbar {
+      padding: 0 16px; /* Réduction de la marge */
+      height: 56px;
+    }
+  
+    .logo {
+      height: 40px;
+    }
+  
+    .navbar-message {
+      font-size: 0.85rem;
+      margin-right: 16px;
+    }
+  
+    .navbar button {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+    }
+  
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+  
+  /* Desktop normal et au-dessus de 1200px */
+  @media (min-width: 1201px) {
+    .profile-header {
+      padding: 24px;
+    }
+  
+    .stats-section {
+      gap: 16px;
+    }
+  
+    .stat-card {
+      flex: 1;
+    }
+  }
+  

@@ -1,31 +1,38 @@
 <div class="form-wrapper">
-    <h2 class="form-title">Ajouter un nouveau projet</h2>
-  
-    <form [formGroup]="projetForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline">
-        <mat-label>Titre du projet</mat-label>
-        <input matInput formControlName="titre" required>
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <textarea matInput rows="5" formControlName="description" required></textarea>
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <mat-label>ID Étudiant</mat-label>
-        <input matInput type="number" formControlName="etudiant_id" required>
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <mat-label>ID Encadrant</mat-label>
-        <input matInput type="number" formControlName="encadrant_id" required>
-      </mat-form-field>
-  
-      <div class="button-group">
-        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
-        <button mat-stroked-button color="warn" type="button" (click)="annuler()">Annuler</button>
-      </div>
-    </form>
-  </div>
-  
+  <h2 class="form-title">Ajouter un nouveau projet</h2>
+
+  <form [formGroup]="projetForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Titre du projet</mat-label>
+      <input matInput formControlName="titre" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="5" formControlName="description" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Encadrant</mat-label>
+      <mat-select formControlName="encadrant_id" required>
+        <mat-option *ngFor="let encadrant of encadrants" [value]="encadrant.id">
+          {{ encadrant.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modules</mat-label>
+      <mat-select formControlName="module_id" required>
+        <mat-option *ngFor="let module of modules" [value]="module.id">
+          {{ module.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-group">
+      <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+      <button mat-stroked-button color="warn" type="button" (click)="annuler()">Annuler</button>
+    </div>
+  </form>
+</div>
