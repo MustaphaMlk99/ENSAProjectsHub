@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-etudiant-header',
   templateUrl: './etudiant-header.component.html',
-  styleUrl: './etudiant-header.component.scss',
+  styleUrls: ['./etudiant-header.component.scss'], 
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -23,21 +23,24 @@ export class EtudiantHeaderComponent {
     { id: 2, role: 'enseignant' },
     { id: 3, role: 'etudiant' }
   ];
+
+  user_id: number | null = null;
+
   constructor(private router: Router) {}
 
-
-  historique(){
+// Redirige vers la page historique
+  historique() {
     this.router.navigate(['/historique']);
   }
 
-  add_projet(){
+// Redirige vers la page ajouter projet
+  add_projet() {
     this.router.navigate(['/add_projet']);
   }
 
-  // Méthode de déconnexion
+// Redirige vers la page de connexion
   logout() {
-    // Logique de déconnexion (ex: redirection, appel d'API, etc.)
-    this.router.navigate(['/']); // Redirige vers la page de connexion
+    localStorage.clear(); // supprime tout le localStorage
+    this.router.navigate(['/']); 
   }
-
 }

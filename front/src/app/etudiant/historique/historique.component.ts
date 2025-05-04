@@ -15,6 +15,15 @@ import { EtudiantHeaderComponent } from '../etudiant-header/etudiant-header.comp
   MatButtonModule]
 })
 export class HistoriqueComponent {
+  user_id: number | null = null;
+
+constructor() {
+  const storedId = localStorage.getItem('id_user');
+  this.user_id = storedId ? parseInt(storedId, 10) : null;
+
+  console.log('ID utilisateur connecté :', this.user_id);
+}
+
   projects = [
     { id: 1, title: 'Système de gestion ENSA', description: 'Application pour la gestion des étudiants et enseignants.' },
     { id: 2, title: 'Site Web ENSA Kénitra', description: 'Site vitrine dynamique pour présenter l’école et ses services.' },

@@ -47,10 +47,11 @@ export class LoginComponent {
     this.isLoading = true;
     const credentials = this.loginForm.value;
 
-    this.http.post<{ token: string; role: string }>('http://localhost:8000/api/login', credentials).subscribe({
+    this.http.post<{ token: string; role: string; user: { id: number }}>('http://localhost:8000/api/login', credentials).subscribe({
       next: (response) => {
-        console.log("response ", response);
+        console.log("response ", response.token);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('id_user', (response.user.id).toString());
     
         switch (response.role) {
           case 'etudiant':
