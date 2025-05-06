@@ -1,5 +1,13 @@
 <div class="login-container">
   <mat-card>
+
+    <!-- Logo centré -->
+    <div class="logo-container">
+      <img src="storage/Logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <hr class="separator" />
+
     <mat-card-title>Connexion</mat-card-title>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">

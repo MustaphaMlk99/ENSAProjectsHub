@@ -29,10 +29,17 @@ class UserController extends Controller
         return response()->json(Administrateur::all());
     }
 
-    // Récupère tous les admins 
+    // Récupère les etudiants par id 
     public function getEtudiantById($id)
     {
         $etudiant = Etudiant::findOrFail($id);
         return response()->json($etudiant);
+    }
+
+    // Récupère les encadrant by id 
+    public function getEncadrantById($id)
+    {
+        $encadrant = Encadrant::findOrFail($id);
+        return response()->json($encadrant);
     }
 }

@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { LoginComponent } from './app/login/login.component';
 import { EtudiantHomeComponent } from './app/etudiant/etudiant-home/etudiant-home.component';
-import { EnseignantHomeComponent } from './app/enseignant/enseignant-home/enseignant-home.component';
+import { EncadrantHomeComponent } from './app/encadrant/encadrant-home/encadrant-home.component';
 import { AdminHomeComponent } from './app/admin/admin-home/admin-home.component';
 import { HistoriqueComponent } from './app/etudiant/historique/historique.component';
 import { AddProjetComponent } from './app/etudiant/add-projet/add-projet.component';
@@ -18,7 +18,7 @@ bootstrapApplication(AppComponent, {
     provideRouter([
       { path: '', component: LoginComponent },
       { path: 'etudiant_home', component: EtudiantHomeComponent },
-      { path: 'enseignant_home', component: EnseignantHomeComponent },
+      { path: 'encadrant_home', component: EncadrantHomeComponent },
       { path: 'admin_home', component: AdminHomeComponent },
       { path: 'profil', component: ProfilComponent },
       { path: 'historique', component: HistoriqueComponent },

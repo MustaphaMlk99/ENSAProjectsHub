@@ -71,3 +71,22 @@
     }
   }
   
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .logo {
+    max-height: 80px;
+    object-fit: contain;
+  }
+  
+  .separator {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 0 auto 16px;
+    width: 60%;
+  }

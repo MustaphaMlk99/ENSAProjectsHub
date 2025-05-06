@@ -25,7 +25,7 @@ import { Router, RouterModule } from '@angular/router';
 export class AdminHeaderComponent {
   roles = [
     { id: 1, role: 'admin' },
-    { id: 2, role: 'enseignant' },
+    { id: 2, role: 'encadrant' },
     { id: 3, role: 'etudiant' }
   ];
 

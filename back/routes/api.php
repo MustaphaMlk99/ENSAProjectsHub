@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,13 @@ Route::get('/getEncadrants', [UserController::class, 'getEncadrants']);
 Route::get('/getEtudiants', [UserController::class, 'getEtudiants']);
 Route::get('/getAdmins', [UserController::class, 'getAdmins']);
 Route::get('/getEtudiantById/{id}', [UserController::class, 'getEtudiantById']);
+Route::get('/getEncadrantById/{id}', [UserController::class, 'getEncadrantById']);
+
+
+//likes
+Route::post('/likes/toggle', [LikeController::class, 'toggleLike']);
+Route::get('/likes/count/{projet_id}', [LikeController::class, 'countLikes']);
+Route::get('/likes/check/{etudiant_id}/{projet_id}', [LikeController::class, 'isLiked']);
+Route::get('/likes/received/{etudiant_id}', [LikeController::class, 'countLikesReceivedByEtudiant']);
+Route::get('/likes/most-liked/{etudiant_id}', [LikeController::class, 'mostLikedProjetByEtudiant']);
+

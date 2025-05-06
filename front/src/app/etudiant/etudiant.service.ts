@@ -52,13 +52,38 @@ export class EtudiantService {
     return this.http.delete(`${this.apiUrl}/deleteProjet/${id}`);
   }
 
-
-
-
-
-
 //methode utilisant id
-  getEtudiantById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/getEtudiantById/${id}`);
-  }
+getEtudiantById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/getEtudiantById/${id}`);
+}
+
+
+// toggle like
+toggleLike(projetId: number, etudiantId: number) {
+  return this.http.post(`${this.apiUrl}/likes/toggle`, {
+    projet_id: projetId,
+    etudiant_id: etudiantId
+  });
+}
+
+// check if liked
+checkIfLiked(projetId: number, etudiantId: number) {
+  return this.http.get<{ liked: boolean }>(`${this.apiUrl}/likes/check/${etudiantId}/${projetId}`);
+}
+
+// count likes pour un projet
+getLikesCount(projetId: number) {
+  return this.http.get<{ likes: number }>(`${this.apiUrl}/likes/count/${projetId}`);
+}
+
+getLikesReceivedByEtudiant(etudiantId: number) {
+  return this.http.get<{ likes_received: number }>(`${this.apiUrl}/likes/received/${etudiantId}`);
+}
+
+getMostLikedProjet(etudiantId: number) {
+  return this.http.get<{ projet_id: number, titre: string, likes: number }>(`${this.apiUrl}/likes/most-liked/${etudiantId}`);
+}
+
+
+
 }

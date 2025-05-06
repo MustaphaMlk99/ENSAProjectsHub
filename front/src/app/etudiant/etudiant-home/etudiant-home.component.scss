@@ -1,120 +1,81 @@
-/* Fond de la page avec un dégradé doux et élégant */
-body {
-    background: linear-gradient(135deg, #2a3d66, #4e5f75);
-    color: #f5f5f5;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    overflow-x: hidden;
-    padding: 0;
-  }
-  
-  /* Conteneur principal du carrousel */
-  .carousel-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    padding: 2rem 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-  
-  /* Style des slides */
-  .carousel-slide {
-    width: 100%;
-    max-width: 800px;
-    margin: 1rem auto;
-    opacity: 0;
-    transition: opacity 0.7s ease, transform 0.5s ease;
-    transform: scale(0.95);
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: 0;
-  }
-  
-  .carousel-slide.active {
-    opacity: 1;
-    transform: scale(1);
-    position: relative;
-  }
-  
-  /* Images dans le carrousel */
-  .carousel-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 15px;
-    border: 4px solid #ff6f00;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-  }
-  
-  .carousel-image:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Contrôles du carrousel */
-  .carousel-controls {
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    padding: 0 20px;
-    transform: translateY(-50%);
-  }
-  
-  mat-icon {
-    color: #ff6f00;
-    font-size: 32px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  mat-icon:hover {
-    transform: scale(1.2);
-  }
-  
-  /* Style des cartes */
-  mat-card {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-  }
-  
-  mat-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  mat-card h3 {
-    font-size: 24px;
-    color: #3f51b5;
-    margin-bottom: 10px;
-  }
-  
-  mat-card p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Style du bouton "Visiter" */
-  a[mat-button] {
-    color: #fff;
-    background-color: #3f51b5;
-    border-radius: 5px;
-    padding: 0.5rem 1.5rem;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  a[mat-button]:hover {
-    background-color: #283593;
-    transform: translateY(-2px);
-  }
-  
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  align-items: stretch; /* Force l'alignement vertical des cartes */
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px; /* Fixe la hauteur minimale pour éviter le chevauchement */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.project-card h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  flex-grow: 1; /* Prend l'espace disponible */
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* Ligne du bouton J’aime + compteur */
+.like-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto; /* Pousse cette ligne vers le bas */
+}
+
+/* Style du compteur de likes */
+.likes-count {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.like-number {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+/* Bouton J’aime */
+.like-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.2s;
+}
+
+.like-btn .icon {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+.like-btn.liked {
+  color: red;
+}
+
+.like-btn:not(.liked) {
+  color: #888;
+}
+
+.like-btn:hover {
+  opacity: 0.8;
+}

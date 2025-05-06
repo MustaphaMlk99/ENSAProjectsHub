@@ -1,0 +1,16 @@
+<app-encadrant-header></app-encadrant-header>
+
+<div class="profile-container">
+
+    <!-- PROFIL encadrant -->
+    <div class="profile-header" *ngIf="encadrant">
+        <div class="avatar">
+          <i class="material-icons">account_circle</i>
+        </div>
+        <div class="profile-info">
+          <h2>{{ encadrant.nom }} {{ encadrant.prenom }}</h2>
+          <p><i class="material-icons">email</i> {{ encadrant.email }}</p>
+
+        </div>
+    </div>
+</div>

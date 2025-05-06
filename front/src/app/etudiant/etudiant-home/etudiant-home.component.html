@@ -1,6 +1,6 @@
 <app-etudiant-header></app-etudiant-header>
 
-<div class="carousel-container">
+<!-- <div class="carousel-container">
     <mat-card *ngFor="let slide of slides; let i = index" class="carousel-slide" [class.active]="i === currentSlide">
       <img [src]="slide.image" alt="Image ENSAK" class="carousel-image">
       <mat-card-content>
@@ -14,5 +14,37 @@
       <button mat-icon-button (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
       <button mat-icon-button (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
     </div>
+  </div>
+   -->
+
+   <div class="project-grid">
+    <!-- Boucle des projets -->
+    <div class="project-card" *ngFor="let project of projets">
+      <h3>{{ project.titre }}</h3>
+      <p>{{ project.description }}</p>
+  
+      <div class="like-row">
+        <!-- Nombre de likes -->
+        <div class="likes-count">
+          <span class="like-number">{{ project.likesCount }}</span>
+          <span class="like-label">{{ project.likesCount === 1 ? 'like' : 'likes' }}</span>
+        </div>
+  
+        <!-- Bouton Like -->
+        <button 
+          class="btn like-btn" 
+          (click)="toggleLike(project.id)" 
+          [ngClass]="{ liked: isProjetLiked(project.id) }"
+        >
+          <span class="icon">
+            <ng-container *ngIf="isProjetLiked(project.id); else notLiked">❤️</ng-container>
+            <ng-template #notLiked>🤍</ng-template>
+          </span>
+          <span class="like-text">J’aime</span>
+        </button>
+      </div>
+    </div>
+  
+   
   </div>
   

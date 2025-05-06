@@ -11,6 +11,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('projet_id');
             $table->unsignedBigInteger('etudiant_id');
             $table->timestamps();
+
+            
         });
     }
 

@@ -17,5 +17,10 @@ class Etudiant extends Model implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
 

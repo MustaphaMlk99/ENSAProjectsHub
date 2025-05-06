@@ -60,8 +60,8 @@ export class LoginComponent {
           case 'admin':
             this.router.navigate(['/admin_home']);
             break;
-          case 'enseignant':
-            this.router.navigate(['/enseignant_home']);
+          case 'encadrant':
+            this.router.navigate(['/encadrant_home']);
             break;
           default:
             this.errorMessage = 'Rôle inconnu';

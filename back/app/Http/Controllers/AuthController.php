@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         $encadrant = Encadrant::where('email', $email)->first();
         if ($encadrant && Hash::check($password, $encadrant->mot_de_passe)) {
-            return $this->generateToken($encadrant, 'enseignant');
+            return $this->generateToken($encadrant, 'encadrant');
         }
 
         $etudiant = Etudiant::where('email', $email)->first();

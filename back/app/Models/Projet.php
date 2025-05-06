@@ -27,4 +27,9 @@ class Projet extends Model
         return $this->hasOne(Livrable::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
 }

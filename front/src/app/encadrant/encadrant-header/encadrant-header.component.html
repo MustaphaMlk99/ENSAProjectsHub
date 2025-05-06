@@ -1,15 +1,15 @@
 <mat-toolbar class="navbar" color="primary">
     <!-- Logo -->
-    <img src="assets/logo.png" alt="Logo" class="logo" />
+    <img src="storage/Logo.png" alt="Logo" class="logo" />
   
     <!-- Message de connexion -->
     <div class="navbar-message">
       <mat-icon>person</mat-icon>
-      <span>Vous êtes connecté(e) Mr. l'enseignant !</span>
+      <span>Vous êtes connecté(e) Mr. l'encadrant !</span>
     </div>
   
     <!-- Navigation -->
-    <button mat-button [routerLink]="'/enseignant_home'">
+    <button mat-button [routerLink]="'/encadrant_home'">
       <mat-icon>home</mat-icon>
       &nbsp;Home
     </button>
@@ -19,7 +19,7 @@
       &nbsp;ENSAK officiel
     </a>
   
-    <button mat-button [routerLink]="'/profil'">
+    <button mat-button [routerLink]="'/profil_encadrant'">
       <mat-icon>account_circle</mat-icon>
       &nbsp;Profil
     </button>
@@ -28,15 +28,11 @@
     <mat-menu #menu2="matMenu">
       <button mat-menu-item (click)="historique()">
         <mat-icon>history</mat-icon>
-        Historique des projets
+        Historique des projets validés
       </button>
-      <button mat-menu-item (click)="add_projet()">
+      <button mat-menu-item (click)="nouveau_projet()">
         <mat-icon>add_circle</mat-icon>
-        Ajouter un nouveau projet
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>more_horiz</mat-icon>
-        ...
+        Nouveaux projets soumis par mes étudiants
       </button>
     </mat-menu>
   
