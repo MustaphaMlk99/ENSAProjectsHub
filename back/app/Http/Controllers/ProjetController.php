@@ -46,31 +46,31 @@ class ProjetController extends Controller
     }
 
     
-    public function updateProjet(Request $request)
-    {
-        $request->validate([
-        'id' => 'required|integer|exists:projets,id',
-        'titre' => 'required|string|max:150',
-        'description' => 'required|string|max:2000',
-        'etudiant_id' => 'required|integer|exists:users,id',
-        'encadrant_id' => 'required|integer|exists:users,id',
-        ]);
+    // public function updateProjet(Request $request)
+    // {
+    //     $request->validate([
+    //     'id' => 'required|integer|exists:projets,id',
+    //     'titre' => 'required|string|max:150',
+    //     'description' => 'required|string|max:2000',
+    //     'etudiant_id' => 'required|integer|exists:users,id',
+    //     'encadrant_id' => 'required|integer|exists:users,id',
+    //     ]);
 
-        $projet = Projet::find($request->id);
+    //     $projet = Projet::find($request->id);
 
-        if (!$projet) {
-            return response()->json(['message' => 'Projet non trouvé'], 404);
-        }
+    //     if (!$projet) {
+    //         return response()->json(['message' => 'Projet non trouvé'], 404);
+    //     }
 
-        $projet->titre = $request->titre;
-        $projet->description = $request->description;
-        $projet->etudiant_id = $request->etudiant_id;
-        $projet->encadrant_id = $request->encadrant_id;
+    //     $projet->titre = $request->titre;
+    //     $projet->description = $request->description;
+    //     $projet->etudiant_id = $request->etudiant_id;
+    //     $projet->encadrant_id = $request->encadrant_id;
 
-        $projet->save();
+    //     $projet->save();
 
-        return response()->json(['message' => 'Projet mis à jour avec succès', 'projet' => $projet], 200);
-    }
+    //     return response()->json(['message' => 'Projet mis à jour avec succès', 'projet' => $projet], 200);
+    // }
 
     public function storeWithLivrables(Request $request)
     {
@@ -112,4 +112,83 @@ class ProjetController extends Controller
 
         return response()->json(['message' => 'Projet et livrable enregistrés avec succès.'], 201);
     }
+
+
+        public function updateWithLivrables(Request $request, $id)
+    {
+        $request->validate([
+            'titre' => 'required|string',
+            'description' => 'required|string',
+            'encadrant_id' => 'required|integer',
+            'module_id' => 'required|integer',
+            'etudiant_id' => 'required|integer',
+            'rapport' => 'nullable|file',
+            'presentation' => 'nullable|file',
+            'codeSource' => 'nullable|file',
+        ]);
+
+        $projet = Projet::findOrFail($id);
+        $projet->update([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'encadrant_id' => $request->encadrant_id,
+            'module_id' => $request->module_id,
+            'etudiant_id' => $request->etudiant_id,
+        ]);
+
+        $livrable = Livrable::where('projet_id', $projet->id)->first();
+        if (!$livrable) {
+            $livrable = new Livrable();
+            $livrable->projet_id = $projet->id;
+        }
+
+        if ($request->hasFile('rapport')) {
+            $livrable->rapport = file_get_contents($request->file('rapport')->getRealPath());
+        }
+
+        if ($request->hasFile('presentation')) {
+            $livrable->presentation = file_get_contents($request->file('presentation')->getRealPath());
+        }
+
+        if ($request->hasFile('codeSource')) {
+            $livrable->code_source = file_get_contents($request->file('codeSource')->getRealPath());
+        }
+
+        $livrable->save();
+
+        return response()->json(['message' => 'Projet et livrables mis à jour avec succès.']);
+    }
+
+
+    
+        public function deleteProjet($id)
+    {
+        $projet = Projet::find($id);
+
+        if (!$projet) {
+            return response()->json(['message' => 'Projet non trouvé'], 404);
+        }
+
+        // Supprimer les livrables associés au projet
+        $livrable = Livrable::where('projet_id', $id)->first();
+        if ($livrable) {
+            // Suppression des fichiers si nécessaire
+            if ($livrable->rapport) {
+                unlink(storage_path('app/' . $livrable->rapport));
+            }
+            if ($livrable->presentation) {
+                unlink(storage_path('app/' . $livrable->presentation));
+            }
+            if ($livrable->code_source) {
+                unlink(storage_path('app/' . $livrable->code_source));
+            }
+            $livrable->delete();
+        }
+
+        // Supprimer le projet
+        $projet->delete();
+
+        return response()->json(['message' => 'Projet et livrables supprimés avec succès'], 200);
+    }
+
 }

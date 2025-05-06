@@ -33,15 +33,24 @@ export class EtudiantService {
     return this.http.post(`${this.apiUrl}/ajouterProjet`, projetData);
   }
 
-  updateProjet(projet: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/updateprojet`, projet);
-  }  
+  
+  //updateProjet(projet: any): Observable<any> {
+    //return this.http.post(`${this.apiUrl}/updateprojet`, projet);
+  //}  
 
   ajouterProjetAvecLivrables(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/projets-avec-livrables`, formData);
   }
+
+  updateProjetAvecLivrables(formData: FormData, projetId: number) {
+    console.log("here", formData, projetId);
+    return this.http.post(`${this.apiUrl}/projets/update/${projetId}`, formData);
+  }
   
 
+  deleteProjet(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/deleteProjet/${id}`);
+  }
 
 
 

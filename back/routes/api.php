@@ -37,8 +37,11 @@ Route::middleware('auth:api')->get('/me', [AuthController::class, 'me']);
 Route::get('/getProjets', [ProjetController::class, 'getProjets']);
 Route::post('/ajouterProjet', [ProjetController::class, 'ajouterProjet']);
 Route::get('/projet/{id}', [ProjetController::class, 'getProjetById']);
-Route::post('/updateprojet', [ProjetController::class, 'updateProjet']);
+//Route::post('/updateprojet', [ProjetController::class, 'updateProjet']);
 Route::post('/projets-avec-livrables', [ProjetController::class, 'storeWithLivrables']);
+Route::post('/projets/update/{id}', [ProjetController::class, 'updateWithLivrables']);
+Route::delete('/deleteProjet/{id}', [ProjetController::class, 'deleteProjet']);
+
 
 
 // Modules

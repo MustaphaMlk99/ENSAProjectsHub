@@ -1,0 +1,56 @@
+<mat-toolbar class="navbar" color="primary">
+    <!-- Logo -->
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+  
+    <!-- Message de connexion -->
+    <div class="navbar-message">
+      <mat-icon>person</mat-icon>
+      <span>Vous êtes connecté(e) Mr. l'enseignant !</span>
+    </div>
+  
+    <!-- Navigation -->
+    <button mat-button [routerLink]="'/enseignant_home'">
+      <mat-icon>home</mat-icon>
+      &nbsp;Home
+    </button>
+  
+    <a mat-button href="https://ensa.uit.ac.ma/" target="_blank" rel="noopener noreferrer">
+      <mat-icon>school</mat-icon>
+      &nbsp;ENSAK officiel
+    </a>
+  
+    <button mat-button [routerLink]="'/profil'">
+      <mat-icon>account_circle</mat-icon>
+      &nbsp;Profil
+    </button>
+  
+    <!-- Dropdown - Projets -->
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item (click)="historique()">
+        <mat-icon>history</mat-icon>
+        Historique des projets
+      </button>
+      <button mat-menu-item (click)="add_projet()">
+        <mat-icon>add_circle</mat-icon>
+        Ajouter un nouveau projet
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>more_horiz</mat-icon>
+        ...
+      </button>
+    </mat-menu>
+  
+    <button mat-button [matMenuTriggerFor]="menu2">
+      <mat-icon>folder</mat-icon>
+      &nbsp;Projets
+    </button>
+  
+    <!-- Bouton de déconnexion -->
+    <span class="spacer"></span>
+  
+    <button mat-raised-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      &nbsp;Se déconnecter
+    </button>
+  </mat-toolbar>
+  

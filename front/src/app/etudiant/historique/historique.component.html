@@ -5,8 +5,8 @@
       <h3>{{ project.titre }}</h3>
       <p>{{ project.description }}</p>
       <div class="actions">
-        <button class="btn edit" (click)="consultProject(project.id)">Modifier</button>
-        <button class="btn delete">Supprimer</button>
+        <button class="btn edit" (click)="modifyProjet(project.id)">Modifier</button>
+        <button class="btn delete" (click)="deleteProjet(project.id)">Supprimer</button>
       </div>
     </div>
   </div>

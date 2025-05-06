@@ -1,0 +1,111 @@
+/* NAVBAR PRINCIPALE */
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    height: 70px;
+    background: linear-gradient(to right, #4e0000, #8b0000); /* rouge foncé */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    flex-wrap: wrap;
+  }
+  
+  /* LOGO */
+  .logo {
+    height: 48px;
+    margin-right: 24px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .logo:hover {
+    transform: scale(1.1);
+  }
+  
+  /* MESSAGE DE CONNEXION */
+  .navbar-message {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+    font-weight: 500;
+    font-size: 17px;
+    color: #f8f9fa; /* texte clair */
+  }
+  .navbar-message mat-icon {
+    margin-right: 6px;
+    color: #ff8a80; /* rouge pâle pour les icônes */
+  }
+  
+  /* ESPACE ENTRE LES BLOCS */
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* BOUTONS MAT-BUTTON (NAVIGATION) */
+  button[mat-button],
+  a[mat-button] {
+    margin: 0 6px;
+    color: #ffffff;
+    background-color: transparent;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  button[mat-button]:hover,
+  a[mat-button]:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+  button[mat-button] mat-icon,
+  a[mat-button] mat-icon {
+    margin-right: 4px;
+    color: #ffcdd2; /* rose clair */
+  }
+  
+  /* BOUTON DECONNEXION */
+  button[color="warn"] {
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 6px 16px;
+    transition: background-color 0.3s ease, transform 0.2s;
+    display: flex;
+    align-items: center;
+    background-color: #c62828;
+    color: #fff;
+  }
+  button[color="warn"]:hover {
+    background-color: #b71c1c !important;
+    transform: scale(1.03);
+  }
+  button[color="warn"] mat-icon {
+    margin-right: 6px;
+    color: #ffffff;
+  }
+  
+  /* RESPONSIVE : Menu compact sur petit écran */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 12px;
+    }
+  
+    .logo {
+      margin-bottom: 12px;
+    }
+  
+    .navbar-message {
+      margin-bottom: 12px;
+    }
+  
+    button[mat-button],
+    a[mat-button],
+    button[color="warn"] {
+      width: 100%;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+    }
+  }
+  

@@ -23,7 +23,7 @@ bootstrapApplication(AppComponent, {
       { path: 'profil', component: ProfilComponent },
       { path: 'historique', component: HistoriqueComponent },
       { path: 'add_projet', component: AddProjetComponent },
-      { path: 'modify_projet', component: ModifyProjetComponent }
+      { path: 'modify_projet/:id', component: ModifyProjetComponent }
 
     ]),
     EtudiantService

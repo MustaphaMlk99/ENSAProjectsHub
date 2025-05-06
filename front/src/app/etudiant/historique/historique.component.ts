@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { EtudiantHeaderComponent } from '../etudiant-header/etudiant-header.component';
 import { EtudiantService } from '../etudiant.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-historique',
@@ -20,7 +21,10 @@ export class HistoriqueComponent {
   public projects: any;
   selectedProject: any = null;
 
-constructor(private etudiantService: EtudiantService) {
+constructor(
+  private router: Router,
+  private etudiantService: EtudiantService
+) {
   const storedId = localStorage.getItem('id_user');
   this.user_id = storedId ? parseInt(storedId, 10) : null;
 
@@ -39,17 +43,35 @@ ngOnInit(): void {
 }
 
 
-  consultProject(id: number): void {
+modifyProjet(id: number): void {
     // Appelle l'API pour récupérer les détails du projet sélectionné
     this.etudiantService.getProjetById(id).subscribe({
       next: (response) => {
         this.selectedProject = response;  // Assigner les données du projet à la variable selectedProject
-        localStorage.setItem('projet_selec', this.selectedProject);
+        localStorage.setItem('projet_selec', JSON.stringify(this.selectedProject)); 
         console.log('Projet sélectionné:', this.selectedProject);
+        this.router.navigate(['/modify_projet', id]);
+
       },
       error: (error) => {
         console.error("Erreur lors de la récupération du projet:", error);
       }
     });
   }
+
+  deleteProjet(id: number): void {
+    // Appeler le service pour supprimer le projet
+    this.etudiantService.deleteProjet(id).subscribe({
+      next: (response) => {
+        console.log('Projet supprimé avec succès:', response);
+        // Actualiser la liste des projets après suppression
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression du projet:', error);
+        alert('Erreur lors de la suppression du projet.');
+      }
+    });
+  }
+
 }

@@ -1,1 +1,69 @@
-<p>modify-projet works!</p>
+<div class="modify-container" *ngIf="selectedProject">
+    <h2 class="section-title">Modifier le Projet</h2>
+  
+    <form [formGroup]="projetForm" (ngSubmit)="onSubmit()">
+      <!-- Titre -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="titre" />
+      </mat-form-field>
+  
+      <!-- Description -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="4"></textarea>
+      </mat-form-field>
+  
+      <!-- Encadrant -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Encadrant</mat-label>
+        <mat-select formControlName="encadrant_id">
+          <mat-option *ngFor="let encadrant of encadrants" [value]="encadrant.id">
+            {{ encadrant.nom }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- Module -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Module</mat-label>
+        <mat-select formControlName="module_id">
+          <mat-option *ngFor="let module of modules" [value]="module.id">
+            {{ module.nom }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- Livrables actuels -->
+      <div class="livrables-section">
+        <h3>Livrables Actuels</h3>
+        <div class="livrable-row">
+          <span>📄 Rapport :</span>
+          <span>{{ selectedProject.livrable?.rapport ? '✅ Disponible' : '❌ Non fourni' }}</span>
+        </div>
+        <div class="livrable-row">
+          <span>📊 Présentation :</span>
+          <span>{{ selectedProject.livrable?.presentation ? '✅ Disponible' : '❌ Non fourni' }}</span>
+        </div>
+        <div class="livrable-row">
+          <span>💻 Code Source :</span>
+          <span>{{ selectedProject.livrable?.code_source ? '✅ Disponible' : '❌ Non fourni' }}</span>
+        </div>
+      </div>
+  
+      <!-- Nouveau Upload (si voulu) -->
+      <div class="upload-section">
+        <label>Remplacer les fichiers :</label>
+        <input type="file" (change)="onFileSelected($event, 'rapport')" />
+        <input type="file" (change)="onFileSelected($event, 'presentation')" />
+        <input type="file" (change)="onFileSelected($event, 'codeSource')" />
+      </div>
+  
+      <!-- Boutons -->
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">💾 Mettre à jour</button>
+        <button mat-stroked-button color="warn" (click)="annuler()">❌ Annuler</button>
+      </div>
+    </form>
+  </div>
+  

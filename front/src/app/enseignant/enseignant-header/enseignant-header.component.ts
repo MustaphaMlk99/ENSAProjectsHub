@@ -7,9 +7,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-etudiant-header',
-  templateUrl: './etudiant-header.component.html',
-  styleUrls: ['./etudiant-header.component.scss'], 
+  selector: 'app-enseignant-header',
+  templateUrl: './enseignant-header.component.html',
+  styleUrl: './enseignant-header.component.scss',
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -20,9 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 
   ]
 })
-export class EtudiantHeaderComponent {
-  user_id: number | null = null;
-
+export class EnseignantHeaderComponent {
   constructor(private router: Router) {}
 
 // Redirige vers la page historique
