@@ -1,31 +1,49 @@
-<mat-toolbar color="primary" class="navbar">
-  <!-- Logo -->
-  <img src="assets/Logo.png" alt="Logo" class="logo" />
+<nav class="navbar">
+  <!-- Logo section -->
+  <img class="logo" src="assets/logo.png" alt="Logo ENSAK" (click)="navigateToHome()"/>
 
-  <!-- Message de connexion -->
+  <!-- Connection Message -->
   <div class="navbar-message">
-    <span style="color:rgb(0, 0, 0);">Vous êtes connecté(e) Mr. l'administrateur !</span>
+    <mat-icon>person</mat-icon> Bienvenue, Administrateur
   </div>
 
-  <!-- Statistics -->
-  <button mat-button [routerLink]="'/admin/statistiques'">Statistiques</button>
+  <!-- Spacer between logo/message and buttons -->
+  <div class="spacer"></div>
 
-  <!-- Dropdown - Projects Management -->
-  <mat-menu #menu2="matMenu">
-    <button mat-menu-item [routerLink]="'/admin/projets'">Voir les projets</button>
-    <button mat-menu-item [routerLink]="'/admin/filtrage_projets'">Filtrer les projets</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="menu2">Gestion des projets</button>
+  <!-- Navigation buttons -->
+  <button mat-button [routerLink]="['/admin/statistiques']">
+    <mat-icon>bar_chart</mat-icon> Statistiques
+  </button>
 
+  <button mat-button [routerLink]="['/admin/gestion-utilisateurs']">
+    <mat-icon>group</mat-icon> Gestion des utilisateurs
+  </button>
+  
   <!-- Dropdown - User Management -->
-  <mat-menu #menu1="matMenu">
-    <button mat-menu-item *ngFor="let role of roles" [routerLink]="['/admin/gestion_utilisateurs', role]">
-      {{ role.role }}
+  <div class="dropdown">
+    <button mat-button class="dropdown-toggle">
+      <mat-icon>supervisor_account</mat-icon> Gestion des utilisateurs
     </button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="menu1">Gestion des utilisateurs</button>
+    <div class="dropdown-menu">
+      <button mat-button [routerLink]="['/admin/gestion-administrateurs']">Gestion des administrateurs</button>
+      <button mat-button [routerLink]="['/admin/gestion-encadrants']">Gestion des encadrants</button>
+      <button mat-button [routerLink]="['/admin/gestion-etudiants']">Gestion des étudiants</button>
+    </div>
+  </div>
 
-  <!-- Déconnexion (Logout) -->
-  <span class="spacer"></span>
-  <button mat-raised-button color="warn" (click)="logout()">Se déconnecter</button>
-</mat-toolbar>
+  <button mat-button [routerLink]="['/admin/ensak-officiel']">
+    <mat-icon>school</mat-icon> ENSAK Officiel
+  </button>
+  
+  <button mat-button [routerLink]="['/admin/projets']">
+    <mat-icon>folder</mat-icon> Projets
+  </button>
+
+  <!-- Spacer between nav and logout -->
+  <div class="spacer"></div>
+
+  <!-- Logout button -->
+  <button mat-button color="warn" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon> Déconnexion
+  </button>
+</nav>

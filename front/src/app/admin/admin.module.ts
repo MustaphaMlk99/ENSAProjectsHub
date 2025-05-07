@@ -1,40 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
-// Import Components
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminProjectsComponent } from './admin-projects/admin-projects.component';
+// Import Angular Material Modules
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+// Import your routing module and components
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { GestionUtilisateursComponent } from './gestion-utilisateurs/gestion-utilisateurs.component';
-import { AdminHeaderComponent } from './admin-header/admin-header.component'; // Assuming your header is in this folder
-
-// Define Routes for Admin
-const routes: Routes = [
-  {
-    path: '',
-    component: AdminHeaderComponent,
-    children: [
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'projets', component: AdminProjectsComponent },
-      { path: 'gestion_utilisateurs', component: GestionUtilisateursComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-    ]
-  }
-];
+import { GestionAdministrateursComponent } from './gestion-administrateurs/gestion-administrateurs.component';
+import { GestionEncadrantsComponent } from './gestion-encadrants/gestion-encadrants.component';
+import { GestionEtudiantsComponent } from './gestion-etudiants/gestion-etudiants.component';
+import { ProjetsComponent } from './projets/projets.component';
 
 @NgModule({
   declarations: [
-    AdminDashboardComponent,
-    AdminProjectsComponent,
+    AdminHeaderComponent,
+    StatistiquesComponent,
     GestionUtilisateursComponent,
-    AdminHeaderComponent, // Declare your admin header component here
+    GestionAdministrateursComponent,
+    GestionEncadrantsComponent,
+    GestionEtudiantsComponent,
+    ProjetsComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes), // Import the routing for this module
-    // Any other Angular Material modules you may need
-  ],
-  exports: [RouterModule] // Export RouterModule to allow routing in this module
+    AdminRoutingModule,  // Import the routing module
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    FormsModule,
+    MatToolbarModule
+  ]
 })
-export class AdminModule {}
-
+export class AdminModule { }

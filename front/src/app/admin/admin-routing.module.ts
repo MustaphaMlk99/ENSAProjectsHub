@@ -2,26 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Import your components
-import { AdminComponent } from './admin.component'; // Import admin.component
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminProjectsComponent } from './admin-projects/admin-projects.component'; // Import the new Projects component
+import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { GestionUtilisateursComponent } from './gestion-utilisateurs/gestion-utilisateurs.component';
-import { StatisticsComponent } from './statistics/statistics.component'; // Import the new Statistics component
-import { FilterProjectsComponent } from './filter-projects/filter-projects.component'; // Import the filter projects component
+import { GestionAdministrateursComponent } from './gestion-administrateurs/gestion-administrateurs.component';
+import { GestionEncadrantsComponent } from './gestion-encadrants/gestion-encadrants.component';
+import { GestionEtudiantsComponent } from './gestion-etudiants/gestion-etudiants.component';
+import { ProjetsComponent } from './projets/projets.component';
 
 const routes: Routes = [
-  {
-    path: '', 
-    component: AdminComponent,  // Use AdminComponent as the root for admin routes
-    children: [
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'projets', component: AdminProjectsComponent }, // Add the route for Projects
-      { path: 'gestion_utilisateurs', component: GestionUtilisateursComponent },
-      { path: 'statistiques', component: StatisticsComponent }, // Add the route for Statistics
-      { path: 'filtrage_projets', component: FilterProjectsComponent }, // Add the route for filtering projects
-      { path: '', redirectTo: 'statistiques', pathMatch: 'full' } // Default path to Statistiques
-    ]
-  }
+  { path: 'statistiques', component: StatistiquesComponent },
+  { path: 'gestion-utilisateurs', component: GestionUtilisateursComponent },
+  { path: 'gestion-administrateurs', component: GestionAdministrateursComponent },
+  { path: 'gestion-encadrants', component: GestionEncadrantsComponent },
+  { path: 'gestion-etudiants', component: GestionEtudiantsComponent },
+  { path: 'projets', component: ProjetsComponent },
+  // Optional: Redirect to a default route if no match
+  { path: '', redirectTo: '/admin/statistiques', pathMatch: 'full' }
 ];
 
 @NgModule({
