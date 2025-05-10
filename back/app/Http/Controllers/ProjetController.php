@@ -194,6 +194,7 @@ class ProjetController extends Controller
         return response()->json(['message' => 'Projet et livrables supprimés avec succès'], 200);
     }
 
+    public function getProjectCount()
     {
         $count = \App\Models\Projet::count();
         return response()->json(['total' => $count]);
