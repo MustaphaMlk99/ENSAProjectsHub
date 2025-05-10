@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Add this line
+
 import { AppComponent } from './app.component';
-import { AdminModule } from './admin/admin.module'; // Import AdminModule
+import { AdminModule } from './admin/admin.module';
+
+// Material modules
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -10,10 +17,14 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, // Add this line
     MatIconModule,
-    AdminModule, // Add AdminModule here
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

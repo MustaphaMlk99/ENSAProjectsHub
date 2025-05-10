@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,6 +9,7 @@ use App\Models\Administrateur;
 use App\Models\Projet;
 use App\Models\Like;
 use App\Models\Evaluation;
+use Illuminate\Support\Facades\DB;
 
 class StatistiquesController extends Controller
 {
@@ -41,7 +44,7 @@ class StatistiquesController extends Controller
     // Statistiques sur les projets par module
     public function getProjectsByModule()
     {
-        $modulesStats = Projet::select('module_id', \DB::raw('count(*) as total'))
+        $modulesStats = Projet::select('module_id', DB::raw('count(*) as total'))
                               ->groupBy('module_id')
                               ->get();
 
@@ -51,7 +54,7 @@ class StatistiquesController extends Controller
     // Statistiques sur les évaluations par projet
     public function getEvaluationsByProject()
     {
-        $evaluationStats = Evaluation::select('livrable_id', \DB::raw('avg(note) as avg_note'))
+        $evaluationStats = Evaluation::select('livrable_id', DB::raw('avg(note) as avg_note'))
                                      ->groupBy('livrable_id')
                                      ->get();
 
@@ -61,10 +64,12 @@ class StatistiquesController extends Controller
     // Statistiques des projets par encadrant
     public function getProjectsByEncadrant()
     {
-        $encadrantStats = Projet::select('encadrant_id', \DB::raw('count(*) as total'))
+        $encadrantStats = Projet::select('encadrant_id', DB::raw('count(*) as total'))
                                 ->groupBy('encadrant_id')
                                 ->get();
 
         return response()->json($encadrantStats);
     }
+
+    
 }

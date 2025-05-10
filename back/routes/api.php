@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\StatistiquesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,15 @@ Route::get('/likes/check/{etudiant_id}/{projet_id}', [LikeController::class, 'is
 Route::get('/likes/received/{etudiant_id}', [LikeController::class, 'countLikesReceivedByEtudiant']);
 Route::get('/likes/most-liked/{etudiant_id}', [LikeController::class, 'mostLikedProjetByEtudiant']);
 
+
+
+//statistiques
+Route::get('/stats/projects/count', [ProjetController::class, 'getProjectCount']);
+Route::get('/stats/users/counts', [UserController::class, 'getUserCounts']);
+Route::get('statistiques', [StatistiquesController::class, 'getStats']);
+Route::get('statistiques/projets-par-module', [StatistiquesController::class, 'getProjectsByModule']);
+Route::get('statistiques/evaluations-par-projet', [StatistiquesController::class, 'getEvaluationsByProject']);
+Route::get('statistiques/projets-par-encadrant', [StatistiquesController::class, 'getProjectsByEncadrant']);
 
 //gestion admins
 Route::get('/admins', [UserController::class, 'getAdmins']);

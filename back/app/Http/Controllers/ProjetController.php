@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Projet;
 use App\Models\Livrable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+
 
 class ProjetController extends Controller
 {
@@ -189,6 +192,11 @@ class ProjetController extends Controller
         $projet->delete();
 
         return response()->json(['message' => 'Projet et livrables supprimés avec succès'], 200);
+    }
+
+    {
+        $count = \App\Models\Projet::count();
+        return response()->json(['total' => $count]);
     }
 
 }

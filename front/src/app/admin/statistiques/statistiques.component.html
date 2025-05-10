@@ -1,3 +1,64 @@
-<app-admin-header></app-admin-header>
+<div class="stats-container">
+  <h1>Statistiques</h1>
+  
+  <!-- General Stats -->
+  <div class="stat">
+    <p><strong>Étudiants:</strong> {{ generalStats?.etudiants }}</p>
+    <p><strong>Encadrants:</strong> {{ generalStats?.encadrants }}</p>
+    <p><strong>Administrateurs:</strong> {{ generalStats?.administrateurs }}</p>
+    <p><strong>Projets:</strong> {{ generalStats?.projets }}</p>
+    <p><strong>Likes:</strong> {{ generalStats?.likes }}</p>
+    <p><strong>Score Moyen:</strong> {{ generalStats?.avgScore }}</p>
+  </div>
 
-<p>statistiques works!</p>
+  <!-- Projects by Module Stats -->
+  <div class="stat">
+    <h2>Projets par Module</h2>
+    <mat-table [dataSource]="modulesStats">
+      <ng-container matColumnDef="module_id">
+        <mat-header-cell *matHeaderCellDef>Module</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.module_id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.total }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="moduleColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: moduleColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Evaluations Stats -->
+  <div class="stat">
+    <h2>Évaluations par Projet</h2>
+    <mat-table [dataSource]="evaluationsStats">
+      <ng-container matColumnDef="livrable_id">
+        <mat-header-cell *matHeaderCellDef>Livrable</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.livrable_id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="avg_note">
+        <mat-header-cell *matHeaderCellDef>Note Moyenne</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.avg_note }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="evaluationColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: evaluationColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <!-- Projects by Encadrant Stats -->
+  <div class="stat">
+    <h2>Projets par Encadrant</h2>
+    <mat-table [dataSource]="projetsByEncadrantStats">
+      <ng-container matColumnDef="encadrant_id">
+        <mat-header-cell *matHeaderCellDef>Encadrant</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.encadrant_id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+        <mat-cell *matCellDef="let stat">{{ stat.total }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="encadrantColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: encadrantColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

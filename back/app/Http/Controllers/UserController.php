@@ -177,4 +177,18 @@ class UserController extends Controller
     
         return response()->json(null, 204);
     }
+
+    public function getUserCounts()
+    {
+        $etudiants = \App\Models\Etudiant::count();
+        $encadrants = \App\Models\Encadrant::count();
+        $admins = \App\Models\Administrateur::count();
+
+        return response()->json([
+            'etudiants' => $etudiants,
+            'encadrants' => $encadrants,
+            'administrateurs' => $admins
+        ]);
+    }
+
 }
