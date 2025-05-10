@@ -1,6 +1,6 @@
 <nav class="navbar">
   <!-- Logo section -->
-  <img class="logo" src="assets/logo.png" alt="Logo ENSAK" (click)="navigateToHome()"/>
+  <img class="logo" src="storage/Logo.png" alt="Logo ENSAK" />
 
   <!-- Connection Message -->
   <div class="navbar-message">
@@ -11,11 +11,11 @@
   <div class="spacer"></div>
 
   <!-- Navigation buttons -->
-  <button mat-button [routerLink]="['/admin/statistiques']">
+  <button mat-button [routerLink]="['/statistiques']">
     <mat-icon>bar_chart</mat-icon> Statistiques
   </button>
 
-  <button mat-button [routerLink]="['/admin/gestion-utilisateurs']">
+  <button mat-button [routerLink]="['/gestion_utilisateurs']">
     <mat-icon>group</mat-icon> Gestion des utilisateurs
   </button>
   
@@ -25,9 +25,9 @@
       <mat-icon>supervisor_account</mat-icon> Gestion des utilisateurs
     </button>
     <div class="dropdown-menu">
-      <button mat-button [routerLink]="['/admin/gestion-administrateurs']">Gestion des administrateurs</button>
-      <button mat-button [routerLink]="['/admin/gestion-encadrants']">Gestion des encadrants</button>
-      <button mat-button [routerLink]="['/admin/gestion-etudiants']">Gestion des étudiants</button>
+      <button mat-button [routerLink]="['/gestion_administrateurs']">Gestion des administrateurs</button>
+      <button mat-button [routerLink]="['/gestion_encadrants']">Gestion des encadrants</button>
+      <button mat-button [routerLink]="['/gestion_etudiants']">Gestion des étudiants</button>
     </div>
   </div>
 

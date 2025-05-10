@@ -17,6 +17,8 @@ import { GestionAdministrateursComponent } from './gestion-administrateurs/gesti
 import { GestionEncadrantsComponent } from './gestion-encadrants/gestion-encadrants.component';
 import { GestionEtudiantsComponent } from './gestion-etudiants/gestion-etudiants.component';
 import { ProjetsComponent } from './projets/projets.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ProjetsComponent } from './projets/projets.component';
     GestionAdministrateursComponent,
     GestionEncadrantsComponent,
     GestionEtudiantsComponent,
-    ProjetsComponent
+    ProjetsComponent,
+    MatFormFieldModule,
+    MatTableModule
   ],
   imports: [
     CommonModule,

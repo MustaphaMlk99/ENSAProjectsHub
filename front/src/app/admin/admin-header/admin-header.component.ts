@@ -1,18 +1,34 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
-  styleUrls: ['./admin-header.component.scss']
+  styleUrls: ['./admin-header.component.scss'],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+    RouterModule,
+    MatIconModule,
+
+  ]
 })
 export class AdminHeaderComponent {
 
   constructor(private router: Router) {}
 
-  // Define the method to navigate to the home page
-  navigateToHome() {
-    this.router.navigate(['/home']);  // Replace '/home' with your actual home route
+
+
+  logout(){
+    localStorage.clear(); // supprime tout le localStorage
+    this.router.navigate(['/']); 
   }
 
   // Any other methods like logout if needed

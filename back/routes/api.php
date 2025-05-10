@@ -63,3 +63,23 @@ Route::get('/likes/check/{etudiant_id}/{projet_id}', [LikeController::class, 'is
 Route::get('/likes/received/{etudiant_id}', [LikeController::class, 'countLikesReceivedByEtudiant']);
 Route::get('/likes/most-liked/{etudiant_id}', [LikeController::class, 'mostLikedProjetByEtudiant']);
 
+
+//gestion admins
+Route::get('/admins', [UserController::class, 'getAdmins']);
+Route::post('/admins', [UserController::class, 'createAdmin']);
+Route::put('/admins/{id}', [UserController::class, 'updateAdmin']);
+Route::delete('/admins/{id}', [UserController::class, 'deleteAdmin']);
+
+
+//gestion encadrants
+Route::get('/getEncadrants', [UserController::class, 'getEncadrants']);
+Route::post('/encadrants', [UserController::class, 'createEncadrant']);
+Route::put('/encadrants/{id}', [UserController::class, 'updateEncadrant']);
+Route::delete('/encadrants/{id}', [UserController::class, 'deleteEncadrant']);
+
+
+//gestion etudiants
+Route::get('/getEtudiants', [UserController::class, 'getEtudiants']);
+Route::post('/etudiant', [UserController::class, 'createEtudiant']);
+Route::put('/etudiants/{id}', [UserController::class, 'updateEtudiant']);
+Route::delete('/etudiants/{id}', [UserController::class, 'deleteEtudiant']);

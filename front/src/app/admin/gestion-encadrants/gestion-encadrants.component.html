@@ -1,1 +1,50 @@
-<p>gestion-encadrants works!</p>
+<app-admin-header></app-admin-header>
+
+<div class="admin-container">
+  <div class="top-bar">
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Filtrer les encadrants</mat-label>
+      <input matInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+
+    <button class="create-button" (click)="addEncadrant()">
+      Créer Admin
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="filteredEncadrants" class="mat-elevation-z8">
+
+    <!-- Nom -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let encadrant"> {{ encadrant.nom }} </td>
+    </ng-container>
+
+    <!-- Prénom -->
+    <ng-container matColumnDef="prenom">
+      <th mat-header-cell *matHeaderCellDef> Prénom </th>
+      <td mat-cell *matCellDef="let encadrant"> {{ encadrant.prenom }} </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let encadrant"> {{ encadrant.email }} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let encadrant">
+        <div class="actions">
+          <button class="edit" (click)="editEncadrant(encadrant)">Modifier</button>
+          <button class="delete" (click)="deleteEncadrant(encadrant.id)">Supprimer</button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>

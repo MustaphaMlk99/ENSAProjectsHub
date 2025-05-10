@@ -11,6 +11,11 @@ import { AddProjetComponent } from './app/etudiant/add-projet/add-projet.compone
 import { EtudiantService } from './app/etudiant/etudiant.service';
 import { ModifyProjetComponent } from './app/etudiant/modify-projet/modify-projet.component';
 import { ProfilComponent } from './app/etudiant/profil/profil.component';
+import { StatistiquesComponent } from './app/admin/statistiques/statistiques.component';
+import { GestionAdministrateursComponent } from './app/admin/gestion-administrateurs/gestion-administrateurs.component';
+import { GestionEncadrantsComponent } from './app/admin/gestion-encadrants/gestion-encadrants.component';
+import { GestionEtudiantsComponent } from './app/admin/gestion-etudiants/gestion-etudiants.component';
+import { GestionUtilisateursComponent } from './app/admin/gestion-utilisateurs/gestion-utilisateurs.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,7 +28,15 @@ bootstrapApplication(AppComponent, {
       { path: 'profil', component: ProfilComponent },
       { path: 'historique', component: HistoriqueComponent },
       { path: 'add_projet', component: AddProjetComponent },
-      { path: 'modify_projet/:id', component: ModifyProjetComponent }
+      { path: 'modify_projet/:id', component: ModifyProjetComponent },
+
+
+
+      { path: 'statistiques', component: StatistiquesComponent },
+      { path: 'gestion_utilisateurs', component: GestionUtilisateursComponent },
+      { path: 'gestion_administrateurs', component: GestionAdministrateursComponent },
+      { path: 'gestion_encadrants', component: GestionEncadrantsComponent },
+      { path: 'gestion_etudiants', component: GestionEtudiantsComponent }
 
     ]),
     EtudiantService
