@@ -50,6 +50,7 @@ export class ModifyProjetComponent implements OnInit {
     const storedProject = localStorage.getItem('projet_selec');
     if (storedProject) {
       this.selectedProject = JSON.parse(storedProject);
+      console.log("selectedProject ", this.selectedProject);
       this.setFormValues();
     }
 

@@ -39,15 +39,18 @@
         <h3>Livrables Actuels</h3>
         <div class="livrable-row">
           <span>📄 Rapport :</span>
-          <span>{{ selectedProject.livrable?.rapport ? '✅ Disponible' : '❌ Non fourni' }}</span>
+          <a *ngIf="selectedProject.livrable?.rapport_url" [href]="selectedProject.livrable.rapport_url" download target="_blank"><i class="fa fa-download"></i> </a>
+          <span>{{ selectedProject.livrable?.rapport_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
         </div>
         <div class="livrable-row">
           <span>📊 Présentation :</span>
-          <span>{{ selectedProject.livrable?.presentation ? '✅ Disponible' : '❌ Non fourni' }}</span>
+          <a *ngIf="selectedProject.livrable?.presentation_url" [href]="selectedProject.livrable.presentation_url" download target="_blank"><i class="fa fa-download"></i> </a>
+          <span>{{ selectedProject.livrable?.presentation_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
         </div>
         <div class="livrable-row">
           <span>💻 Code Source :</span>
-          <span>{{ selectedProject.livrable?.code_source ? '✅ Disponible' : '❌ Non fourni' }}</span>
+          <a *ngIf="selectedProject.livrable?.codeSource_url" [href]="selectedProject.livrable.codeSource_url" download target="_blank"><i class="fa fa-download"></i> </a>
+          <span>{{ selectedProject.livrable?.codeSource_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
         </div>
       </div>
   

@@ -35,15 +35,7 @@ export class AddProjetComponent {
   public encadrants: any[] = [];
   public modules: any[] = [];
 
-  livrables: {
-    rapport: File | null;
-    presentation: File | null;
-    codeSource: File | null;
-  } = {
-    rapport: null,
-    presentation: null,
-    codeSource: null
-  };
+  livrables: { [key: string]: File } = {};
 
   constructor(private fb: FormBuilder, private router: Router, private etudiantService: EtudiantService) {
     const storedId = localStorage.getItem('id_user');
@@ -84,51 +76,46 @@ export class AddProjetComponent {
     });
   }
 
+
   onFileSelected(event: any, type: 'rapport' | 'presentation' | 'codeSource') {
-    const file = event.target.files[0];
+    const file: File = event.target.files[0];
     if (file) {
       this.livrables[type] = file;
-      this.livrableForm.get(type)?.setValue(file);
+      this.livrableForm.get(type)?.setValue(file.name); // juste pour affichage
     }
   }
 
   onSubmit() {
     if (this.projetForm.valid && this.livrableForm.valid) {
       const formData = new FormData();
-      console.log("projetForm ", this.projetForm.value);
+  
       // Ajouter les champs du projet
       Object.entries(this.projetForm.value).forEach(([key, value]) => {
-        console.log("key", key, value);
-        formData.append(key, value as any);
+        formData.append(key, value as string);
       });
-
-      // Ajouter les fichiers (BLOBs)
-      if (this.livrables.rapport) {
-        formData.append('rapport', this.livrables.rapport);
-      }
-      if (this.livrables.presentation) {
-        formData.append('presentation', this.livrables.presentation);
-      }
-      if (this.livrables.codeSource) {
-        formData.append('codeSource', this.livrables.codeSource);
-      }
-      formData.forEach((value, key) => {
-        console.log("FormData contains:", key, value); // Vérifiez tout ce qui est dans formData
+  
+      // Ajouter les fichiers livrables
+      ['rapport', 'presentation', 'codeSource'].forEach((type) => {
+        if (this.livrables[type]) {
+          formData.append(type, this.livrables[type]);
+        }
       });
+  
       this.etudiantService.ajouterProjetAvecLivrables(formData).subscribe({
         next: (response) => {
-          alert("Projet ajouté avec succès !");
+          alert('Projet ajouté avec succès !');
           this.router.navigate(['/historique']);
         },
         error: (error) => {
-          alert("Erreur lors de l'ajout du projet.");
-          console.error("Erreur lors de l'ajout :", error);
+          alert('Erreur lors de l\'ajout du projet.');
+          console.error('Erreur lors de l\'ajout :', error);
         }
       });
     } else {
-      alert("Veuillez remplir correctement les deux étapes du formulaire.");
+      alert('Veuillez remplir correctement les deux étapes du formulaire.');
     }
   }
+  
   
 
   annuler() {
