@@ -97,5 +97,16 @@ export class AdminService {
 
 
 
+  getLikesCount(projetId: number) {
+    return this.http.get<{ likes: number }>(`${this.baseUrl}/likes/count/${projetId}`);
+  }
+
+  // Méthode pour récupérer les données
+  getProjets(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getProjets`);
+  }
+
+
+
 
 }

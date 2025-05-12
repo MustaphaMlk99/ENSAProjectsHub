@@ -1,3 +1,16 @@
 <app-admin-header></app-admin-header>
 
-<p>projets works!</p>
+<div class="project-grid">
+    <!-- Boucle des projets -->
+    <div class="project-card" *ngFor="let project of projets">
+      <h3>{{ project.titre }}</h3>
+      <p>{{ project.description }}</p>
+  
+      <div class="like-row">
+        <!-- Nombre de likes -->
+        <div class="likes-count">
+          <span class="like-number">{{ project.likesCount }}</span>
+          <span class="like-label">{{ project.likesCount === 1 ? 'like' : 'likes' }}</span>
+        </div>
+      </div>
+    </div>

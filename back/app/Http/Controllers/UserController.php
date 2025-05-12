@@ -73,7 +73,21 @@ class UserController extends Controller
     public function updateAdmin(Request $request, $id)
     {
         $admin = Administrateur::findOrFail($id);
-        $admin->update($request->all());
+
+        $validated = $request->validate([
+            'nom' => 'sometimes|required|string|max:100',
+            'prenom' => 'sometimes|required|string|max:100',
+            'email' => 'sometimes|required|email|unique:administrateurs,email,' . $id,
+            'mot_de_passe' => 'sometimes|nullable|string|min:6',
+        ]);
+
+        if (!empty($validated['mot_de_passe'])) {
+            $validated['mot_de_passe'] = bcrypt($validated['mot_de_passe']);
+        } else {
+            unset($validated['mot_de_passe']);
+        }
+
+        $admin->update($validated);
 
         return response()->json($admin);
     }
@@ -81,16 +95,20 @@ class UserController extends Controller
     // Supprimer un administrateur
     public function deleteAdmin($id)
     {
-        Administrateur::destroy($id);
-        return response()->json(['message' => 'Administrateur supprimé']);
+        $admin = Administrateur::findOrFail($id);
+        $admin->delete();
+
+        return response()->json(['message' => 'Administrateur supprimé avec succès']);
     }
 
 
 
-    
+
+        
 
 
 
+    // Créer un nouvel encadrant
     public function createEncadrant(Request $request)
     {
         $validated = $request->validate([
@@ -99,27 +117,45 @@ class UserController extends Controller
             'email' => 'required|email|unique:encadrants,email',
             'mot_de_passe' => 'required|string|min:6',
         ]);
-    
+
         $validated['mot_de_passe'] = bcrypt($validated['mot_de_passe']);
-    
         $encadrant = Encadrant::create($validated);
-    
+
         return response()->json($encadrant, 201);
     }
 
+    // Mettre à jour un encadrant
     public function updateEncadrant(Request $request, $id)
     {
         $encadrant = Encadrant::findOrFail($id);
-        $encadrant->update($request->all());
+
+        $validated = $request->validate([
+            'nom' => 'sometimes|required|string|max:100',
+            'prenom' => 'sometimes|required|string|max:100',
+            'email' => 'sometimes|required|email|unique:encadrants,email,' . $id,
+            'mot_de_passe' => 'sometimes|nullable|string|min:6',
+        ]);
+
+        if (!empty($validated['mot_de_passe'])) {
+            $validated['mot_de_passe'] = bcrypt($validated['mot_de_passe']);
+        } else {
+            unset($validated['mot_de_passe']);
+        }
+
+        $encadrant->update($validated);
+
         return response()->json($encadrant);
     }
 
+    // Supprimer un encadrant
     public function deleteEncadrant($id)
     {
         $encadrant = Encadrant::findOrFail($id);
         $encadrant->delete();
-        return response()->json(null, 204);
+
+        return response()->json(['message' => 'Encadrant supprimé avec succès']);
     }
+
 
 
     
