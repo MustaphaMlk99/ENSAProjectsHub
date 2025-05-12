@@ -8,8 +8,8 @@
       <input matInput (keyup)="applyFilter($event)">
     </mat-form-field>
 
-    <button class="create-button" (click)="addEncadrant()">
-      Créer Admin
+    <button class="create-button" (click)="addEtudiant()">
+      Créer un étudiant
     </button>
   </div>
 
@@ -38,8 +38,8 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let etudiant">
         <div class="actions">
-          <button class="edit" (click)="editEncadrant(etudiant)">Modifier</button>
-          <button class="delete" (click)="deleteEncadrant(etudiant.id)">Supprimer</button>
+          <button class="edit" (click)="editEtudiant(etudiant)">Modifier</button>
+          <button class="delete" (click)="deleteEtudiant(etudiant.id)">Supprimer</button>
         </div>
       </td>
     </ng-container>

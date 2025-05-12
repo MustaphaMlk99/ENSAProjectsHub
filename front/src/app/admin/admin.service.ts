@@ -7,10 +7,29 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
   private baseUrl = 'http://localhost:8000/api';
-  private baseUrl2 = 'http://localhost:8000/api/statistiques';  // Change this to the correct base URL
-
 
   constructor(private http: HttpClient) {}
+
+  
+  getEtudiants(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getEtudiants`);
+  }
+
+  createEtudiant(etudiant: FormData): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/etudiant`, etudiant);
+  }
+
+  updateEtudiant(id: number, etudiant: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/etudiants/${id}`, etudiant);
+  }
+
+  deleteEtudiant(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/etudiants/${id}`);
+  }
+
+
+
+
 
   getAdmins(): Observable<any> {
     return this.http.get(`${this.baseUrl}/admins`);
@@ -37,12 +56,12 @@ export class AdminService {
     return this.http.get<any[]>(`${this.baseUrl}/getEncadrants`);
   }
 
-  createEncadrant(etudiant: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/encadrants`, etudiant);
+  createEncadrant(encadrant: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/encadrants`, encadrant);
   }
 
-  updateEncadrant(id: number, etudiant: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/encadrants/${id}`, etudiant);
+  updateEncadrant(id: number, encadrant: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/encadrants/${id}`, encadrant);
   }
 
   deleteEncadrant(id: number): Observable<any> {
@@ -51,45 +70,32 @@ export class AdminService {
 
 
 
-  getEtudiants(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/getEtudiants`);
-  }
-
-  createEtudiant(encadrant: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/etudiants`, encadrant);
-  }
-
-  updateEtudiant(id: number, encadrant: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/etudiants/${id}`, encadrant);
-  }
-
-  deleteEtudiant(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/etudiants/${id}`);
-  }
-
 
 
 
   
   // Fetch general statistics
   getGeneralStats(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl2}/getStats`);
+    return this.http.get<any>(`${this.baseUrl}/statistiques/getStats`);
   }
 
   // Fetch statistics by module
   getProjectsByModule(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl2}/getProjectsByModule`);
+    return this.http.get<any>(`${this.baseUrl}/statistiques/getProjectsByModule`);
   }
 
   // Fetch evaluations statistics by project
   getEvaluationsByProject(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl2}/getEvaluationsByProject`);
+    return this.http.get<any>(`${this.baseUrl}/statistiques/getEvaluationsByProject`);
   }
 
   // Fetch statistics for projects by encadrant
   getProjectsByEncadrant(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl2}/getProjectsByEncadrant`);
+    return this.http.get<any>(`${this.baseUrl}/statistiques/getProjectsByEncadrant`);
   }
+
+
+
 
 
 }

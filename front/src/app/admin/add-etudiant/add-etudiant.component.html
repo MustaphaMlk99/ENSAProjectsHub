@@ -1,0 +1,87 @@
+<app-admin-header></app-admin-header>
+
+<div class="etudiant-form-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  <h2>Ajouter un nouvel étudiant</h2>
+
+  <form [formGroup]="etudiantForm" (ngSubmit)="submitForm()" style="display: flex; flex-direction: column; gap: 16px;">
+    
+    <!-- Nom -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': etudiantForm.controls['nom'].invalid && etudiantForm.controls['nom'].touched}">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" required>
+      <mat-error *ngIf="etudiantForm.controls['nom'].hasError('required') && etudiantForm.controls['nom'].touched">
+        Le nom est requis.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Prénom -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': etudiantForm.controls['prenom'].invalid && etudiantForm.controls['prenom'].touched}">
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" required>
+      <mat-error *ngIf="etudiantForm.controls['prenom'].hasError('required') && etudiantForm.controls['prenom'].touched">
+        Le prénom est requis.
+      </mat-error>
+    </mat-form-field>
+    
+    <!-- Email -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': etudiantForm.controls['email'].invalid && etudiantForm.controls['email'].touched}">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+      <mat-error *ngIf="etudiantForm.controls['email'].hasError('required') && etudiantForm.controls['email'].touched">
+        L'email est requis.
+      </mat-error>
+      <mat-error *ngIf="etudiantForm.controls['email'].hasError('email') && etudiantForm.controls['email'].touched">
+        L'email n'est pas valide.
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Filière</mat-label>
+      <mat-select formControlName="filiere" required>
+        <mat-option value="">-- Sélectionnez une filière --</mat-option>
+        <mat-option value="Genie Informatique">Génie Informatique</mat-option>
+        <mat-option value="Genie Industriel">Génie Industriel</mat-option>
+        <mat-option value="Genie RST">Génie RST</mat-option>
+        <mat-option value="Genie Logiciel">Génie Logiciel</mat-option>
+        <mat-option value="Genie Civile">Génie Civile</mat-option>
+        <mat-option value="Genie Mecatronique">Génie Mécatronique</mat-option>
+      </mat-select>
+      <mat-error *ngIf="etudiantForm.controls['filiere'].hasError('required') && etudiantForm.controls['filiere'].touched">
+        La filière est requise.
+      </mat-error>
+    </mat-form-field>
+    
+    
+    <!-- Année -->
+<mat-form-field appearance="outline" [ngClass]="{'invalid': etudiantForm.controls['annee'].invalid && etudiantForm.controls['annee'].touched}">
+  <mat-label>Année</mat-label>
+  <input matInput type="number" formControlName="annee" min="1" max="3" required>
+  <mat-error *ngIf="etudiantForm.controls['annee'].hasError('required') && etudiantForm.controls['annee'].touched">
+    L'année est requise.
+  </mat-error>
+  <mat-error *ngIf="etudiantForm.controls['annee'].hasError('min') && etudiantForm.controls['annee'].touched">
+    L'année doit être au minimum 1.
+  </mat-error>
+  <mat-error *ngIf="etudiantForm.controls['annee'].hasError('max') && etudiantForm.controls['annee'].touched">
+    L'année doit être au maximum 3.
+  </mat-error>
+</mat-form-field>
+    
+    <!-- Mot de passe -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': etudiantForm.controls['mot_de_passe'].invalid && etudiantForm.controls['mot_de_passe'].touched}">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="mot_de_passe" required>
+      <mat-error *ngIf="etudiantForm.controls['mot_de_passe'].hasError('required') && etudiantForm.controls['mot_de_passe'].touched">
+        Le mot de passe est requis.
+      </mat-error>
+      <mat-error *ngIf="etudiantForm.controls['mot_de_passe'].hasError('minlength') && etudiantForm.controls['mot_de_passe'].touched">
+        Le mot de passe doit comporter au moins 6 caractères.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Bouton de soumission -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="etudiantForm.invalid">
+      Ajouter Étudiant
+    </button>
+  </form>
+</div>

@@ -5,6 +5,7 @@ import { AdminService } from '../admin.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-encadrants',
@@ -21,7 +22,9 @@ export class GestionEncadrantsComponent implements OnInit {
     filteredEncadrants: any[] = [];  // Tableau pour stocker les encadrants filtrés
     displayedColumns: string[] = ['nom', 'prenom', 'email', 'actions'];  // Colonnes à afficher dans le tableau
   
-    constructor(private adminService: AdminService) {}
+    constructor(
+      private router: Router,
+      private adminService: AdminService) {}
   
     ngOnInit(): void {
       this.getEncadrants();  // Récupérer les encadrants au chargement du composant
@@ -43,7 +46,7 @@ export class GestionEncadrantsComponent implements OnInit {
     }
   
     addEncadrant() {
-      // Implémenter l'ouverture du dialog pour créer un encadrant
+      this.router.navigate(['/add_encadrant']); 
     }
   
     editEncadrant(encadrant: any) {

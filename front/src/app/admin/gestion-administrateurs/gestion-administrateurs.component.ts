@@ -5,10 +5,11 @@ import { AdminService } from '../admin.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-administrateurs',
-  imports: [    
+  imports: [   
     MatInputModule,
     MatFormFieldModule,
     MatTableModule,
@@ -21,7 +22,10 @@ export class GestionAdministrateursComponent implements OnInit{
   filteredAdmins: any[] = [];
   displayedColumns: string[] = ['nom', 'prenom', 'email', 'actions'];
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadAdmins();
@@ -43,7 +47,7 @@ export class GestionAdministrateursComponent implements OnInit{
   }
 
   addAdmin() {
-    // à implémenter : ouvrir un modal ou une autre page pour créer un admin
+    this.router.navigate(['/add_admin']); 
   }
 
   editAdmin(admin: any) {

@@ -136,7 +136,6 @@ class UserController extends Controller
             'annee' => 'required|integer',
             'mot_de_passe' => 'required|string|min:6',
         ]);
-    
         // Hash du mot de passe
         $validated['mot_de_passe'] = bcrypt($validated['mot_de_passe']);
     

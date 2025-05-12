@@ -19,6 +19,12 @@ import { GestionUtilisateursComponent } from './app/admin/gestion-utilisateurs/g
 import { ProjetsComponent } from './app/admin/projets/projets.component';
 import { EncadrantService } from './app/encadrant/encadrant.service';
 import { AdminService } from './app/admin/admin.service';
+import { AddEtudiantComponent } from './app/admin/add-etudiant/add-etudiant.component';
+import { AddEncadrantComponent } from './app/admin/add-encadrant/add-encadrant.component';
+import { AddAdminComponent } from './app/admin/add-admin/add-admin.component';
+import { ModifyEtudiantComponent } from './app/admin/modify-etudiant/modify-etudiant.component';
+import { ModifyEncadrantComponent } from './app/admin/modify-encadrant/modify-encadrant.component';
+import { ModifyAdminComponent } from './app/admin/modify-admin/modify-admin.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -40,6 +46,12 @@ bootstrapApplication(AppComponent, {
       { path: 'gestion_encadrants', component: GestionEncadrantsComponent },
       { path: 'gestion_etudiants', component: GestionEtudiantsComponent },
       { path: 'projets', component: ProjetsComponent },
+      { path: 'add_etudiant', component: AddEtudiantComponent },
+      { path: 'add_encadrant', component: AddEncadrantComponent },
+      { path: 'add_admin', component: AddAdminComponent },
+      { path: 'modify_etudiant/:id', component: ModifyEtudiantComponent },
+      { path: 'modify_encadrant/:id', component: ModifyEncadrantComponent },
+      { path: 'modify_admin/:id', component: ModifyAdminComponent },
 
 
     ]),

@@ -5,6 +5,7 @@ import { AdminService } from '../admin.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-etudiants',
@@ -22,7 +23,9 @@ encadrants:any[] = [];  // Tableau pour stocker les encadrants
     filteredEncadrants: any[] = [];  // Tableau pour stocker les encadrants filtrés
     displayedColumns: string[] = ['nom', 'prenom', 'email', 'actions'];  // Colonnes à afficher dans le tableau
   
-    constructor(private adminService: AdminService) {}
+    constructor(
+      private router: Router,
+      private adminService: AdminService) {}
   
     ngOnInit(): void {
       this.getEtudiants();  // Récupérer les encadrants au chargement du composant
@@ -43,17 +46,29 @@ encadrants:any[] = [];  // Tableau pour stocker les encadrants
       );
     }
   
-    addEncadrant() {
-      // Implémenter l'ouverture du dialog pour créer un etudiant
+    addEtudiant() {
+      this.router.navigate(['/add_etudiant']); 
     }
   
-    editEncadrant(etudiant: any) {
-      // Implémenter la méthode de modification de l'etudiant
+    editEtudiant(etudiant: any): void {
+      this.router.navigate(['/modify_etudiant', etudiant.id]);
     }
   
-    deleteEncadrant(id: number) {
-      // Implémenter la méthode de suppression d'un etudiant
+    deleteEtudiant(id: number): void {
+      if (confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')) {
+        this.adminService.deleteEtudiant(id).subscribe({
+          next: () => {
+            alert('Étudiant supprimé avec succès');
+            window.location.reload();
+          },
+          error: (err) => {
+            console.error(err);
+            alert('Erreur lors de la suppression de l\'étudiant');
+          }
+        });
+      }
     }
+    
   }
   
 
