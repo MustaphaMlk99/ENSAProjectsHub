@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { StatistiquesService } from '../services/statistiques.service';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { AdminHeaderComponent } from '../admin-header/admin-header.component';
 
 @Component({
   selector: 'app-statistiques',
   templateUrl: './statistiques.component.html',
-  styleUrls: ['./statistiques.component.scss']
+  styleUrls: ['./statistiques.component.scss'],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    AdminHeaderComponent
+
+  ]
 })
 export class StatistiquesComponent implements OnInit {
   
