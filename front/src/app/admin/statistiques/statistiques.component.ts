@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { StatistiquesService } from '../services/statistiques.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AdminHeaderComponent } from '../admin-header/admin-header.component';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-statistiques',
@@ -14,7 +14,6 @@ import { AdminHeaderComponent } from '../admin-header/admin-header.component';
     MatPaginatorModule,
     MatSortModule,
     AdminHeaderComponent
-
   ]
 })
 export class StatistiquesComponent implements OnInit {
@@ -30,7 +29,7 @@ export class StatistiquesComponent implements OnInit {
   evaluationColumns: string[] = ['livrable_id', 'avg_note'];
   encadrantColumns: string[] = ['encadrant_id', 'total'];
 
-  constructor(private statistiquesService: StatistiquesService) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.loadGeneralStats();
@@ -41,7 +40,7 @@ export class StatistiquesComponent implements OnInit {
 
   // Fetch general statistics (number of students, admins, etc.)
   loadGeneralStats(): void {
-    this.statistiquesService.getGeneralStats().subscribe(
+    this.adminService.getGeneralStats().subscribe(
       (data: any) => {
         this.generalStats = data;
       },
@@ -53,7 +52,7 @@ export class StatistiquesComponent implements OnInit {
 
   // Fetch statistics related to projects by module
   loadProjectsByModule(): void {
-    this.statistiquesService.getProjectsByModule().subscribe(
+    this.adminService.getProjectsByModule().subscribe(
       (data: any) => {
         this.modulesStats.data = data;
       },
@@ -65,7 +64,7 @@ export class StatistiquesComponent implements OnInit {
 
   // Fetch statistics related to evaluations by project
   loadEvaluationsByProject(): void {
-    this.statistiquesService.getEvaluationsByProject().subscribe(
+    this.adminService.getEvaluationsByProject().subscribe(
       (data: any) => {
         this.evaluationsStats.data = data;
       },
@@ -77,7 +76,7 @@ export class StatistiquesComponent implements OnInit {
 
   // Fetch statistics related to projects by encadrant
   loadProjectsByEncadrant(): void {
-    this.statistiquesService.getProjectsByEncadrant().subscribe(
+    this.adminService.getProjectsByEncadrant().subscribe(
       (data: any) => {
         this.projetsByEncadrantStats.data = data;
       },

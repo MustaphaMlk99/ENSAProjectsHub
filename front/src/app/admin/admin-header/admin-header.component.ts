@@ -31,5 +31,4 @@ export class AdminHeaderComponent {
     this.router.navigate(['/']); 
   }
 
-  // Any other methods like logout if needed
 }

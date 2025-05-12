@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
   private baseUrl = 'http://localhost:8000/api';
+  private baseUrl2 = 'http://localhost:8000/api/statistiques';  // Change this to the correct base URL
+
 
   constructor(private http: HttpClient) {}
 
@@ -49,8 +51,6 @@ export class AdminService {
 
 
 
-
-
   getEtudiants(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/getEtudiants`);
   }
@@ -66,4 +66,30 @@ export class AdminService {
   deleteEtudiant(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/etudiants/${id}`);
   }
+
+
+
+
+  
+  // Fetch general statistics
+  getGeneralStats(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl2}/getStats`);
+  }
+
+  // Fetch statistics by module
+  getProjectsByModule(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl2}/getProjectsByModule`);
+  }
+
+  // Fetch evaluations statistics by project
+  getEvaluationsByProject(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl2}/getEvaluationsByProject`);
+  }
+
+  // Fetch statistics for projects by encadrant
+  getProjectsByEncadrant(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl2}/getProjectsByEncadrant`);
+  }
+
+
 }
