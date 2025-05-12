@@ -11,6 +11,11 @@ export class AdminService {
   constructor(private http: HttpClient) {}
 
   
+  getAdminById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/getAdminById/${id}`);
+  }
+
+
   getEtudiants(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/getEtudiants`);
   }
@@ -44,7 +49,7 @@ export class AdminService {
   }
 
   deleteAdmin(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/admins/${id}`);
   }
 
 
@@ -93,6 +98,9 @@ export class AdminService {
   getProjectsByEncadrant(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/statistiques/getProjectsByEncadrant`);
   }
+
+
+
 
 
 

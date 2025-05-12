@@ -50,11 +50,21 @@ export class GestionEncadrantsComponent implements OnInit {
     }
   
     editEncadrant(encadrant: any) {
-      // Implémenter la méthode de modification de l'encadrant
+      this.router.navigate(['/modify_encadrant', encadrant.id]);
     }
   
     deleteEncadrant(id: number) {
-      // Implémenter la méthode de suppression d'un encadrant
-    }
+      if (confirm('Êtes-vous sûr de vouloir supprimer cet encadrant ?')) {
+        this.adminService.deleteEncadrant(id).subscribe({
+          next: () => {
+            alert('encadrant supprimé avec succès');
+            window.location.reload();
+          },
+          error: (err) => {
+            console.error(err);
+            alert('Erreur lors de la suppression de l\'encadrant');
+          }
+        });
+      }    }
   }
   

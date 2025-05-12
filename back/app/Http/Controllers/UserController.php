@@ -43,7 +43,11 @@ class UserController extends Controller
         return response()->json($encadrant);
     }
 
-
+    public function getAdminById($id)
+    {
+        $admin = Administrateur::findOrFail($id);
+        return response()->json($admin);
+    }
 
 
 

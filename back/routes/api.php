@@ -55,6 +55,7 @@ Route::get('/getEtudiants', [UserController::class, 'getEtudiants']);
 Route::get('/getAdmins', [UserController::class, 'getAdmins']);
 Route::get('/getEtudiantById/{id}', [UserController::class, 'getEtudiantById']);
 Route::get('/getEncadrantById/{id}', [UserController::class, 'getEncadrantById']);
+Route::get('/getAdminById/{id}', [UserController::class, 'getAdminById']);
 
 
 //likes

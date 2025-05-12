@@ -1,1 +1,55 @@
-<p>add-encadrant works!</p>
+<app-admin-header></app-admin-header>
+
+<div class="etudiant-form-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  <h2>Ajouter un nouvel encadrant</h2>
+
+  <form [formGroup]="encadrantForm" (ngSubmit)="submitForm()" style="display: flex; flex-direction: column; gap: 16px;">
+    
+    <!-- Nom -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': encadrantForm.controls['nom'].invalid && encadrantForm.controls['nom'].touched}">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" required>
+      <mat-error *ngIf="encadrantForm.controls['nom'].hasError('required') && encadrantForm.controls['nom'].touched">
+        Le nom est requis.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Prénom -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': encadrantForm.controls['prenom'].invalid && encadrantForm.controls['prenom'].touched}">
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" required>
+      <mat-error *ngIf="encadrantForm.controls['prenom'].hasError('required') && encadrantForm.controls['prenom'].touched">
+        Le prénom est requis.
+      </mat-error>
+    </mat-form-field>
+    
+    <!-- Email -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': encadrantForm.controls['email'].invalid && encadrantForm.controls['email'].touched}">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+      <mat-error *ngIf="encadrantForm.controls['email'].hasError('required') && encadrantForm.controls['email'].touched">
+        L'email est requis.
+      </mat-error>
+      <mat-error *ngIf="encadrantForm.controls['email'].hasError('email') && encadrantForm.controls['email'].touched">
+        L'email n'est pas valide.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Mot de passe -->
+    <mat-form-field appearance="outline" [ngClass]="{'invalid': encadrantForm.controls['mot_de_passe'].invalid && encadrantForm.controls['mot_de_passe'].touched}">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="mot_de_passe" required>
+      <mat-error *ngIf="encadrantForm.controls['mot_de_passe'].hasError('required') && encadrantForm.controls['mot_de_passe'].touched">
+        Le mot de passe est requis.
+      </mat-error>
+      <mat-error *ngIf="encadrantForm.controls['mot_de_passe'].hasError('minlength') && encadrantForm.controls['mot_de_passe'].touched">
+        Le mot de passe doit comporter au moins 6 caractères.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Bouton de soumission -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="encadrantForm.invalid">
+      Ajouter encadrant
+    </button>
+  </form>
+</div>

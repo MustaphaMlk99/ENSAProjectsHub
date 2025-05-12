@@ -51,10 +51,20 @@ export class GestionAdministrateursComponent implements OnInit{
   }
 
   editAdmin(admin: any) {
-    // à implémenter : ouvrir un formulaire pré-rempli
+    this.router.navigate(['/modify_admin', admin.id]);
   }
 
   deleteAdmin(id: number) {
-    this.adminService.deleteAdmin(id).subscribe(() => this.loadAdmins());
-  }
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet administrateur ?')) {
+      this.adminService.deleteAdmin(id).subscribe({
+        next: () => {
+          alert('administrateur supprimé avec succès');
+          window.location.reload();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Erreur lors de la suppression de l\'administrateur');
+        }
+      });
+    }  }
 }

@@ -1,1 +1,39 @@
-<p>modify-admin works!</p>
+<app-admin-header></app-admin-header>
+
+<div class="etudiant-form-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  <h2>Modifier l'administrateur</h2>
+
+  <form [formGroup]="adminForm" (ngSubmit)="submitForm()" style="display: flex; flex-direction: column; gap: 16px;">
+    
+    <!-- Nom -->
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" required>
+    </mat-form-field>
+
+    <!-- Prénom -->
+    <mat-form-field appearance="outline">
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" required>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required>
+    </mat-form-field>
+
+    <!-- Mot de passe -->
+    <mat-form-field appearance="outline">
+      <mat-label>Nouveau mot de passe (optionnel)</mat-label>
+      <input matInput type="password" formControlName="mot_de_passe">
+    </mat-form-field>
+
+    <!-- Bouton -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="adminForm.invalid">
+      Enregistrer les modifications
+    </button>
+    <button mat-button color="warn" (click)="cancelEdit()">Annuler</button>
+
+  </form>
+</div>
