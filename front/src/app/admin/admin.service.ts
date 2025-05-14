@@ -79,25 +79,59 @@ export class AdminService {
 
 
   
-  // Fetch general statistics
-  getGeneralStats(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/statistiques/getStats`);
-  }
+// Fetch general statistics (number of students, admins, etc.)
+getGeneralStats() {
+return this.http.get('/api/stats');
+}
 
-  // Fetch statistics by module
-  getProjectsByModule(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/statistiques/getProjectsByModule`);
-  }
+getProjectsByModule(): Observable<any[]> {
+  return this.http.get<any[]>('/api/projects-by-module');
+}
 
-  // Fetch evaluations statistics by project
-  getEvaluationsByProject(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/statistiques/getEvaluationsByProject`);
-  }
+getProjectsByEncadrant(): Observable<any[]> {
+  return this.http.get<any[]>('/api/projects-by-encadrant');
+}
 
-  // Fetch statistics for projects by encadrant
-  getProjectsByEncadrant(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/statistiques/getProjectsByEncadrant`);
-  }
+getSubmissionRates(): Observable<any[]> {
+  return this.http.get<any[]>('/api/submission-rates');
+}
+
+getEvaluationDistribution(): Observable<any[]> {
+  return this.http.get<any[]>('/api/evaluation-distribution');
+}
+
+getEvaluationsByProject(): Observable<any[]> {
+  return this.http.get<any[]>('/api/evaluations-by-project');
+}
+
+getLikesVsEvaluations(): Observable<any[]> {
+  return this.http.get<any[]>('/api/likes-vs-evaluations');
+}
+
+getEncadrantWorkload(): Observable<any[]> {
+  return this.http.get<any[]>('/api/encadrant-workload');
+}
+
+getStudentEngagement(): Observable<any> {
+  return this.http.get<any>('/api/student-engagement');
+}
+
+getMonthlyUserRegistrations(): Observable<any[]> {
+  return this.http.get<any[]>('/api/monthly-user-registrations');
+}
+
+getModulePopularityByLikes(): Observable<any[]> {
+  return this.http.get<any[]>('/api/module-popularity-by-likes');
+}
+
+getTopRatedProjects(): Observable<any[]> {
+  return this.http.get<any[]>('/api/top-rated-projects');
+}
+
+getAvgTimeToFirstSubmission(): Observable<any[]> {
+  return this.http.get<any[]>('/api/avg-time-to-first-submission');
+}
+
 
 
 

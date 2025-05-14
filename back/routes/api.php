@@ -68,12 +68,17 @@ Route::get('/likes/most-liked/{etudiant_id}', [LikeController::class, 'mostLiked
 
 
 //statistiques
-Route::get('/stats/projects/count', [ProjetController::class, 'getProjectCount']);
-Route::get('/stats/users/counts', [UserController::class, 'getUserCounts']);
-Route::get('statistiques', [StatistiquesController::class, 'getStats']);
-Route::get('statistiques/projets-par-module', [StatistiquesController::class, 'getProjectsByModule']);
-Route::get('statistiques/evaluations-par-projet', [StatistiquesController::class, 'getEvaluationsByProject']);
-Route::get('statistiques/projets-par-encadrant', [StatistiquesController::class, 'getProjectsByEncadrant']);
+Route::get('/stats', [StatistiquesController::class, 'getStats']);
+Route::get('/stats/projects-by-module', [StatistiquesController::class, 'getProjectsByModule']);
+Route::get('/stats/submission-rates', [StatistiquesController::class, 'getSubmissionRates']);
+Route::get('/stats/evaluation-distribution', [StatistiquesController::class, 'getEvaluationDistribution']);
+Route::get('/stats/likes-vs-evaluations', [StatistiquesController::class, 'getLikesVsEvaluations']);
+Route::get('/stats/encadrant-workload', [StatistiquesController::class, 'getEncadrantWorkload']);
+Route::get('/stats/student-engagement', [StatistiquesController::class, 'getStudentEngagement']);
+Route::get('/stats/user-registrations', [StatistiquesController::class, 'getMonthlyUserRegistrations']);
+Route::get('/stats/module-popularity', [StatistiquesController::class, 'getModulePopularityByLikes']);
+Route::get('/stats/top-projects', [StatistiquesController::class, 'getTopRatedProjects']);
+Route::get('/stats/submission-delay', [StatistiquesController::class, 'getAvgTimeToFirstSubmission']);
 
 //gestion admins
 Route::get('/admins', [UserController::class, 'getAdmins']);

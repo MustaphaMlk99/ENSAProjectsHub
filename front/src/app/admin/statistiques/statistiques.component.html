@@ -2,65 +2,110 @@
 
 <div class="stats-container">
   <h1>Statistiques</h1>
-  
-  <!-- General Stats -->
+
+  <!-- 1. Projects per Module -->
   <div class="stat">
-    <p><strong>Étudiants:</strong> {{ generalStats?.etudiants }}</p>
-    <p><strong>Encadrants:</strong> {{ generalStats?.encadrants }}</p>
-    <p><strong>Administrateurs:</strong> {{ generalStats?.administrateurs }}</p>
-    <p><strong>Projets:</strong> {{ generalStats?.projets }}</p>
-    <p><strong>Likes:</strong> {{ generalStats?.likes }}</p>
-    <p><strong>Score Moyen:</strong> {{ generalStats?.avgScore }}</p>
+    <div class="chart-header">
+      <h2>Projets par Module</h2>
+      <button (click)="exportChart('projectsModuleChart')">Exporter</button>
+    </div>
+    <canvas id="projectsModuleChart" baseChart></canvas>
   </div>
 
-  <!-- Projects by Module Stats -->
+  <!-- 2. Submission Rates Over Time -->
   <div class="stat">
-    <h2>Projets par Module</h2>
-    <mat-table [dataSource]="modulesStats">
-      <ng-container matColumnDef="module_id">
-        <mat-header-cell *matHeaderCellDef>Module</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.module_id }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="total">
-        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.total }}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="moduleColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: moduleColumns;"></mat-row>
-    </mat-table>
+    <div class="chart-header">
+      <h2>Taux de Soumissions dans le Temps</h2>
+      <button (click)="exportChart('submissionRateChart')">Exporter</button>
+    </div>
+    <canvas id="submissionRateChart" baseChart></canvas>
   </div>
 
-  <!-- Evaluations Stats -->
+  <!-- 3. Average Evaluation Score Distribution -->
   <div class="stat">
-    <h2>Évaluations par Projet</h2>
-    <mat-table [dataSource]="evaluationsStats">
-      <ng-container matColumnDef="livrable_id">
-        <mat-header-cell *matHeaderCellDef>Livrable</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.livrable_id }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="avg_note">
-        <mat-header-cell *matHeaderCellDef>Note Moyenne</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.avg_note }}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="evaluationColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: evaluationColumns;"></mat-row>
-    </mat-table>
+    <div class="chart-header">
+      <h2>Distribution des Notes Moyennes</h2>
+      <button (click)="exportChart('scoreDistributionChart')">Exporter</button>
+    </div>
+    <canvas id="scoreDistributionChart" baseChart></canvas>
   </div>
 
-  <!-- Projects by Encadrant Stats -->
+  <!-- 4. Likes vs Evaluation Score -->
   <div class="stat">
-    <h2>Projets par Encadrant</h2>
-    <mat-table [dataSource]="projetsByEncadrantStats">
-      <ng-container matColumnDef="encadrant_id">
-        <mat-header-cell *matHeaderCellDef>Encadrant</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.encadrant_id }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="total">
-        <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-        <mat-cell *matCellDef="let stat">{{ stat.total }}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="encadrantColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: encadrantColumns;"></mat-row>
-    </mat-table>
+    <div class="chart-header">
+      <h2>Likes vs Note Moyenne</h2>
+      <button (click)="exportChart('likesVsScoreChart')">Exporter</button>
+    </div>
+    <canvas id="likesVsScoreChart" baseChart></canvas>
   </div>
+
+  <!-- 5. Encadrant Workload -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Charge de Travail des Encadrants</h2>
+      <button (click)="exportChart('encadrantWorkloadChart')">Exporter</button>
+    </div>
+    <canvas id="encadrantWorkloadChart" baseChart></canvas>
+  </div>
+
+  <!-- 6. Student Engagement Funnel -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Funnel d'Engagement des Étudiants</h2>
+      <button (click)="exportChart('engagementFunnelChart')">Exporter</button>
+    </div>
+    <canvas id="engagementFunnelChart" baseChart></canvas>
+  </div>
+
+  <!-- 7. Monthly User Registrations -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Inscriptions Mensuelles des Utilisateurs</h2>
+      <button (click)="exportChart('userRegistrationsChart')">Exporter</button>
+    </div>
+    <canvas id="userRegistrationsChart" baseChart></canvas>
+  </div>
+
+  <!-- 8. Module Popularity by Likes -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Popularité des Modules par Likes</h2>
+      <button (click)="exportChart('moduleLikesChart')">Exporter</button>
+    </div>
+    <canvas id="moduleLikesChart" baseChart></canvas>
+  </div>
+
+  <!-- 9. Top-Rated Projects Leaderboard -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Top Projets (Leaderboard)</h2>
+      <button (click)="exportLeaderboard()">Exporter</button>
+    </div>
+    <table class="leaderboard" #leaderboardTable>
+      <thead>
+        <tr>
+          <th>Projet</th>
+          <th>Note Moyenne</th>
+          <th>Likes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of topProjects">
+          <td>{{ project.nom }}</td>
+          <td>{{ project.avg_note }}</td>
+          <td>{{ project.likes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 10. Avg Time to First Submission -->
+  <div class="stat">
+    <div class="chart-header">
+      <h2>Délai Moyen Avant la Première Soumission</h2>
+      <button (click)="exportChart('firstSubmissionTimeChart')">Exporter</button>
+    </div>
+    <canvas id="firstSubmissionTimeChart" baseChart></canvas>
+  </div>
+
 </div>
