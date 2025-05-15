@@ -89,8 +89,6 @@ getEvaluationsByProject(): Observable<any[]> {
 }
 
 
-
-
 getGeneralStats() {
 return this.http.get(`${this.baseUrl}/stats`);
 }
@@ -135,13 +133,6 @@ getAvgTimeToFirstSubmission(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}/getAvgTimeToFirstSubmission`);
 }
 
-
-
-
-
-
-
-
   getLikesCount(projetId: number) {
     return this.http.get<{ likes: number }>(`${this.baseUrl}/likes/count/${projetId}`);
   }
@@ -151,7 +142,25 @@ getAvgTimeToFirstSubmission(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/getProjets`);
   }
 
+  // Projets
+  getProjectsSortedBy(sort: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admin/projects/sorted/${sort}`);
+  }
 
+  getProjectsSortedByLikes(direction: 'asc' | 'desc'): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/projets/sorted-by-likes/${direction}`);
+  }
 
+  getProjectsByYear(year: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/projets/by-year/${year}`);
+  }
+
+getAvailableYears(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/projets/years`);
+}
+
+getModules() {
+  return this.http.get<any[]>('/api/modules');
+}
 
 }

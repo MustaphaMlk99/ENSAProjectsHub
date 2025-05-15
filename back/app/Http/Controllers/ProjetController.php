@@ -242,4 +242,40 @@ public function getProjetById($id)
         return response()->json(['total' => $count]);
     }
 
+    public function getProjetsSortedByLikes($direction = 'desc')
+    {
+        $direction = strtolower($direction) === 'asc' ? 'asc' : 'desc';
+
+        $projets = Projet::withCount('likes')
+            ->with(['etudiant', 'encadrant']) // optional: include relations
+            ->orderBy('likes_count', $direction)
+            ->get();
+
+        return response()->json($projets);
+    }
+
+    public function sortedByLikes($direction)
+    {
+        $direction = in_array($direction, ['asc', 'desc']) ? $direction : 'desc';
+
+        $projets = Projet::withCount('likes')
+            ->orderBy('likes_count', $direction)
+            ->get();
+
+        return response()->json($projets);
+    }
+
+    public function getProjetsByYear($year)
+{
+    $projets = Projet::with(['etudiant'])
+        ->whereHas('etudiant', function ($query) use ($year) {
+            $query->where('annee', $year);
+        })
+        ->withCount('likes')
+        ->get();
+
+    return response()->json($projets);
+}
+
+
 }

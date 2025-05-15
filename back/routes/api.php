@@ -99,3 +99,8 @@ Route::get('/getEtudiants', [UserController::class, 'getEtudiants']);
 Route::post('/etudiant', [UserController::class, 'createEtudiant']);
 Route::put('/etudiants/{id}', [UserController::class, 'updateEtudiant']);
 Route::delete('/etudiants/{id}', [UserController::class, 'deleteEtudiant']);
+
+// Projets-admin
+Route::get('/projets/sorted-by-likes/{direction}', [ProjetController::class, 'sortedByLikes']);
+Route::get('/projets/by-year/{year}', [ProjetController::class, 'getProjetsByYear']);
+Route::get('/modules', [ModuleController::class, 'index']);
