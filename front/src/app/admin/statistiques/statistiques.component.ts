@@ -42,36 +42,36 @@ export class StatistiquesComponent implements OnInit {
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.loadGeneralStats();
-    this.loadProjectsByModule();
-    this.loadEvaluationsByProject();
-    this.loadProjectsByEncadrant();
+    // this.loadGeneralStats();
+    // this.loadProjectsByModule();
+    // this.loadEvaluationsByProject();
+    // this.loadProjectsByEncadrant();
     this.initAllCharts();
   }
 
-  loadGeneralStats(): void {
-    this.adminService.getGeneralStats().subscribe(data => {
-      this.generalStats = data;
-    });
-  }
+  // loadGeneralStats(): void {
+  //   this.adminService.getGeneralStats().subscribe(data => {
+  //     this.generalStats = data;
+  //   });
+  // }
 
-  loadProjectsByModule(): void {
-    this.adminService.getProjectsByModule().subscribe((data: any[]) => {
-      this.modulesStats.data = data;
-    });
-  }
+  // loadProjectsByModule(): void {
+  //   this.adminService.getProjectsByModule().subscribe((data: any[]) => {
+  //     this.modulesStats.data = data;
+  //   });
+  // }
 
-  loadEvaluationsByProject(): void {
-    this.adminService.getEvaluationsByProject().subscribe((data: any[]) => {
-      this.evaluationsStats.data = data;
-    });
-  }
+  // loadEvaluationsByProject(): void {
+  //   this.adminService.getEvaluationsByProject().subscribe((data: any[]) => {
+  //     this.evaluationsStats.data = data;
+  //   });
+  // }
 
-  loadProjectsByEncadrant(): void {
-    this.adminService.getProjectsByEncadrant().subscribe((data: any[]) => {
-      this.projetsByEncadrantStats.data = data;
-    });
-  }
+  // loadProjectsByEncadrant(): void {
+  //   this.adminService.getProjectsByEncadrant().subscribe((data: any[]) => {
+  //     this.projetsByEncadrantStats.data = data;
+  //   });
+  // }
 
   initAllCharts(): void {
     this.adminService.getProjectsByModule().subscribe((data: any[]) => {
@@ -80,10 +80,11 @@ export class StatistiquesComponent implements OnInit {
       this.charts['projectsByModule'] = this.createBarChart('projectsByModuleChart', labels, values, 'Projects per Module');
     });
 
-    this.adminService.getSubmissionRates().subscribe((data: any[]) => {
-      const labels = data.map(d => d.date);
-      const values = data.map(d => d.total);
-      this.charts['submissionRates'] = this.createLineChart('submissionRatesChart', labels, values, 'Submissions');
+     this.adminService.getSubmissionRates().subscribe((data: any[]) => {
+      console.log(data);
+       const labels = data.map(d => d.date);
+       const values = data.map(d => d.total);
+       this.charts['submissionRates'] = this.createLineChart('submissionRatesChart', labels, values, 'Submissions');
     });
 
     this.adminService.getEvaluationDistribution().subscribe((data: any[]) => {
@@ -102,42 +103,43 @@ export class StatistiquesComponent implements OnInit {
     this.adminService.getEncadrantWorkload().subscribe((data: any[]) => {
       const labels = data.map(d => `${d.nom} ${d.prenom}`);
       const values = data.map(d => d.total_projects);
-      this.charts['encadrantWorkload'] = this.createHorizontalBarChart('encadrantWorkloadChart', labels, values);
+      console.log(labels,values);
+      this.charts['encadrantWorkload'] = this.createBarChart('encadrantWorkloadChart', labels, values,'Projects per Module');
     });
 
-    this.adminService.getStudentEngagement().subscribe((data: any) => {
-      const labels = ['Engaged Students', 'Evaluated Projects'];
-      const values = [
-        data.engaged_students?.[0]?.engaged_students || 0,
-        data.evaluated_projects?.[0]?.evaluated_projects || 0
-      ];
-      this.charts['studentFunnel'] = this.createFunnelChart('studentFunnelChart', labels, values);
-    });
+    // this.adminService.getStudentEngagement().subscribe((data: any) => {
+    //   const labels = ['Engaged Students', 'Evaluated Projects'];
+    //   const values = [
+    //     data.engaged_students?.[0]?.engaged_students || 0,
+    //     data.evaluated_projects?.[0]?.evaluated_projects || 0
+    //   ];
+    //   this.charts['studentFunnel'] = this.createFunnelChart('studentFunnelChart', labels, values);
+    // });
 
-    this.adminService.getMonthlyUserRegistrations().subscribe((data: any[]) => {
-      const labels = data.map(d => `Month ${d.month}`);
-      const values = data.map(d => d.total);
-      this.charts['userRegistrations'] = this.createAreaChart('userRegistrationsChart', labels, values);
-    });
+    // this.adminService.getMonthlyUserRegistrations().subscribe((data: any[]) => {
+    //   const labels = data.map(d => `Month ${d.month}`);
+    //   const values = data.map(d => d.total);
+    //   this.charts['userRegistrations'] = this.createAreaChart('userRegistrationsChart', labels, values);
+    // });
 
-    this.adminService.getModulePopularityByLikes().subscribe((data: any[]) => {
-      const labels = data.map(d => d.nom_module);
-      const values = data.map(d => d.total_likes);
-      this.charts['modulePopularity'] = this.createStackedBarChart('modulePopularityChart', labels, values);
-    });
+    // this.adminService.getModulePopularityByLikes().subscribe((data: any[]) => {
+    //   const labels = data.map(d => d.nom_module);
+    //   const values = data.map(d => d.total_likes);
+    //   this.charts['modulePopularity'] = this.createStackedBarChart('modulePopularityChart', labels, values);
+    // });
 
-    this.adminService.getTopRatedProjects().subscribe((data: any[]) => {
-      const labels = data.map(d => d.titre);
-      const values = data.map(d => d.note);
-      this.topProjects = data; 
+    // this.adminService.getTopRatedProjects().subscribe((data: any[]) => {
+    //   const labels = data.map(d => d.titre);
+    //   const values = data.map(d => d.note);
+    //   this.topProjects = data; 
 
-      this.charts['topProjects'] = this.createBarChart('topProjectsChart', labels, values, 'Top Rated');
-    });
+    //   this.charts['topProjects'] = this.createBarChart('topProjectsChart', labels, values, 'Top Rated');
+    // });
 
-    this.adminService.getAvgTimeToFirstSubmission().subscribe((data: any[]) => {
-      const avg = Math.round(data?.[0]?.avg_time_hours || 0);
-      this.charts['submissionDelays'] = this.createBoxChart('submissionDelaysChart', [avg], 'Avg Submission Time (hours)');
-    });
+    // this.adminService.getAvgTimeToFirstSubmission().subscribe((data: any[]) => {
+    //   const avg = Math.round(data?.[0]?.avg_time_hours || 0);
+    //   this.charts['submissionDelays'] = this.createBoxChart('submissionDelaysChart', [avg], 'Avg Submission Time (hours)');
+    // });
   }
 
   createBarChart(id: string, labels: string[], data: number[], label: string): Chart {

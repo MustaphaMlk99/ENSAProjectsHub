@@ -28,25 +28,30 @@ class StatistiquesController extends Controller
         ]);
     }
     
-    public function getProjectsByModule() {
-        $projectsByModule = DB::table('projets')
-            ->select('modules.nom', DB::raw('COUNT(projets.id) as total'))
-            ->join('projet_module', 'projet_module.projet_id', '=', 'projets.id')
+    public function getProjectsByModule()
+    {
+        $projectsByModule = DB::table('projet_module')
+            ->join('projets', 'projets.id', '=', 'projet_module.projet_id')
             ->join('modules', 'modules.id', '=', 'projet_module.module_id')
+            ->select('modules.nom as nom_module', DB::raw('COUNT(projets.id) as total'))
             ->groupBy('modules.nom')
             ->get();
-
+    
         return response()->json($projectsByModule);
     }
+    
 
     public function getSubmissionRates() {
         $submissionRates = DB::table('projets')
-            ->select(DB::raw('DATE(date_soumission) as date'), DB::raw('COUNT(*) as total'))
-            ->groupBy(DB::raw('DATE(date_soumission)'))
+            ->select(
+                DB::raw('DATE(created_at) as date'), 
+                DB::raw('COUNT(*) as total'))
+            ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
         return response()->json($submissionRates);
     }
+    
 
     public function getEvaluationDistribution() {
         $evaluationDistribution = DB::table('evaluations')
@@ -75,13 +80,15 @@ class StatistiquesController extends Controller
 
     public function getEncadrantWorkload() {
         $encadrantWorkload = DB::table('projets')
-            ->select('encadrants.nom', 'encadrants.prenom', DB::raw('COUNT(projets.id) as total_projects'))
+            ->select('encadrants.id', 'encadrants.nom', 'encadrants.prenom', DB::raw('COUNT(projets.id) as total_projects'))
             ->join('encadrants', 'encadrants.id', '=', 'projets.encadrant_id')
-            ->groupBy('encadrants.nom', 'encadrants.prenom')
+            ->groupBy('encadrants.id', 'encadrants.nom', 'encadrants.prenom')
             ->get();
-
+    
         return response()->json($encadrantWorkload);
     }
+    
+    
 
     public function getStudentEngagement() {
         $engagedStudents = DB::table('projets')

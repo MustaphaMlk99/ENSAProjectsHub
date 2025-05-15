@@ -7,36 +7,36 @@
   <div class="stat">
     <div class="chart-header">
       <h2>Projets par Module</h2>
-      <button (click)="exportChart('projectsModuleChart')">Exporter</button>
+      <button (click)="exportChart('projectsByModuleChart')">Exporter</button>
     </div>
-    <canvas id="projectsModuleChart" baseChart></canvas>
+    <canvas id="projectsByModuleChart" baseChart></canvas>
   </div>
 
   <!-- 2. Submission Rates Over Time -->
   <div class="stat">
     <div class="chart-header">
       <h2>Taux de Soumissions dans le Temps</h2>
-      <button (click)="exportChart('submissionRateChart')">Exporter</button>
+      <button (click)="exportChart('submissionRatesChart')">Exporter</button>
     </div>
-    <canvas id="submissionRateChart" baseChart></canvas>
-  </div>
+    <canvas id="submissionRatesChart" baseChart></canvas>
+  </div> 
 
   <!-- 3. Average Evaluation Score Distribution -->
   <div class="stat">
     <div class="chart-header">
       <h2>Distribution des Notes Moyennes</h2>
-      <button (click)="exportChart('scoreDistributionChart')">Exporter</button>
+      <button (click)="exportChart('evaluationDistributionChart')">Exporter</button>
     </div>
-    <canvas id="scoreDistributionChart" baseChart></canvas>
-  </div>
+    <canvas id="evaluationDistributionChart" baseChart></canvas>
+  </div> 
 
   <!-- 4. Likes vs Evaluation Score -->
   <div class="stat">
     <div class="chart-header">
       <h2>Likes vs Note Moyenne</h2>
-      <button (click)="exportChart('likesVsScoreChart')">Exporter</button>
+      <button (click)="exportChart('likesVsEvaluationsChart')">Exporter</button>
     </div>
-    <canvas id="likesVsScoreChart" baseChart></canvas>
+    <canvas id="likesVsEvaluationsChart" baseChart></canvas>
   </div>
 
   <!-- 5. Encadrant Workload -->
@@ -46,36 +46,36 @@
       <button (click)="exportChart('encadrantWorkloadChart')">Exporter</button>
     </div>
     <canvas id="encadrantWorkloadChart" baseChart></canvas>
-  </div>
+  </div> 
 
-  <!-- 6. Student Engagement Funnel -->
+  <!-- 6. Student Engagement Funnel 
   <div class="stat">
     <div class="chart-header">
       <h2>Funnel d'Engagement des Étudiants</h2>
       <button (click)="exportChart('engagementFunnelChart')">Exporter</button>
     </div>
     <canvas id="engagementFunnelChart" baseChart></canvas>
-  </div>
+  </div> -->
 
-  <!-- 7. Monthly User Registrations -->
+  <!-- 7. Monthly User Registrations 
   <div class="stat">
     <div class="chart-header">
       <h2>Inscriptions Mensuelles des Utilisateurs</h2>
       <button (click)="exportChart('userRegistrationsChart')">Exporter</button>
     </div>
     <canvas id="userRegistrationsChart" baseChart></canvas>
-  </div>
+  </div> -->
 
-  <!-- 8. Module Popularity by Likes -->
+  <!-- 8. Module Popularity by Likes 
   <div class="stat">
     <div class="chart-header">
       <h2>Popularité des Modules par Likes</h2>
       <button (click)="exportChart('moduleLikesChart')">Exporter</button>
     </div>
     <canvas id="moduleLikesChart" baseChart></canvas>
-  </div>
+  </div> -->
 
-  <!-- 9. Top-Rated Projects Leaderboard -->
+  <!-- 9. Top-Rated Projects Leaderboard 
   <div class="stat">
     <div class="chart-header">
       <h2>Top Projets (Leaderboard)</h2>
@@ -97,15 +97,15 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
 
-  <!-- 10. Avg Time to First Submission -->
+  <!-- 10. Avg Time to First Submission 
   <div class="stat">
     <div class="chart-header">
       <h2>Délai Moyen Avant la Première Soumission</h2>
       <button (click)="exportChart('firstSubmissionTimeChart')">Exporter</button>
     </div>
     <canvas id="firstSubmissionTimeChart" baseChart></canvas>
-  </div>
+  </div> -->
 
 </div>
