@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: `root`
 })
 export class AdminService {
-  private baseUrl = 'http://localhost:8000/api';
+  private baseUrl = `http://localhost:8000/api`;
 
   constructor(private http: HttpClient) {}
 
@@ -80,56 +80,59 @@ export class AdminService {
 
   
 // Fetch general statistics (number of students, admins, etc.)
-getGeneralStats() {
-return this.http.get('/api/stats');
-}
-
-getProjectsByModule(): Observable<any[]> {
-  return this.http.get<any[]>('/api/projects-by-module');
-}
-
 getProjectsByEncadrant(): Observable<any[]> {
-  return this.http.get<any[]>('/api/projects-by-encadrant');
-}
-
-getSubmissionRates(): Observable<any[]> {
-  return this.http.get<any[]>('/api/submission-rates');
-}
-
-getEvaluationDistribution(): Observable<any[]> {
-  return this.http.get<any[]>('/api/evaluation-distribution');
+  return this.http.get<any[]>(`${this.baseUrl}/projects-by-encadrant`);
 }
 
 getEvaluationsByProject(): Observable<any[]> {
-  return this.http.get<any[]>('/api/evaluations-by-project');
+  return this.http.get<any[]>(`${this.baseUrl}/evaluations-by-project`);
+}
+
+
+
+
+getGeneralStats() {
+return this.http.get(`${this.baseUrl}/stats`);
+}
+
+getProjectsByModule(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/projects_by_module`);
+}
+
+getSubmissionRates(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/submission_rates`);
+}
+
+getEvaluationDistribution(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/Evaluation_Distribution`);
 }
 
 getLikesVsEvaluations(): Observable<any[]> {
-  return this.http.get<any[]>('/api/likes-vs-evaluations');
+  return this.http.get<any[]>(`${this.baseUrl}/Likes_Vs_Evaluations`);
 }
 
 getEncadrantWorkload(): Observable<any[]> {
-  return this.http.get<any[]>('/api/encadrant-workload');
+  return this.http.get<any[]>(`${this.baseUrl}/Encadrant_Workload`);
 }
 
 getStudentEngagement(): Observable<any> {
-  return this.http.get<any>('/api/student-engagement');
+  return this.http.get<any>(`${this.baseUrl}/Student_Engagement`);
 }
 
 getMonthlyUserRegistrations(): Observable<any[]> {
-  return this.http.get<any[]>('/api/monthly-user-registrations');
+  return this.http.get<any[]>(`${this.baseUrl}/Monthly_User_Registrations`);
 }
 
 getModulePopularityByLikes(): Observable<any[]> {
-  return this.http.get<any[]>('/api/module-popularity-by-likes');
+  return this.http.get<any[]>(`${this.baseUrl}/getModulePopularityByLikes`);
 }
 
 getTopRatedProjects(): Observable<any[]> {
-  return this.http.get<any[]>('/api/top-rated-projects');
+  return this.http.get<any[]>(`${this.baseUrl}/getTopRatedProjects`);
 }
 
 getAvgTimeToFirstSubmission(): Observable<any[]> {
-  return this.http.get<any[]>('/api/avg-time-to-first-submission');
+  return this.http.get<any[]>(`${this.baseUrl}/getAvgTimeToFirstSubmission`);
 }
 
 

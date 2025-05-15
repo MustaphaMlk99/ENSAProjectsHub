@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class StatistiquesController extends Controller
 {
-    // General statistics (e.g., number of students, admins, projects, likes, etc.)
     public function getStats()
     {
         $etudiants = Etudiant::count();
@@ -29,13 +28,12 @@ class StatistiquesController extends Controller
         ]);
     }
     
-    // Get projects per module (for bar chart)
     public function getProjectsByModule() {
         $projectsByModule = DB::table('projets')
-            ->select('modules.nom_module', DB::raw('COUNT(projets.id) as total'))
+            ->select('modules.nom', DB::raw('COUNT(projets.id) as total'))
             ->join('projet_module', 'projet_module.projet_id', '=', 'projets.id')
             ->join('modules', 'modules.id', '=', 'projet_module.module_id')
-            ->groupBy('modules.nom_module')
+            ->groupBy('modules.nom')
             ->get();
 
         return response()->json($projectsByModule);
@@ -61,13 +59,19 @@ class StatistiquesController extends Controller
 
     public function getLikesVsEvaluations() {
         $likesVsEvaluations = DB::table('likes')
-            ->select('likes.projet_id', DB::raw('COUNT(likes.id) as total_likes'), 'evaluations.note')
-            ->join('evaluations', 'evaluations.projet_id', '=', 'likes.projet_id')
+            ->select(
+                'likes.projet_id',
+                DB::raw('COUNT(likes.id) as total_likes'),
+                'evaluations.note'
+            )
+            ->join('livrables', 'livrables.projet_id', '=', 'likes.projet_id')
+            ->join('evaluations', 'evaluations.livrable_id', '=', 'livrables.id')
             ->groupBy('likes.projet_id', 'evaluations.note')
             ->get();
-
+    
         return response()->json($likesVsEvaluations);
     }
+    
 
     public function getEncadrantWorkload() {
         $encadrantWorkload = DB::table('projets')
@@ -82,12 +86,15 @@ class StatistiquesController extends Controller
     public function getStudentEngagement() {
         $engagedStudents = DB::table('projets')
             ->select(DB::raw('COUNT(DISTINCT etudiant_id) as engaged_students'))
-            ->get();
-
+            ->first()
+            ->engaged_students;
+    
         $evaluatedProjects = DB::table('evaluations')
-            ->select(DB::raw('COUNT(DISTINCT projet_id) as evaluated_projects'))
-            ->get();
-
+            ->join('livrables', 'evaluations.livrable_id', '=', 'livrables.id')
+            ->select(DB::raw('COUNT(DISTINCT livrables.projet_id) as evaluated_projects'))
+            ->first()
+            ->evaluated_projects;
+    
         return response()->json([
             'engaged_students' => $engagedStudents,
             'evaluated_projects' => $evaluatedProjects,
@@ -105,10 +112,10 @@ class StatistiquesController extends Controller
 
     public function getModulePopularityByLikes() {
         $modulePopularity = DB::table('likes')
-            ->select('modules.nom_module', DB::raw('COUNT(likes.id) as total_likes'))
+            ->select('modules.nom', DB::raw('COUNT(likes.id) as total_likes'))
             ->join('projet_module', 'projet_module.projet_id', '=', 'likes.projet_id')
             ->join('modules', 'modules.id', '=', 'projet_module.module_id')
-            ->groupBy('modules.nom_module')
+            ->groupBy('modules.nom')
             ->get();
 
         return response()->json($modulePopularity);
@@ -117,18 +124,19 @@ class StatistiquesController extends Controller
     public function getTopRatedProjects() {
         $topRatedProjects = DB::table('projets')
             ->select('projets.titre', 'evaluations.note')
-            ->join('evaluations', 'evaluations.projet_id', '=', 'projets.id')
+            ->join('livrables', 'livrables.projet_id', '=', 'projets.id')
+            ->join('evaluations', 'evaluations.livrable_id', '=', 'livrables.id')
             ->orderByDesc('evaluations.note')
             ->take(10)
             ->get();
-
+    
         return response()->json($topRatedProjects);
     }
 
     public function getAvgTimeToFirstSubmission() {
         $avgTime = DB::table('projets')
             ->select(DB::raw('AVG(TIMESTAMPDIFF(HOUR, created_at, date_soumission)) as avg_time_hours'))
-            ->get();
+            ->first();
 
         return response()->json($avgTime);
     }

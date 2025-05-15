@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminService } from '../admin.service';
 import { Chart, registerables } from 'chart.js';
+import { AdminHeaderComponent } from '../admin-header/admin-header.component';
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 
@@ -10,7 +12,11 @@ Chart.register(...registerables);
   templateUrl: './statistiques.component.html',
   styleUrls: ['./statistiques.component.scss'],
   standalone: true,
-  imports: []
+  imports: [
+    AdminHeaderComponent,
+    CommonModule,
+
+  ],
 })
 export class StatistiquesComponent implements OnInit {
 
@@ -18,6 +24,7 @@ export class StatistiquesComponent implements OnInit {
   modulesStats = new MatTableDataSource<any>([]);
   evaluationsStats = new MatTableDataSource<any>([]);
   projetsByEncadrantStats = new MatTableDataSource<any>([]);
+  topProjects: { titre: string; note: number; likes?: number }[] = [];
 
   charts: { [key: string]: Chart | null } = {
     projectsByModule: null,
@@ -122,6 +129,8 @@ export class StatistiquesComponent implements OnInit {
     this.adminService.getTopRatedProjects().subscribe((data: any[]) => {
       const labels = data.map(d => d.titre);
       const values = data.map(d => d.note);
+      this.topProjects = data; 
+
       this.charts['topProjects'] = this.createBarChart('topProjectsChart', labels, values, 'Top Rated');
     });
 
@@ -232,4 +241,56 @@ export class StatistiquesComponent implements OnInit {
       }
     });
   }
+
+
+
+  exportChart(chartId: string) {
+    const chart = this.charts[chartId];
+    if (!chart) {
+      console.warn(`Chart with id '${chartId}' not found.`);
+      return;
+    }
+  
+    // Création d’un lien de téléchargement de l’image du canvas
+    const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+    if (!canvas) {
+      console.warn(`Canvas element with id '${chartId}' not found.`);
+      return;
+    }
+  
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${chartId}.png`;
+    a.click();
+  }
+
+
+
+  exportLeaderboard() {
+    // Exemple de logique : exporter les "topProjects" en CSV
+    const topProjectsData = this.charts['topProjects'];
+    if (!topProjectsData) {
+      console.warn('Le graphique "topProjects" n’est pas disponible.');
+      return;
+    }
+  
+    // Récupérer les labels et valeurs
+    const labels = topProjectsData.data.labels as string[];
+    const dataset = topProjectsData.data.datasets[0].data as number[];
+  
+    let csvContent = 'Projet,Note\n';
+    labels.forEach((label, i) => {
+      csvContent += `${label},${dataset[i]}\n`;
+    });
+  
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'top_projects_leaderboard.csv';
+    a.click();
+  }
+  
 }

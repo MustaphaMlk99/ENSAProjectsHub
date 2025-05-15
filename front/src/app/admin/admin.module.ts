@@ -27,13 +27,14 @@ import { ProjetsComponent } from './projets/projets.component';
 
 @NgModule({
   declarations: [
-    AdminHeaderComponent,
-    StatistiquesComponent,
-    GestionUtilisateursComponent,
-    GestionAdministrateursComponent,
-    GestionEncadrantsComponent,
-    GestionEtudiantsComponent,
-    ProjetsComponent
+    // AdminHeaderComponent,
+    // StatistiquesComponent,
+    // GestionUtilisateursComponent,
+    // GestionAdministrateursComponent,
+    // GestionEncadrantsComponent,
+    // GestionEtudiantsComponent,
+    // StatistiquesComponent,
+    // ProjetsComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +53,6 @@ import { ProjetsComponent } from './projets/projets.component';
   ],
   exports: [
     // Components to export
-    StatistiquesComponent,
     // Also export Material modules used in exported components
     MatTableModule,
     MatPaginatorModule,
