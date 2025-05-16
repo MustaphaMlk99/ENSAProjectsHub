@@ -24,7 +24,7 @@ export class StatistiquesComponent implements OnInit {
   modulesStats = new MatTableDataSource<any>([]);
   evaluationsStats = new MatTableDataSource<any>([]);
   projetsByEncadrantStats = new MatTableDataSource<any>([]);
-  topProjects: { titre: string; note: number; likes?: number }[] = [];
+  topProjects: { titre: string; note: number; likes: number }[] = [];
 
   charts: { [key: string]: Chart | null } = {
     projectsByModule: null,
@@ -77,34 +77,48 @@ export class StatistiquesComponent implements OnInit {
     this.adminService.getProjectsByModule().subscribe((data: any[]) => {
       const labels = data.map(d => d.nom_module);
       const values = data.map(d => d.total);
-      this.charts['projectsByModule'] = this.createBarChart('projectsByModuleChart', labels, values, 'Projects per Module');
+      this.charts['projectsByModuleChart'] = this.createBarChart('projectsByModuleChart', labels, values, 'Projects per Module');
     });
 
      this.adminService.getSubmissionRates().subscribe((data: any[]) => {
       console.log(data);
        const labels = data.map(d => d.date);
        const values = data.map(d => d.total);
-       this.charts['submissionRates'] = this.createLineChart('submissionRatesChart', labels, values, 'Submissions');
+       this.charts['submissionRatesChart'] = this.createLineChart('submissionRatesChart', labels, values, 'Submissions');
     });
 
     this.adminService.getEvaluationDistribution().subscribe((data: any[]) => {
       const labels = data.map(d => d.note);
       const values = data.map(d => d.total);
-      this.charts['evaluationDistribution'] = this.createBarChart('evaluationDistributionChart', labels, values, 'Evaluations');
+      this.charts['evaluationDistributionChart'] = this.createBarChart('evaluationDistributionChart', labels, values, 'Evaluations');
     });
 
     this.adminService.getLikesVsEvaluations().subscribe((data: any[]) => {
       const labels = data.map(d => d.projet_id);
       const x = data.map(d => d.total_likes);
       const y = data.map(d => d.note);
-      this.charts['likesVsEvaluations'] = this.createScatterChart('likesVsEvaluationsChart', labels, x, y);
+      this.charts['likesVsEvaluationsChart'] = this.createScatterChart('likesVsEvaluationsChart', labels, x, y);
     });
 
     this.adminService.getEncadrantWorkload().subscribe((data: any[]) => {
       const labels = data.map(d => `${d.nom} ${d.prenom}`);
       const values = data.map(d => d.total_projects);
-      console.log(labels,values);
-      this.charts['encadrantWorkload'] = this.createBarChart('encadrantWorkloadChart', labels, values,'Projects per Module');
+      this.charts['encadrantWorkloadChart'] = this.createBarChart('encadrantWorkloadChart', labels, values,'Projects per Module');
+    });
+
+    this.adminService.getModulePopularityByLikes().subscribe((data: any[]) => {
+      const labels = data.map(d => d.nom);
+      const values = data.map(d => d.total_likes);
+      this.charts['modulePopularityChart'] = this.createStackedBarChart('modulePopularityChart', labels, values);
+    });
+
+    this.adminService.getTopRatedProjects().subscribe((data: any[]) => {
+      const labels = data.map(d => d.titre);
+      const values = data.map(d => d.note);
+      const datas = data.map(d => d.likes);
+      this.topProjects = data; 
+
+      this.charts['topProjectsChart'] = this.createBar2Chart('topProjectsChart', labels, values, datas, 'Top Rated');
     });
 
     // this.adminService.getStudentEngagement().subscribe((data: any) => {
@@ -122,19 +136,7 @@ export class StatistiquesComponent implements OnInit {
     //   this.charts['userRegistrations'] = this.createAreaChart('userRegistrationsChart', labels, values);
     // });
 
-    // this.adminService.getModulePopularityByLikes().subscribe((data: any[]) => {
-    //   const labels = data.map(d => d.nom_module);
-    //   const values = data.map(d => d.total_likes);
-    //   this.charts['modulePopularity'] = this.createStackedBarChart('modulePopularityChart', labels, values);
-    // });
 
-    // this.adminService.getTopRatedProjects().subscribe((data: any[]) => {
-    //   const labels = data.map(d => d.titre);
-    //   const values = data.map(d => d.note);
-    //   this.topProjects = data; 
-
-    //   this.charts['topProjects'] = this.createBarChart('topProjectsChart', labels, values, 'Top Rated');
-    // });
 
     // this.adminService.getAvgTimeToFirstSubmission().subscribe((data: any[]) => {
     //   const avg = Math.round(data?.[0]?.avg_time_hours || 0);
@@ -148,6 +150,20 @@ export class StatistiquesComponent implements OnInit {
       data: {
         labels,
         datasets: [{ label, data, backgroundColor: '#42a5f5' }]
+      },
+      options: { responsive: true }
+    });
+  }
+
+    createBar2Chart(id: string, labels: string[], data: number[],datas: number[], label: string): Chart {
+    return new Chart(id, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: label, data: data, backgroundColor: '#42a5f5' },
+          { label: label, data: datas, backgroundColor: '#ffa726' }
+        ]
       },
       options: { responsive: true }
     });
@@ -271,19 +287,21 @@ export class StatistiquesComponent implements OnInit {
 
   exportLeaderboard() {
     // Exemple de logique : exporter les "topProjects" en CSV
-    const topProjectsData = this.charts['topProjects'];
+    const topProjectsData = this.charts['topProjectsChart'];
     if (!topProjectsData) {
       console.warn('Le graphique "topProjects" n’est pas disponible.');
       return;
     }
-  
+      console.log(topProjectsData);
+
     // Récupérer les labels et valeurs
     const labels = topProjectsData.data.labels as string[];
     const dataset = topProjectsData.data.datasets[0].data as number[];
-  
-    let csvContent = 'Projet,Note\n';
+    const datase = topProjectsData.data.datasets[1].data as number[];
+
+    let csvContent = 'Projet,Note,Likes\n';
     labels.forEach((label, i) => {
-      csvContent += `${label},${dataset[i]}\n`;
+      csvContent += `${label},${dataset[i]},${datase[i]}\n`;
     });
   
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });

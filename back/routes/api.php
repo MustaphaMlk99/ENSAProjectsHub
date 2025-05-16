@@ -74,8 +74,8 @@ Route::get('/submission_rates', [StatistiquesController::class, 'getSubmissionRa
 Route::get('/Evaluation_Distribution', [StatistiquesController::class, 'getEvaluationDistribution']);
 Route::get('/Likes_Vs_Evaluations', [StatistiquesController::class, 'getLikesVsEvaluations']);
 Route::get('/Encadrant_Workload', [StatistiquesController::class, 'getEncadrantWorkload']);
-Route::get('/Student_Engagement', [StatistiquesController::class, 'getStudentEngagement']);
-Route::get('/Monthly_User_Registrations', [StatistiquesController::class, 'getMonthlyUserRegistrations']);
+// Route::get('/Student_Engagement', [StatistiquesController::class, 'getStudentEngagement']);
+// Route::get('/Monthly_User_Registrations', [StatistiquesController::class, 'getMonthlyUserRegistrations']);
 Route::get('/getModulePopularityByLikes', [StatistiquesController::class, 'getModulePopularityByLikes']);
 Route::get('/getTopRatedProjects', [StatistiquesController::class, 'getTopRatedProjects']);
 Route::get('/getAvgTimeToFirstSubmission', [StatistiquesController::class, 'getAvgTimeToFirstSubmission']);
