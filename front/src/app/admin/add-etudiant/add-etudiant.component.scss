@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:host {
+    font-family: 'Poppins', sans-serif;
+  background-color: #f3f6fa;
+  min-height: 100vh;
+}
 .etudiant-form-container {
   max-width: 600px;
   margin: 40px auto;

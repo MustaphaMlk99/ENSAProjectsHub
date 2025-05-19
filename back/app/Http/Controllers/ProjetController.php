@@ -277,5 +277,18 @@ public function getProjetById($id)
     return response()->json($projets);
 }
 
+public function getProjectsByModule($moduleId)
+{
+    $projets = Projet::whereHas('modules', function ($query) use ($moduleId) {
+        $query->where('modules.id', $moduleId);
+    })
+    ->withCount('likes')
+    ->with(['etudiant', 'encadrant'])
+    ->get();
+
+    return response()->json($projets);
+}
+
+
 
 }

@@ -47,11 +47,28 @@ export class ProjetsComponent {
 fetchProjets() {
   const direction = this.selectedSort === 'asc' ? 'asc' : 'desc';
 
-  if (this.selectedYear) {
+  // Filtrer par module si sélectionné
+  if (this.selectedModule) {
+    this.adminService.getProjectsByModule(+this.selectedModule).subscribe((data: any[]) => {
+      this.projets = data;
+
+      // Ajout des likes si nécessaire
+      this.projets.forEach(projet => {
+        if (projet.likesCount === undefined) {
+          this.adminService.getLikesCount(projet.id).subscribe((res) => {
+            projet.likesCount = res.likes;
+          });
+        }
+      });
+    }, error => {
+      console.error('Erreur lors du filtrage par module :', error);
+    });
+
+  // Sinon filtrer par année
+  } else if (this.selectedYear) {
     this.adminService.getProjectsByYear(+this.selectedYear).subscribe((data: any[]) => {
       this.projets = data;
 
-      // Fetch likes count if not present
       this.projets.forEach(projet => {
         if (projet.likesCount === undefined) {
           this.adminService.getLikesCount(projet.id).subscribe((res) => {
@@ -62,11 +79,12 @@ fetchProjets() {
     }, error => {
       console.error('Erreur lors du filtrage par année :', error);
     });
+
+  // Sinon trier par likes
   } else {
     this.adminService.getProjectsSortedByLikes(direction).subscribe((data: any[]) => {
       this.projets = data;
 
-      // Fetch likes count if not present
       this.projets.forEach(projet => {
         if (projet.likesCount === undefined) {
           this.adminService.getLikesCount(projet.id).subscribe((res) => {
@@ -79,6 +97,7 @@ fetchProjets() {
     });
   }
 }
+
 
 
 
@@ -118,11 +137,19 @@ onYearChange() {
 toggleLikesDropdown() {
   this.showLikesDropdown = !this.showLikesDropdown;
   this.showYearDropdown = false; // close other dropdown
+    this.showModuleDropdown = false; // close other dropdown
 }
 
 toggleYearDropdown() {
   this.showYearDropdown = !this.showYearDropdown;
   this.showLikesDropdown = false; // close other dropdown
+  this.showModuleDropdown = false;
+}
+
+toggleModuleDropdown() {
+  this.showModuleDropdown = !this.showModuleDropdown;
+  this.showLikesDropdown = false;
+  this.showYearDropdown = false;
 }
 
 selectSort(sort: string) {
@@ -138,11 +165,6 @@ selectYear(year: number | null) {
 }
 
 
-toggleModuleDropdown() {
-  this.showModuleDropdown = !this.showModuleDropdown;
-  this.showLikesDropdown = false;
-  this.showYearDropdown = false;
-}
 
 selectModule(module: string | null) {
   this.selectedModule = module;
@@ -156,5 +178,6 @@ fetchModules() {
     this.modules = data;
   });
 }
+
 
 }

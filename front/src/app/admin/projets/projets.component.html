@@ -40,6 +40,25 @@
     </div>
   </div>
 
+  <!-- Module filter -->
+  <div class="filter-item">
+    <button type="button" class="icon-btn" (click)="toggleModuleDropdown()" aria-label="Filtrer par module">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M4 4h16v2H4zM4 8h16v2H4zM4 12h16v2H4zM4 16h16v2H4z"/>
+      </svg>
+      <span>
+        {{ selectedModule || 'Module' }}
+      </span>
+    </button>
+
+    <div *ngIf="showModuleDropdown" class="filter-dropdown">
+      <div (click)="selectModule(null)" class="dropdown-item">-- Module --</div>
+      <div *ngFor="let module of modules" (click)="selectModule(module)" class="dropdown-item">
+        {{ module.name }}
+      </div>
+    </div>
+  </div>
+
 </div>
 
 

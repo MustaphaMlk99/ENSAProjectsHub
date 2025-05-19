@@ -93,9 +93,14 @@ getGeneralStats() {
 return this.http.get(`${this.baseUrl}/stats`);
 }
 
-getProjectsByModule(): Observable<any[]> {
-  return this.http.get<any[]>(`${this.baseUrl}/projects_by_module`);
+getProjectsByModule(moduleId?: number): Observable<any[]> {
+  if(moduleId) {
+    return this.http.get<any[]>(`/api/projects/module/${moduleId}`);
+  } else {
+    return this.http.get<any[]>(`/api/projects`); // or some default endpoint
+  }
 }
+
 
 getSubmissionRates(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}/submission_rates`);
@@ -162,5 +167,7 @@ getAvailableYears(): Observable<string[]> {
 getModules() {
   return this.http.get<any[]>('/api/modules');
 }
+
+
 
 }

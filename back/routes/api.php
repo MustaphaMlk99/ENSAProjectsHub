@@ -104,3 +104,4 @@ Route::delete('/etudiants/{id}', [UserController::class, 'deleteEtudiant']);
 Route::get('/projets/sorted-by-likes/{direction}', [ProjetController::class, 'sortedByLikes']);
 Route::get('/projets/by-year/{year}', [ProjetController::class, 'getProjetsByYear']);
 Route::get('/modules', [ModuleController::class, 'index']);
+Route::get('/projects/module/{moduleId}', [ProjetController::class, 'getProjectsByModule']);
