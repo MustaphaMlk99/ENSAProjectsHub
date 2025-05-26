@@ -9,8 +9,7 @@ import { AdminModule } from './admin/admin.module';
 const routes: Routes = [
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: 'statistiques', component: StatistiquesComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
-];
+  { path: '', redirectTo: '/home', pathMatch: 'full' }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

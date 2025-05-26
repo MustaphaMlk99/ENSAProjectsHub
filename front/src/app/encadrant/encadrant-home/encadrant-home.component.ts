@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { EncadrantService } from '../encadrant.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FilterService, GridModule, PageService, SortService, ToolbarService } from '@syncfusion/ej2-angular-grids';
 
 @Component({
   selector: 'app-encadrant-home',
@@ -14,9 +15,13 @@ import { Router } from '@angular/router';
     CommonModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule],
+    MatIconModule,
+    RouterModule,
+  GridModule],
   templateUrl: './encadrant-home.component.html',
-  styleUrl: './encadrant-home.component.scss'
+  styleUrl: './encadrant-home.component.scss',
+   standalone: true,
+   providers: [SortService, FilterService, PageService, ToolbarService],
 })
 export class EncadrantHomeComponent {
 
@@ -35,12 +40,18 @@ export class EncadrantHomeComponent {
   }
 
   ngOnInit() {
-    this.fetchProjets();  
+    this.fetchProjets()
   }
 
   fetchProjets() {
-    this.encadrantService.getProjets().subscribe((data: any[]) => {
-      this.projets = data;
+    this.encadrantService.getProjetsByEncadrant(this.userId).subscribe((data: any[]) => {
+      this.projets = data.map(p => ({
+      ...p,
+      validationStatus: (p?.livrable?.evaluation?.note ?? 0) >= 12 ? 'Validé' : 'Non validée',
+      note: p?.livrable?.evaluation?.note  ?? '-',
+      created_at: new Date(p.created_at) ,
+      projetEvalue: p?.livrable?.evaluation?.note ?? false
+}));
 
       // Vérifier le nombre de likes et si l'étudiant a liké chaque projet
       this.projets.forEach(projet => {

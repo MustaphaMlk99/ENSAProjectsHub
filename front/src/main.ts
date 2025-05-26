@@ -25,6 +25,7 @@ import { AddAdminComponent } from './app/admin/add-admin/add-admin.component';
 import { ModifyEtudiantComponent } from './app/admin/modify-etudiant/modify-etudiant.component';
 import { ModifyEncadrantComponent } from './app/admin/modify-encadrant/modify-encadrant.component';
 import { ModifyAdminComponent } from './app/admin/modify-admin/modify-admin.component';
+import { EvaluerProjetComponent } from './app/encadrant/evaluer-projet/evaluer-projet.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -52,6 +53,8 @@ bootstrapApplication(AppComponent, {
       { path: 'modify_etudiant/:id', component: ModifyEtudiantComponent },
       { path: 'modify_encadrant/:id', component: ModifyEncadrantComponent },
       { path: 'modify_admin/:id', component: ModifyAdminComponent },
+      { path: 'projets/evaluer/:id', component: EvaluerProjetComponent }
+
 
 
     ]),

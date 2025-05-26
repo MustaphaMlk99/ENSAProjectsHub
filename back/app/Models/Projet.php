@@ -32,4 +32,11 @@ class Projet extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function encadrant() {
+        return $this->belongsTo(Encadrant::class, 'encadrant_id');
+    }
+
+    public function etudiant() {
+        return $this->belongsTo(Etudiant::class, 'etudiant_id');
+    }
 }

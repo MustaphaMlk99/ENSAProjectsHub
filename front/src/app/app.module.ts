@@ -11,6 +11,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
+//Syncfusion
+import { GridModule } from '@syncfusion/ej2-angular-grids';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    AdminModule
+    AdminModule,
+    GridModule
   ],
   providers: [],
   bootstrap: [AppComponent]

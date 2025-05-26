@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projet;
 use App\Models\Livrable;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,7 @@ class ProjetController extends Controller
 public function getProjetById($id)
 {
     // Récupérer le projet avec ses livrables
-    $projet = Projet::with('livrable')->find($id);
+    $projet = Projet::with('livrable', 'module', 'etudiant')->find($id);
 
     if (!$projet) {
         return response()->json(['message' => 'Projet non trouvé'], 404);
@@ -187,16 +188,16 @@ public function getProjetById($id)
             $livrable->projet_id = $projet->id;
         }
 
-        if ($request->hasFile('rapport')) {
-            $livrable->rapport = file_get_contents($request->file('rapport')->getRealPath());
+         if ($request->hasFile('rapport')) {
+            $livrable->rapport = $request->file('rapport')->store('livrables/rapports', 'public');
         }
-
+        
         if ($request->hasFile('presentation')) {
-            $livrable->presentation = file_get_contents($request->file('presentation')->getRealPath());
+            $livrable->presentation = $request->file('presentation')->store('livrables/presentations', 'public');
         }
-
+        
         if ($request->hasFile('codeSource')) {
-            $livrable->code_source = file_get_contents($request->file('codeSource')->getRealPath());
+            $livrable->code_source = $request->file('codeSource')->store('livrables/codeSources', 'public');
         }
 
         $livrable->save();
@@ -289,6 +290,32 @@ public function getProjectsByModule($moduleId)
     return response()->json($projets);
 }
 
+public function getByEncadrant($id)
+{
+    $projets = Projet::where('encadrant_id', $id)->with(['etudiant', 'livrable.evaluation'])->get();
+    return response()->json($projets);
+}
+
+
+public function evaluer(Request $request)
+{
+    $request->validate([
+        'livrable_id' => 'required|exists:livrables,id',
+        'note' => 'required|integer|min:0|max:20',
+        'commentaire' => 'nullable|string|max:2000',
+    ]);
+
+    $evaluation = new Evaluation();
+    $evaluation->livrable_id = $request->input('livrable_id');
+    $evaluation->note = $request->input('note');
+    $evaluation->commentaire = $request->input('commentaire');
+    $evaluation->save();
+
+    return response()->json([
+        'message' => '✅ Évaluation enregistrée avec succès',
+        'evaluation' => $evaluation
+    ], 201);
+}
 
 
 }

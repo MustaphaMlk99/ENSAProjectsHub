@@ -1,16 +1,32 @@
 <app-encadrant-header></app-encadrant-header>
+<div class="page-container">
+    <ejs-grid
+  [dataSource]="projets"
+  [allowPaging]="true"
+  [allowSorting]="true"
+  [allowFiltering]="true"
+  [filterSettings]="{ type: 'Excel' }"
+  height="500px"
+>
+  <e-columns>
+    <e-column field="titre" headerText="Titre" width="150"></e-column>
+    <e-column field="description" headerText="Description" width="300"></e-column>
+    <e-column field="etudiant.name" headerText="Étudiant" width="150"></e-column>
+    <e-column type="number" field="note" headerText="Note" width="100" textAlign="Center"></e-column>
 
-<div class="project-grid">
-    <!-- Boucle des projets -->
-    <div class="project-card" *ngFor="let project of projets">
-      <h3>{{ project.titre }}</h3>
-      <p>{{ project.description }}</p>
-  
-      <div class="like-row">
-        <!-- Nombre de likes -->
-        <div class="likes-count">
-          <span class="like-number">{{ project.likesCount }}</span>
-          <span class="like-label">{{ project.likesCount === 1 ? 'like' : 'likes' }}</span>
-        </div>
-      </div>
-    </div>
+    <e-column field="validationStatus" headerText="Statut" width="120" textAlign="Center">
+      <ng-template #template let-data>
+        <span *ngIf="data?.note >= 12; else nonValide">Validé</span>
+        <ng-template #nonValide>Non validée</ng-template>
+      </ng-template>
+    </e-column>
+    <e-column type="date" field="created_at" headerText="Date de création" width="150" format='yMd' textAlign="Center"></e-column>
+    <e-column  headerText="Actions" width="120" textAlign="Center">
+      <ng-template #template let-data>
+        <button *ngIf="!data.projetEvalue" class="e-btn e-flat e-primary" [routerLink]="['/projets/evaluer', data.id]">Evaluer</button>
+      </ng-template>
+    </e-column>
+
+  </e-columns>
+</ejs-grid>
+</div>

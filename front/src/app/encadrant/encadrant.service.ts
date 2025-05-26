@@ -26,4 +26,16 @@ export class EncadrantService {
     return this.http.get<{ likes: number }>(`${this.apiUrl}/likes/count/${projetId}`);
   }
 
+  getProjetsByEncadrant(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/encadrant/${id}/projets`);
+  }
+
+  getProjetById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/projet/${id}`);
+  }
+
+  saveEvaluation(payload: any): Observable<any>  {
+    return this.http.post(`${this.apiUrl}/evaluer`, payload)
+  }
+  
 }

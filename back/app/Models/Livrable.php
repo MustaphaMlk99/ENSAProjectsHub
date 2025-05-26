@@ -18,4 +18,9 @@ class Livrable extends Model
     {
         return $this->belongsTo(Projet::class);
     }
+
+    public function evaluation()
+    {
+        return $this->hasOne(Evaluation::class, 'livrable_id');
+    }
 }

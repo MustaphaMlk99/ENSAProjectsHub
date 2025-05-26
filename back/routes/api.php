@@ -92,6 +92,8 @@ Route::get('/getEncadrants', [UserController::class, 'getEncadrants']);
 Route::post('/encadrants', [UserController::class, 'createEncadrant']);
 Route::put('/encadrants/{id}', [UserController::class, 'updateEncadrant']);
 Route::delete('/encadrants/{id}', [UserController::class, 'deleteEncadrant']);
+Route::get('/encadrant/{id}/projets', [ProjetController::class, 'getByEncadrant']);
+Route::post('/evaluer', [ProjetController::class, 'evaluer']);
 
 
 //gestion etudiants
