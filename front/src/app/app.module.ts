@@ -11,6 +11,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
+import { MatChipsModule } from '@angular/material/chips';
+import { MatChipGrid } from '@angular/material/chips';
+
 //Syncfusion
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 
@@ -26,7 +29,9 @@ import { GridModule } from '@syncfusion/ej2-angular-grids';
     MatPaginatorModule,
     MatSortModule,
     AdminModule,
-    GridModule
+    GridModule,
+    MatChipsModule,
+    MatChipGrid
   ],
   providers: [],
   bootstrap: [AppComponent]

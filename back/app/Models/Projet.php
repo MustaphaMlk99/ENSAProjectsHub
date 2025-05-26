@@ -39,4 +39,9 @@ class Projet extends Model
     public function etudiant() {
         return $this->belongsTo(Etudiant::class, 'etudiant_id');
     }
+
+    public function motsCles()
+    {
+        return $this->belongsToMany(MotsCle::class, 'projet_mot_cle');
+    }
 }

@@ -47,7 +47,11 @@ export class EncadrantHomeComponent {
     this.encadrantService.getProjetsByEncadrant(this.userId).subscribe((data: any[]) => {
       this.projets = data.map(p => ({
       ...p,
-      validationStatus: (p?.livrable?.evaluation?.note ?? 0) >= 12 ? 'Validé' : 'Non validée',
+      validationStatus: p?.livrable?.evaluation?.note == null
+      ? 'Nouveau'
+      : p.livrable.evaluation.note >= 12
+        ? 'Validé'
+        : 'Non validée',
       note: p?.livrable?.evaluation?.note  ?? '-',
       created_at: new Date(p.created_at) ,
       projetEvalue: p?.livrable?.evaluation?.note ?? false

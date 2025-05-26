@@ -26,17 +26,18 @@
 
   <!-- Dropdown - Projets -->
   <mat-menu #menu2="matMenu">
-    <button mat-menu-item (click)="historique()">
-      <mat-icon>history</mat-icon>
-      Historique des projets
+    <button mat-menu-item (click)="historique('mes-projets')">
+      <mat-icon>book</mat-icon>
+      Mes Projets
     </button>
+
     <button mat-menu-item (click)="add_projet()">
       <mat-icon>add_circle</mat-icon>
       Ajouter un nouveau projet
     </button>
-    <button mat-menu-item disabled>
-      <mat-icon>more_horiz</mat-icon>
-      ...
+    <button mat-menu-item (click)="historique('all')">
+      <mat-icon>history</mat-icon>
+      Historique des projets
     </button>
   </mat-menu>
 

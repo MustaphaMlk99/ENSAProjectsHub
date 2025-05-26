@@ -26,9 +26,9 @@ export class EtudiantHeaderComponent {
   constructor(private router: Router) {}
 
 // Redirige vers la page historique
-  historique() {
-    this.router.navigate(['/historique']);
-  }
+historique(type: string) {
+  this.router.navigate(['/historique', type]);
+}
 
 // Redirige vers la page ajouter projet
   add_projet() {

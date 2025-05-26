@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { EtudiantHeaderComponent } from '../etudiant-header/etudiant-header.component';
 import { EtudiantService } from '../etudiant.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-historique',
@@ -23,7 +24,8 @@ export class HistoriqueComponent {
 
 constructor(
   private router: Router,
-  private etudiantService: EtudiantService
+  private etudiantService: EtudiantService,
+  private route: ActivatedRoute
 ) {
   const storedId = localStorage.getItem('id_user');
   this.user_id = storedId ? parseInt(storedId, 10) : null;
@@ -32,9 +34,21 @@ constructor(
 }
 
 ngOnInit(): void {
+  this.route.params.subscribe(params => {
+    this.loadData(params['type']); // ou params.get('type') selon la version
+  });
+}
+
+loadData(type: string) {
+  console.log("type ", type);
   this.etudiantService.getProjets().subscribe({
     next: (response) => {
-      this.projects = response.filter(projet => projet.etudiant_id === this.user_id);
+      if(type === 'mes-projets') {
+        this.projects = response.filter(projet => projet.etudiant_id === this.user_id);
+      } else {
+        this.projects = response;
+      }
+
     },
     error: (error) => {
       console.error("Erreur lors de la récupération des projets:", error);

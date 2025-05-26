@@ -32,6 +32,28 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Liste des tags">
+          <mat-chip-row
+            *ngFor="let tag of tags"
+            [removable]="true"
+            (removed)="removeTag(tag)">
+            {{ tag }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+
+          <input
+            placeholder="Ajouter un tag"
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="true"
+            (matChipInputTokenEnd)="addTag($event)" />
+        </mat-chip-grid>
+      </mat-form-field>
+
       <div class="button-group">
         <button mat-raised-button color="primary" matStepperNext>Suivant</button>
       </div>

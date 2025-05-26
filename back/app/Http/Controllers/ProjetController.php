@@ -129,6 +129,7 @@ public function getProjetById($id)
             'rapport' => 'nullable|file',
             'presentation' => 'nullable|file',
             'codeSource' => 'nullable|file',
+            'tags' => 'nullable|string',
         ]);
 
         $projet = Projet::create([
@@ -155,6 +156,27 @@ public function getProjetById($id)
         }
         
         $livrable->save();
+
+        $tags = json_decode($request->input('tags'), true);
+
+    if (is_array($tags)) {
+        foreach ($tags as $tag) {
+            if (!empty($tag)) {
+                // Insère ou récupère le mot-clé
+                $motCle = \App\Models\MotsCle::firstOrCreate(['mot' => $tag]);
+
+                // Insère dans la table pivot
+                \DB::table('projet_mot_cle')->insert([
+                    'projet_id' => $projet->id,
+                    'mot_cle_id' => $motCle->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+    } else {
+        \Log::warning('Le champ tags n\'est pas un tableau JSON valide.', ['tags_brut' => $request->input('tags')]);
+    }
 
         return response()->json(['message' => 'Projet et livrable enregistrés avec succès.'], 200);
     }

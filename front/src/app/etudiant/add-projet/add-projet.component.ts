@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipGrid } from '@angular/material/chips';
+
 
 @Component({
   selector: 'app-add-projet',
@@ -25,7 +29,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSelectModule,
     MatStepperModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatChipsModule,
+    MatChipGrid 
   ]
 })
 export class AddProjetComponent {
@@ -37,6 +43,10 @@ export class AddProjetComponent {
 
   livrables: { [key: string]: File } = {};
 
+   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+tags: string[] = [];
+
+
   constructor(private fb: FormBuilder, private router: Router, private etudiantService: EtudiantService) {
     const storedId = localStorage.getItem('id_user');
     this.user_id = storedId ? parseInt(storedId, 10) : null;
@@ -46,13 +56,14 @@ export class AddProjetComponent {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       etudiant_id: [this.user_id, Validators.required],
       encadrant_id: ['', Validators.required],
-      module_id: ['', Validators.required]
+      module_id: ['', Validators.required],
+       tags: [[]] 
     });
 
     this.livrableForm = this.fb.group({
-      rapport: [null, Validators.required],
-      presentation: [null, Validators.required],
-      codeSource: [null, Validators.required]
+      rapport: [null],
+      presentation: [null],
+      codeSource: [null]
     });
   }
 
@@ -85,7 +96,33 @@ export class AddProjetComponent {
     }
   }
 
+  addTag(event: any): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.tags.push(value);
+      this.projetForm.get('tags')?.setValue(this.tags);
+    }
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
+  removeTag(tag: string): void {
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+      this.projetForm.get('tags')?.setValue(this.tags);
+    }
+  }
+ 
+
   onSubmit() {
+     const livrablesAjoutes = Object.values(this.livrables).filter(fichier => fichier !== undefined);
+  if (livrablesAjoutes.length === 0) {
+    alert('Veuillez ajouter au moins un livrable (rapport, présentation ou code source).');
+    return;
+  }
+
     if (this.projetForm.valid && this.livrableForm.valid) {
       const formData = new FormData();
   
@@ -100,6 +137,10 @@ export class AddProjetComponent {
           formData.append(type, this.livrables[type]);
         }
       });
+
+      console.log(this.projetForm);
+
+      formData.append('tags', JSON.stringify(this.tags)); 
   
       this.etudiantService.ajouterProjetAvecLivrables(formData).subscribe({
         next: (response) => {
