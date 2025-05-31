@@ -7,6 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipGrid } from '@angular/material/chips';
 
 @Component({
   selector: 'app-modify-projet',
@@ -18,7 +22,10 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatChipsModule,
+    MatChipGrid ,
+    MatIconModule
   ]
 })
 export class ModifyProjetComponent implements OnInit {
@@ -28,6 +35,8 @@ export class ModifyProjetComponent implements OnInit {
   modules: any[] = [];
   livrables: any = {}; 
   user_id: number | null = null;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: string[] = [];  
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -41,7 +50,8 @@ export class ModifyProjetComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       encadrant_id: ['', Validators.required],
       module_id: ['', Validators.required],
-      etudiant_id: [this.user_id, Validators.required]
+      etudiant_id: [this.user_id, Validators.required],
+      tags: [[]] 
     });
   }
 
@@ -52,6 +62,12 @@ export class ModifyProjetComponent implements OnInit {
       this.selectedProject = JSON.parse(storedProject);
       console.log("selectedProject ", this.selectedProject);
       this.setFormValues();
+
+      // Extraire juste les mots des tags (le champ 'mot')
+    this.tags = (this.selectedProject.tags ?? []).map((tag: any) => tag.mot);
+
+    // Mettre à jour le FormControl tags
+    this.projetForm.get('tags')?.setValue(this.tags);
     }
 
     // Charger les modules et les encadrants depuis l'API
@@ -93,6 +109,25 @@ export class ModifyProjetComponent implements OnInit {
     });
   }
 
+   addTag(event: any): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.tags.push(value);
+      this.projetForm.get('tags')?.setValue(this.tags);
+    }
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
+  removeTag(tag: string): void {
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+      this.projetForm.get('tags')?.setValue(this.tags);
+    }
+  }
+
   // Fonction pour gérer la sélection des fichiers de livrables
   onFileSelected(event: Event, type: string): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -116,6 +151,8 @@ export class ModifyProjetComponent implements OnInit {
       if (this.livrables.rapport) formData.append('rapport', this.livrables.rapport);
       if (this.livrables.presentation) formData.append('presentation', this.livrables.presentation);
       if (this.livrables.codeSource) formData.append('codeSource', this.livrables.codeSource);
+
+      formData.append('tags', JSON.stringify(this.tags)); 
 
       // Appeler la méthode updateProjetAvecLivrables pour mettre à jour le projet et ses livrables
       this.etudiantService.updateProjetAvecLivrables(formData, this.selectedProject.id).subscribe({

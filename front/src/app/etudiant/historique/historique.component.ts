@@ -6,6 +6,8 @@ import { EtudiantHeaderComponent } from '../etudiant-header/etudiant-header.comp
 import { EtudiantService } from '../etudiant.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { MatChipGrid } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-historique',
@@ -15,12 +17,17 @@ import { ActivatedRoute } from '@angular/router';
   EtudiantHeaderComponent,
   CommonModule, 
   MatCardModule, 
-  MatButtonModule]
+  MatButtonModule, 
+  MatChipGrid,
+  FormsModule]
 })
 export class HistoriqueComponent {
   user_id: number | null = null;
   public projects: any;
   selectedProject: any = null;
+  searchType: 'etudiant' | 'module' | 'tag' = 'etudiant';
+  searchTerm: string = '';
+  filteredProjects: any[] = [];
 
 constructor(
   private router: Router,
@@ -48,6 +55,7 @@ loadData(type: string) {
       } else {
         this.projects = response;
       }
+      this.filteredProjects = [...this.projects]; // initialisation
 
     },
     error: (error) => {
@@ -55,6 +63,33 @@ loadData(type: string) {
     }
   });
 }
+
+filterProjects(): void {
+  const term = this.searchTerm.trim().toLowerCase();
+
+  if (!term) {
+    this.filteredProjects = [...this.projects];
+    return;
+  }
+
+  this.filteredProjects = this.projects.filter((project: any) => {
+    console.log("project ", project);
+    if (this.searchType === 'etudiant') {
+      return project?.etudiant.nom?.toLowerCase().includes(term) || project?.etudiant?.prenom?.toLowerCase().includes(term);
+    }
+
+    if (this.searchType === 'module') {
+      return project?.module?.nom.toLowerCase().includes(term);
+    }
+
+    if (this.searchType === 'tag') {
+      return project.tags?.some((tag: any) => tag.mot.toLowerCase().includes(term));
+    }
+
+    return false;
+  });
+}
+
 
 
 modifyProjet(id: number): void {
@@ -71,6 +106,11 @@ modifyProjet(id: number): void {
         console.error("Erreur lors de la récupération du projet:", error);
       }
     });
+  }
+
+  viewEvaluation(id: number): void {
+    // Stocker temporairement ou naviguer directement
+    this.router.navigate(['/projet_evaluation', id]);
   }
 
   deleteProjet(id: number): void {

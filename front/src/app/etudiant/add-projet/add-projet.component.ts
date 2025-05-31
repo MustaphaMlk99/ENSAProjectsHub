@@ -145,7 +145,7 @@ tags: string[] = [];
       this.etudiantService.ajouterProjetAvecLivrables(formData).subscribe({
         next: (response) => {
           alert('Projet ajouté avec succès !');
-          this.router.navigate(['/historique']);
+          this.router.navigate(['/historique/mes-projets']);
         },
         error: (error) => {
           alert('Erreur lors de l\'ajout du projet.');

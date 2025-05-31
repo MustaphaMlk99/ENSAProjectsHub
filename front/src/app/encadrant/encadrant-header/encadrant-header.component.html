@@ -1,52 +1,41 @@
 <mat-toolbar class="navbar" color="primary">
-    <!-- Logo -->
-    <img src="storage/Logo.png" alt="Logo" class="logo" />
-  
-    <!-- Message de connexion -->
-    <div class="navbar-message">
-      <mat-icon>person</mat-icon>
-      <span>Vous êtes connecté(e) Mr. l'encadrant !</span>
-    </div>
-  
-    <!-- Navigation -->
+  <!-- Logo -->
+  <img src="storage/Logo.png" alt="Logo" class="logo" />
+
+  <!-- BOUTON MENU BURGER (affiché uniquement en petit écran) -->
+  <button class="menu-toggle" (click)="isMenuOpen = !isMenuOpen">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Message de connexion -->
+  <div class="navbar-message">
+    <mat-icon>person</mat-icon>
+    <span>Vous êtes connecté(e) Mr. l'encadrant !</span>
+  </div>
+
+  <!-- Liens de navigation regroupés dans une div -->
+  <div class="navbar-links" [class.open]="isMenuOpen">
     <button mat-button [routerLink]="'/encadrant_home'">
       <mat-icon>home</mat-icon>
       &nbsp;Home
     </button>
-  
+
     <a mat-button href="https://ensa.uit.ac.ma/" target="_blank" rel="noopener noreferrer">
       <mat-icon>school</mat-icon>
       &nbsp;ENSAK officiel
     </a>
-  
-    <button mat-button [routerLink]="'/profil_encadrant'">
-      <mat-icon>account_circle</mat-icon>
-      &nbsp;Profil
-    </button>
-  
-    <!-- Dropdown - Projets -->
-    <mat-menu #menu2="matMenu">
-      <button mat-menu-item (click)="historique()">
-        <mat-icon>history</mat-icon>
-        Historique des projets validés
-      </button>
-      <button mat-menu-item (click)="nouveau_projet()">
-        <mat-icon>add_circle</mat-icon>
-        Nouveaux projets soumis par mes étudiants
-      </button>
-    </mat-menu>
-  
-    <button mat-button [matMenuTriggerFor]="menu2">
+
+    <button mat-button (click)="projets()">
       <mat-icon>folder</mat-icon>
-      &nbsp;Projets
+      &nbsp;Mes projets
     </button>
-  
+
     <!-- Bouton de déconnexion -->
     <span class="spacer"></span>
-  
+
     <button mat-raised-button color="warn" (click)="logout()">
       <mat-icon>logout</mat-icon>
       &nbsp;Se déconnecter
     </button>
-  </mat-toolbar>
-  
+  </div>
+</mat-toolbar>

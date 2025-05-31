@@ -42,6 +42,21 @@ class Projet extends Model
 
     public function motsCles()
     {
-        return $this->belongsToMany(MotsCle::class, 'projet_mot_cle');
+         return $this->belongsToMany(
+            MotsCle::class,
+            'projet_mot_cle',
+            'projet_id',      // clé étrangère vers Projet dans la table pivot
+            'mot_cle_id'      // clé étrangère vers MotsCle dans la table pivot (corrigée)
+        );
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(MotsCle::class, 'projet_mot_cle', 'projet_id', 'mot_cle_id');
+    }
+
+    public function certificat()
+    {
+        return $this->hasOne(Certificat::class);
     }
 }

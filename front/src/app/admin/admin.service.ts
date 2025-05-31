@@ -101,6 +101,9 @@ getProjectsByModule(moduleId?: number): Observable<any[]> {
   }
 }
 
+getProjectsByModule2(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/projects_by_module`);
+}
 
 getSubmissionRates(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}/submission_rates`);

@@ -22,10 +22,14 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class EncadrantHeaderComponent {
   constructor(private router: Router) {}
+  isMenuOpen = false;
 
   // Redirige vers la page historique des projets validés
-    historique() {
-      this.router.navigate(['/projet_valide']);
+    projets() {
+      const storedId = localStorage.getItem('id_user');
+      if(storedId) {
+      this.router.navigate(['/encadrant/projets', parseInt(storedId, 10)]);
+      }
     }
   
   // Redirige vers la page nouveau projet

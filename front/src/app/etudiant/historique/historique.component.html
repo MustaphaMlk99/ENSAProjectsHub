@@ -1,13 +1,36 @@
 <app-etudiant-header></app-etudiant-header>
 
+<div class="search-bar">
+  <select [(ngModel)]="searchType">
+    <option value="module">Module</option>
+    <option value="tag">Tag</option>
+  </select>
+
+  <input type="text" [(ngModel)]="searchTerm" (input)="filterProjects()" placeholder="Rechercher..." />
+</div>
+
 <div class="project-grid">
-    <div class="project-card" *ngFor="let project of projects">
-      <h3>{{ project.titre }}</h3>
-      <p>{{ project.description }}</p>
-      <div class="actions">
-        <button class="btn edit" (click)="modifyProjet(project.id)">Modifier</button>
-        <button class="btn delete" (click)="deleteProjet(project.id)">Supprimer</button>
-      </div>
+  <div class="project-card" *ngFor="let project of filteredProjects">
+    <h3>{{ project.titre }}</h3>
+    <p>{{ project.description }}</p>
+
+    <div class="tags" *ngIf="project.tags?.length">
+      <span class="tag" *ngFor="let tag of project.tags">{{ tag.mot }}</span>
+    </div>
+
+    <div class="actions" *ngIf="project.etudiant_id === user_id">
+      <!-- Bouton Modifier -->
+      <button class="btn edit" *ngIf="!project?.livrable?.evaluation" (click)="modifyProjet(project.id)">
+        Modifier
+      </button>
+      <button class="btn edit" *ngIf="project?.livrable?.evaluation" (click)="viewEvaluation(project.id)">
+        Voir évaluation
+      </button>
+
+      <!-- Bouton Supprimer -->
+      <button class="btn delete" *ngIf="!project?.livrable?.evaluation" (click)="deleteProjet(project.id)">
+        Supprimer
+      </button>
     </div>
   </div>
-  
+</div>

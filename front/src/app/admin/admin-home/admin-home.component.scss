@@ -5,3 +5,41 @@
   background-color: #f3f6fa;
   min-height: 100vh;
 }
+
+.admin-home-container {
+  padding: 40px;
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.announcement, .news-section, .tips-section {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-left: 6px solid #007acc;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.announcement h2,
+.news-section h2,
+.tips-section h2 {
+  color: #007acc;
+  margin-bottom: 12px;
+}
+
+.news-section ul {
+  padding-left: 20px;
+}
+
+.news-section li {
+  margin-bottom: 8px;
+}

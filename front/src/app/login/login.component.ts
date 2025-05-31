@@ -49,7 +49,6 @@ export class LoginComponent {
 
     this.http.post<{ token: string; role: string; user: { id: number }}>('http://localhost:8000/api/login', credentials).subscribe({
       next: (response) => {
-        console.log("response ", response.token);
         localStorage.setItem('token', response.token);
         localStorage.setItem('id_user', (response.user.id).toString());
     

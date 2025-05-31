@@ -1,32 +1,35 @@
-<div class="evaluer-container" *ngIf="projetData">
-  <h2 class="section-title">Évaluer le Projet : {{ projetData.titre }}</h2>
+<div class="evaluer-container" *ngIf="projetData"> 
+  <button class="btn-retour" mat-button [routerLink]="'/encadrant_home'">← Retour à l'accueil</button>
+
+  <h2 *ngIf="!projetData.projetEvalue" class="section-title">Évaluer le Projet : {{ projetData.titre }}</h2>
+  <h2 *ngIf="projetData.projetEvalue" class="section-title">Consulter le Projet : {{ projetData.titre }}</h2>
 
   <div class="project-info">
-    <p><strong>Etudiant :</strong> {{ projetData.etudiant?.nom }}  {{ projetData.etudiant?.prenom }}</p>
+    <p><strong>Étudiant :</strong> {{ projetData.etudiant?.nom }} {{ projetData.etudiant?.prenom }}</p>
     <p><strong>Description :</strong> {{ projetData.description }}</p>
     <p><strong>Module :</strong> {{ projetData.module?.nom }}</p>
   </div>
 
-    <div class="livrables-section">
+  <div class="livrables-section">
     <h3>Livrables Actuels</h3>
     <div class="livrable-row">
-        <span>📄 Rapport :</span>
-        <a *ngIf="projetData.livrable?.rapport_url" [href]="projetData.livrable.rapport_url" download target="_blank"><i class="fa fa-download"></i> </a>
-        <span>{{ projetData.livrable?.rapport_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
+      <span>📄 Rapport :</span>
+      <a *ngIf="projetData.livrable?.rapport_url" [href]="projetData.livrable.rapport_url" download target="_blank"><i class="fa fa-download"></i></a>
+      <span>{{ projetData.livrable?.rapport_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
     </div>
     <div class="livrable-row">
-        <span>📊 Présentation :</span>
-        <a *ngIf="projetData.livrable?.presentation_url" [href]="projetData.livrable.presentation_url" download target="_blank"><i class="fa fa-download"></i> </a>
-        <span>{{ projetData.livrable?.presentation_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
+      <span>📊 Présentation :</span>
+      <a *ngIf="projetData.livrable?.presentation_url" [href]="projetData.livrable.presentation_url" download target="_blank"><i class="fa fa-download"></i></a>
+      <span>{{ projetData.livrable?.presentation_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
     </div>
     <div class="livrable-row">
-        <span>💻 Code Source :</span>
-        <a *ngIf="projetData.livrable?.codeSource_url" [href]="projetData.livrable.codeSource_url" download target="_blank"><i class="fa fa-download"></i> </a>
-        <span>{{ projetData.livrable?.codeSource_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
+      <span>💻 Code Source :</span>
+      <a *ngIf="projetData.livrable?.codeSource_url" [href]="projetData.livrable.codeSource_url" download target="_blank"><i class="fa fa-download"></i></a>
+      <span>{{ projetData.livrable?.codeSource_url ? '✅ Disponible' : '❌ Non fourni' }}</span>
     </div>
-    </div>
+  </div>
 
-  <div class="evaluation-globale">
+  <div *ngIf="projetData.encadrant_id === userId && !projetData.projetEvalue" class="evaluation-globale">
     <h3>Évaluation Globale</h3>
 
     <label for="note">Note (0-20) :</label>
@@ -37,8 +40,8 @@
     <textarea id="remarque" rows="4" [(ngModel)]="projetData.remarque"></textarea>
   </div>
 
-  <div class="button-group">
+  <div *ngIf="projetData.encadrant_id === userId && !projetData.projetEvalue" class="button-group">
     <button class="e-btn e-flat e-primary" (click)="saveEvaluation()">💾 Enregistrer</button>
-    <button class="e-btn e-flat e-warn" >❌ Annuler</button>
+    <button class="e-btn e-flat e-warn">❌ Annuler</button>
   </div>
 </div>

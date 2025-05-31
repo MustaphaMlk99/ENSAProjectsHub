@@ -30,9 +30,8 @@ class StatistiquesController extends Controller
     
     public function getProjectsByModule()
     {
-        $projectsByModule = DB::table('projet_module')
-            ->join('projets', 'projets.id', '=', 'projet_module.projet_id')
-            ->join('modules', 'modules.id', '=', 'projet_module.module_id')
+        $projectsByModule = DB::table('projets')
+            ->join('modules', 'modules.id', '=', 'projets.module_id')
             ->select('modules.nom as nom_module', DB::raw('COUNT(projets.id) as total'))
             ->groupBy('modules.nom')
             ->get();
@@ -90,32 +89,7 @@ class StatistiquesController extends Controller
     
     
 
-    // public function getStudentEngagement() {
-    //     $engagedStudents = DB::table('projets')
-    //         ->select(DB::raw('COUNT(DISTINCT etudiant_id) as engaged_students'))
-    //         ->first()
-    //         ->engaged_students;
-    
-    //     $evaluatedProjects = DB::table('evaluations')
-    //         ->join('livrables', 'evaluations.livrable_id', '=', 'livrables.id')
-    //         ->select(DB::raw('COUNT(DISTINCT livrables.projet_id) as evaluated_projects'))
-    //         ->first()
-    //         ->evaluated_projects;
-    
-    //     return response()->json([
-    //         'engaged_students' => $engagedStudents,
-    //         'evaluated_projects' => $evaluatedProjects,
-    //     ]);
-    // }
-
-    // public function getMonthlyUserRegistrations() {
-    //     $monthlyRegistrations = DB::table('users')
-    //         ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as total'))
-    //         ->groupBy(DB::raw('MONTH(created_at)'))
-    //         ->get();
-
-    //     return response()->json($monthlyRegistrations);
-    // }
+ 
 
     public function getModulePopularityByLikes() {
         $modulePopularity = DB::table('likes')

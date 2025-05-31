@@ -6,7 +6,6 @@
       <e-column field="titre" headerText="Titre" width="150"></e-column>
       <e-column field="description" headerText="Description" width="300"></e-column>
       <e-column field="etudiant" headerText="Étudiant" width="150"></e-column>
-      <e-column field="encadrant" headerText="Encadrant" width="150"></e-column>
       <e-column field="module" headerText="Module" width="150"></e-column>
       <e-column type="number" field="note" headerText="Note" width="100" textAlign="Center"></e-column>
 
@@ -16,13 +15,13 @@
         textAlign="Center"></e-column>
       <e-column headerText="Actions" width="120" textAlign="Center">
         <ng-template #template let-data>
-          <button *ngIf="data.projetEvalue" class="e-btn e-flat e-primary"
-            [routerLink]="['/projet/consulter', data.id]">Consulter</button>
-            <button *ngIf="!data.projetEvalue && data.encadrant_id === userId" class="e-btn e-flat e-primary"
+          <button *ngIf="!data.projetEvalue" class="e-btn e-flat e-primary"
             [routerLink]="['/projets/evaluer', data.id]">Evaluer</button>
+            <button *ngIf="data.projetEvalue" class="e-btn e-flat e-primary"
+            [routerLink]="['/projets/evaluer', data.id]">Consulter</button>
         </ng-template>
       </e-column>
 
     </e-columns>
   </ejs-grid>
-</div> 
+</div>

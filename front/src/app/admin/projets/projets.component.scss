@@ -1,20 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-:host {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f3f6fa;
-    min-height: 100vh;
-}
-
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     padding: 20px;
     align-items: stretch; /* Force l'alignement vertical des cartes */
-}
+  }
   
-.project-card {
+  .project-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,37 +16,19 @@
     border-radius: 12px;
     background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
+  }
   
-.project-card h3 {
+  .project-card h3 {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 10px;
-}
+  }
   
-.project-card p {
+  .project-card p {
     flex-grow: 1; /* Prend l'espace disponible */
     margin-bottom: 20px;
     color: #444;
-    /* Ajout de la troncature pour les descriptions longues */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    display: box;
-    -webkit-line-clamp: 3; /* Limite à 3 lignes pour WebKit */
-    line-clamp: 3; /* Propriété standard */
-    -webkit-box-orient: vertical;
-    box-orient: vertical;
-    max-height: 4.5em; /* Hauteur approximative pour 3 lignes */
-}
-
-/* Style pour les dates (si vous les ajoutez à nouveau plus tard) */
-.project-card .dates-info {
-    text-align: right;
-    font-size: 0.85rem;
-    color: #777;
-    margin-bottom: 12px;
-}
+  }
   
   /* Ligne du bouton J’aime + compteur */
   .like-row {
@@ -106,135 +80,3 @@
     opacity: 0.8;
   }
   
-.actions-row {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-  font-size: 0.9rem;
-}
-
-.btn-modify {
-  background-color: #2a9d8f;
-  color: white;
-
-  &:hover {
-    background-color: #21867a;
-  }
-}
-
-.btn-delete {
-  background-color: #e63946;
-  color: white;
-
-  &:hover {
-    background-color: #b32b3a;
-  }
-}
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-
-  label {
-    font-weight: 600;
-    color: #333;
-    white-space: nowrap;
-  }
-
-  select,
-  input[type="text"] {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    min-width: 200px;
-    transition: border-color 0.2s ease;
-
-    &:focus {
-      border-color: #2a9d8f;
-      outline: none;
-      box-shadow: 0 0 5px rgba(42, 157, 143, 0.5);
-    }
-  }
-
-  button {
-    padding: 8px 14px;
-  }
-}
-.filter-dropdown {
-  position: absolute;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin-top: 6px;
-  min-width: 150px;
-  z-index: 1000;
-}
-
-.filter-dropdown div {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.filter-dropdown div:hover {
-  background-color: #2a9d8f;
-  color: white;
-}
-
-.icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  font-size: 14px;
-  color: #333;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.icon-btn:hover {
-  background-color: #e0e0e0;
-}
-
-@media (max-width: 600px) {
-  .filter-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .filter-bar label,
-  .filter-bar select,
-  .filter-bar input[type="text"],
-  .filter-bar button {
-    width: 100%;
-  }
-}

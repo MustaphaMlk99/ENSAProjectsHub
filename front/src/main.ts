@@ -27,6 +27,8 @@ import { ModifyEncadrantComponent } from './app/admin/modify-encadrant/modify-en
 import { ModifyAdminComponent } from './app/admin/modify-admin/modify-admin.component';
 import { EvaluerProjetComponent } from './app/encadrant/evaluer-projet/evaluer-projet.component';
 import { registerLicense } from '@syncfusion/ej2-base';
+import { ProjetEvaluationComponent } from './app/etudiant/projet-evaluation/projet-evaluation.component';
+import { EncadrantProjetsComponent } from './app/encadrant/encadrant-projets/encadrant-projets.component';
 
 registerLicense('Ngo9BigBOggjHTQxAR8/V1NNaF1cWWhPYVFzWmFZfVtgcV9GaVZUQWY/P1ZhSXxWdkBhX35ZcH1QTmNeV0R9XUs=');
 
@@ -43,6 +45,9 @@ bootstrapApplication(AppComponent, {
       { path: 'add_projet', component: AddProjetComponent },
       { path: 'modify_projet/:id', component: ModifyProjetComponent },
       { path: 'historique/:type', component: HistoriqueComponent },
+      { path: 'projet_evaluation/:id', component: ProjetEvaluationComponent },
+      { path: 'encadrant/projets/:id', component: EncadrantProjetsComponent },
+      { path: 'projet/consulter/:id', component: EvaluerProjetComponent },
 
 
       { path: 'statistiques', component: StatistiquesComponent },

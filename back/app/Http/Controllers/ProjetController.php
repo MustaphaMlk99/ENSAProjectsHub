@@ -8,6 +8,8 @@ use App\Models\Evaluation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Certificat;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 
@@ -17,7 +19,7 @@ class ProjetController extends Controller
     public function getProjets()
     {
         // Récupère tous les projets avec leurs livrables associés
-        $projets = Projet::with('livrable')->get();
+        $projets = Projet::with('livrable', 'tags', 'etudiant', 'module', 'livrable.evaluation', 'certificat', 'encadrant')->get();
     
         // Ajouter les URLs des fichiers pour chaque projet
         foreach ($projets as $projet) {
@@ -35,6 +37,12 @@ class ProjetController extends Controller
                     ? url('storage/livrables/codeSources/' . basename($projet->livrable->code_source))  // Utilisation de url() avec un chemin relatif
                     : null;
             }
+
+                if($projet->certificat) {
+          $projet->certificat->chemin_fichier = $projet->certificat->chemin_fichier
+                    ? url('storage/certificats/' . basename($projet->certificat->chemin_fichier))  // Utilisation de url() avec un chemin relatif
+                    : null;
+    }
         }
 
         return response()->json($projets);
@@ -64,7 +72,7 @@ class ProjetController extends Controller
 public function getProjetById($id)
 {
     // Récupérer le projet avec ses livrables
-    $projet = Projet::with('livrable', 'module', 'etudiant')->find($id);
+    $projet = Projet::with('livrable', 'module', 'etudiant', 'tags', 'livrable.evaluation', 'certificat')->find($id);
 
     if (!$projet) {
         return response()->json(['message' => 'Projet non trouvé'], 404);
@@ -84,6 +92,12 @@ public function getProjetById($id)
         $projet->livrable->codeSource_url = $projet->livrable->code_source
             ? url('storage/livrables/codeSources/' . basename($projet->livrable->code_source))
             : null;
+    }
+
+    if($projet->certificat) {
+          $projet->certificat->chemin_fichier = $projet->certificat->chemin_fichier
+                    ? url('storage/certificats/' . basename($projet->certificat->chemin_fichier))  // Utilisation de url() avec un chemin relatif
+                    : null;
     }
 
     return response()->json($projet);
@@ -224,6 +238,24 @@ public function getProjetById($id)
 
         $livrable->save();
 
+$tags = $request->input('tags', []);
+
+if (is_string($tags)) {
+    $tags = json_decode($tags, true);  // decode en tableau PHP
+}
+
+if (!is_array($tags)) {
+    $tags = []; // sécuriser au cas où ce n’est pas un tableau après decode
+}
+
+// Puis traitement avec la méthode simplifiée que je t’ai donnée avant
+$motCleIds = collect($tags)
+    ->filter(fn($tag) => !empty($tag))
+    ->map(fn($tag) => \App\Models\MotsCle::firstOrCreate(['mot' => $tag])->id)
+    ->toArray();
+
+$projet->motscles()->sync($motCleIds);
+
         return response()->json(['message' => 'Projet et livrables mis à jour avec succès.']);
     }
 
@@ -314,7 +346,7 @@ public function getProjectsByModule($moduleId)
 
 public function getByEncadrant($id)
 {
-    $projets = Projet::where('encadrant_id', $id)->with(['etudiant', 'livrable.evaluation'])->get();
+    $projets = Projet::where('encadrant_id', $id)->with(['etudiant', 'module', 'livrable.evaluation'])->get();
     return response()->json($projets);
 }
 
@@ -332,6 +364,31 @@ public function evaluer(Request $request)
     $evaluation->note = $request->input('note');
     $evaluation->commentaire = $request->input('commentaire');
     $evaluation->save();
+
+     // ✅ Générer le certificat si note >= 12
+    if ($evaluation->note >= 12) {
+        $livrable = $evaluation->livrable;      // relation livrable()
+        $projet = $livrable->projet;            // relation projet()
+        $etudiant = $projet->etudiant;          // relation etudiant()
+
+        $pdf = Pdf::loadView('pdf.certificat', [
+            'etudiant' => $etudiant,
+            'projet' => $projet,
+            'note' => $evaluation->note,
+        ]);
+
+        $fileName = 'certificat_' . $etudiant->id . '_' . now()->timestamp . '.pdf';
+        $filePath = 'certificats/' . $fileName;
+
+        Storage::disk('public')->put($filePath, $pdf->output());
+
+        Certificat::create([
+            'etudiant_id' => $etudiant->id,
+            'projet_id' => $projet->id,
+            'chemin_fichier' => $filePath,
+        ]);
+    }
+
 
     return response()->json([
         'message' => '✅ Évaluation enregistrée avec succès',

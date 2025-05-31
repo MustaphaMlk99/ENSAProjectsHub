@@ -1,85 +1,29 @@
 <app-admin-header></app-admin-header>
 
-<div class="filter-bar" style="position: relative; display: flex; gap: 20px; align-items: center;">
+<div class="page-container">
+  <ejs-grid [dataSource]="projets" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true"
+    [filterSettings]="{ type: 'Excel' }" height="500px">
+    <e-columns>
+      <e-column field="titre" headerText="Titre" width="150"></e-column>
+      <e-column field="description" headerText="Description" width="300"></e-column>
+      <e-column field="etudiant" headerText="Étudiant" width="150"></e-column>
+      <e-column field="encadrant" headerText="Encadrant" width="150"></e-column>
+      <e-column field="module" headerText="Module" width="150"></e-column>
+      <e-column type="number" field="note" headerText="Note" width="100" textAlign="Center"></e-column>
 
-  <!-- Likes filter icon and label -->
-  <div style="position: relative;">
-    <button type="button" class="icon-btn" (click)="toggleLikesDropdown()" aria-label="Trier par likes">
-      <!-- Example filter SVG icon (funnel) -->
-      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 .8 1.6L14 12.6V19a1 1 0 0 1-1.5.87l-4-2.5A1 1 0 0 1 8 16v-3.4L3.2 5.6A1 1 0 0 1 3 4z"/>
-      </svg>
-      <span style="margin-left: 6px;">{{ selectedSort === 'asc' ? 'Likes croissant' : 'Likes décroissant' }}</span>
-    </button>
+      <e-column field="validationStatus" headerText="Statut" width="120" textAlign="Center">
+      </e-column>
+      <e-column type="date" field="created_at" headerText="Date de création" width="150" format='yMd'
+        textAlign="Center"></e-column>
+      <e-column headerText="Actions" width="120" textAlign="Center">
+        <ng-template #template let-data>
+          <button *ngIf="data.projetEvalue" class="e-btn e-flat e-primary"
+            [routerLink]="['/projet/consulter', data.id]">Consulter</button>
+            <button *ngIf="!data.projetEvalue && data.encadrant_id === userId" class="e-btn e-flat e-primary"
+            [routerLink]="['/projets/evaluer', data.id]">Evaluer</button>
+        </ng-template>
+      </e-column>
 
-    <!-- Likes dropdown -->
-    <div *ngIf="showLikesDropdown" class="filter-dropdown">
-      <div (click)="selectSort('desc')">Likes décroissant</div>
-      <div (click)="selectSort('asc')">Likes croissant</div>
-    </div>
-  </div>
-
-  <!-- Year filter icon and label -->
-  <div style="position: relative;">
-    <button type="button" class="icon-btn" (click)="toggleYearDropdown()" aria-label="Filtrer par année">
-      <!-- Example calendar SVG icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM5 20V9h14v11H5z"/>
-      </svg>
-      <span style="margin-left: 6px;">
-        {{ selectedYear ? selectedYear + (selectedYear === 1 ? 'ère année' : 'ème année') : 'Année' }}
-      </span>
-    </button>
-
-    <!-- Year dropdown -->
-    <div *ngIf="showYearDropdown" class="filter-dropdown">
-      <div (click)="selectYear(null)">-- Année --</div>
-        <div *ngFor="let year of years" (click)="selectYear(year)">
-          {{ year }}{{ year === 1 ? 'ère année' : 'ème année' }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Module filter -->
-  <div class="filter-item">
-    <button type="button" class="icon-btn" (click)="toggleModuleDropdown()" aria-label="Filtrer par module">
-      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M4 4h16v2H4zM4 8h16v2H4zM4 12h16v2H4zM4 16h16v2H4z"/>
-      </svg>
-      <span>
-        {{ selectedModule || 'Module' }}
-      </span>
-    </button>
-
-    <div *ngIf="showModuleDropdown" class="filter-dropdown">
-      <div (click)="selectModule(null)" class="dropdown-item">-- Module --</div>
-      <div *ngFor="let module of modules" (click)="selectModule(module)" class="dropdown-item">
-        {{ module.name }}
-      </div>
-    </div>
-  </div>
-
+    </e-columns>
+  </ejs-grid>
 </div>
-
-
-
-<div class="project-grid">
-  <div class="project-card" *ngFor="let project of projets">
-    <h3>{{ project.titre }}</h3>
-    <p>{{ project.description }}</p>
-
-    <div class="like-row">
-      <div class="likes-count">
-        <span class="like-number">{{ project.likesCount }}</span>
-        <span class="like-label">{{ project.likesCount === 1 ? 'like' : 'likes' }}</span>
-      </div>
-    </div>
-
-    <!-- Modifier & Supprimer buttons here -->
-    <div class="actions-row">
-      <button class="btn btn-modify" (click)="onModify(project)">Modifier</button>
-      <button class="btn btn-delete" (click)="onDelete(project)">Supprimer</button>
-    </div>
-  </div>
-</div>
-

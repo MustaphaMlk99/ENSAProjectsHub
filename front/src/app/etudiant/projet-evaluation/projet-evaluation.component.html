@@ -1,0 +1,14 @@
+<div  class="evaluation-full-container" *ngIf="evaluation">
+<div class="evaluation-container">
+  <h2>Évaluation du projet : {{ projet.titre }}</h2>
+  <p><strong>Note :</strong> {{ evaluation.note }}</p>
+  <p><strong>Commentaire :</strong> {{ evaluation.commentaire }}</p>
+  <p><strong>Date d’évaluation :</strong> {{ evaluation.created_at | date:'medium' }}</p>
+
+  <div *ngIf="certificat" class="certificat-download">
+    <a [href]="certificat?.chemin_fichier" target="_blank" class="btn-download">
+      📄 Télécharger le certificat
+    </a>
+  </div>
+</div>
+</div>

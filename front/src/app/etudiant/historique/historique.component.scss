@@ -82,4 +82,72 @@ body {
       font-size: 0.9rem;
     }
   }
+
+  .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 4px 10px;
+  border: 1px solid #007bff;
+  border-radius: 20px;
+  background-color: #f0f8ff;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9fcff;
+  border: 2px solid #b3d7ff;       // ✅ contour bleu clair
+  border-radius: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; // Pour que ça s'adapte au mobile
+}
+
+.search-bar select,
+.search-bar input {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.search-bar select {
+  min-width: 150px;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="10" height="6" xmlns="http://www.w3.org/2000/svg"><path d="M0 0l5 6 5-6z" fill="%23666"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;
+  padding-right: 30px;
+}
+
+.search-bar input {
+  flex: 1 1 300px;
+  min-width: 200px;
+  max-width: 500px;
+}
+
+.search-bar input:focus,
+.search-bar select:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 6px rgba(25, 118, 210, 0.3);
+}
+
   

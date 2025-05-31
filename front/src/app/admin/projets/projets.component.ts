@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminHeaderComponent } from '../admin-header/admin-header.component';
-import { Router } from '@angular/router';
-import { AdminService } from '../admin.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { GridModule} from '@syncfusion/ej2-angular-grids';
+import { MatCardModule } from '@angular/material/card';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Needed for [(ngModel)]
+import { EncadrantService } from '../../encadrant/encadrant.service';
+
 
 @Component({
   selector: 'app-projets',
@@ -11,173 +15,60 @@ import { FormsModule } from '@angular/forms'; // Needed for [(ngModel)]
   imports: [
     AdminHeaderComponent,
     CommonModule,
-    FormsModule
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    GridModule,
   ],
   templateUrl: './projets.component.html',
   styleUrl: './projets.component.scss'
 })
-export class ProjetsComponent {
+export class ProjetsComponent implements OnInit {
   projets: any[] = [];
-  userId: number = 1;
-  years = [1, 2, 3];
-  selectedSort = 'desc';
-  selectedYear: number | null = null;
-  modules: any[] = [];
-  selectedModule: string | null = null;
-
-  showLikesDropdown = false;
-  showYearDropdown = false;
-  showModuleDropdown = false;
+  userId: number = 1; // Par défaut
+  likedProjects: number[] = [];
 
   constructor(
     private router: Router,
-    private adminService: AdminService
+    private encadrantService: EncadrantService
   ) {
     const storedId = localStorage.getItem('id_user');
     this.userId = storedId ? parseInt(storedId, 10) : 0;
     console.log('ID utilisateur connecté :', this.userId);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchProjets();
-    this.fetchModules();
-    this.fetchProjectsByLikes('desc');
   }
 
-fetchProjets() {
-  const direction = this.selectedSort === 'asc' ? 'asc' : 'desc';
+  fetchProjets(): void {
+    this.encadrantService.getProjets().subscribe((data: any[]) => {
+      const projetsEvalues = data
+        .map(p => ({
+          ...p,
+          validationStatus: p?.livrable?.evaluation?.note == null
+            ? 'Nouveau'
+            : p.livrable.evaluation.note >= 12
+              ? 'Validé'
+              : 'Non validée',
+          note: p?.livrable?.evaluation?.note ?? '-',
+          created_at: new Date(p.created_at),
+          projetEvalue: p?.livrable?.evaluation?.note != null,
+          etudiant: p?.etudiant?.nom + ' ' + p?.etudiant?.prenom,
+          module: p?.module?.nom,
+          encadrant: p?.encadrant?.nom + ' ' + p?.encadrant?.prenom,
+        }))
+        .filter(p => p.projetEvalue);
 
-  // Filtrer par module si sélectionné
-  if (this.selectedModule) {
-    this.adminService.getProjectsByModule(+this.selectedModule).subscribe((data: any[]) => {
-      this.projets = data;
+      this.projets = projetsEvalues;
 
-      // Ajout des likes si nécessaire
+      // Charger les likes après avoir filtré
       this.projets.forEach(projet => {
-        if (projet.likesCount === undefined) {
-          this.adminService.getLikesCount(projet.id).subscribe((res) => {
-            projet.likesCount = res.likes;
-          });
-        }
+        this.encadrantService.getLikesCount(projet.id).subscribe((response) => {
+          projet.likesCount = response.likes;
+        });
       });
-    }, error => {
-      console.error('Erreur lors du filtrage par module :', error);
-    });
-
-  // Sinon filtrer par année
-  } else if (this.selectedYear) {
-    this.adminService.getProjectsByYear(+this.selectedYear).subscribe((data: any[]) => {
-      this.projets = data;
-
-      this.projets.forEach(projet => {
-        if (projet.likesCount === undefined) {
-          this.adminService.getLikesCount(projet.id).subscribe((res) => {
-            projet.likesCount = res.likes;
-          });
-        }
-      });
-    }, error => {
-      console.error('Erreur lors du filtrage par année :', error);
-    });
-
-  // Sinon trier par likes
-  } else {
-    this.adminService.getProjectsSortedByLikes(direction).subscribe((data: any[]) => {
-      this.projets = data;
-
-      this.projets.forEach(projet => {
-        if (projet.likesCount === undefined) {
-          this.adminService.getLikesCount(projet.id).subscribe((res) => {
-            projet.likesCount = res.likes;
-          });
-        }
-      });
-    }, error => {
-      console.error('Erreur lors du tri des projets par likes :', error);
     });
   }
-}
-
-
-
-
-
-  onSortChange() {
-    this.fetchProjets(); // refresh with new sort
-  }
-
-  fetchProjectsByLikes(direction: 'asc' | 'desc') {
-  this.adminService.getProjectsSortedByLikes(direction).subscribe((data: any[]) => {
-    this.projets = data;
-
-    // Optional: Fetch like counts if not already included in backend response
-    this.projets.forEach(projet => {
-      this.adminService.getLikesCount(projet.id).subscribe((response) => {
-        projet.likesCount = response.likes;
-      });
-    });
-  }, error => {
-    console.error('Erreur lors du chargement des projets triés:', error);
-  });
-}
-onModify(project: any) {
-  // logic for modification (open modal, navigate, etc.)
-  console.log('Modify:', project);
-}
-
-onDelete(project: any) {
-  // logic for deletion (confirm dialog, then call API)
-  console.log('Delete:', project);
-}
-
-onYearChange() {
-  this.fetchProjets();
-}
-
-toggleLikesDropdown() {
-  this.showLikesDropdown = !this.showLikesDropdown;
-  this.showYearDropdown = false; // close other dropdown
-    this.showModuleDropdown = false; // close other dropdown
-}
-
-toggleYearDropdown() {
-  this.showYearDropdown = !this.showYearDropdown;
-  this.showLikesDropdown = false; // close other dropdown
-  this.showModuleDropdown = false;
-}
-
-toggleModuleDropdown() {
-  this.showModuleDropdown = !this.showModuleDropdown;
-  this.showLikesDropdown = false;
-  this.showYearDropdown = false;
-}
-
-selectSort(sort: string) {
-  this.selectedSort = sort;
-  this.showLikesDropdown = false;
-  this.fetchProjets();  // refresh projects with new sort
-}
-
-selectYear(year: number | null) {
-  this.selectedYear = year;
-  this.showYearDropdown = false;
-  this.fetchProjets();  // refresh projects with new year filter
-}
-
-
-
-selectModule(module: string | null) {
-  this.selectedModule = module;
-  this.showModuleDropdown = false;
-  this.fetchProjets();
-}
-
-
-fetchModules() {
-  this.adminService.getModules().subscribe(data => {
-    this.modules = data;
-  });
-}
-
-
 }
